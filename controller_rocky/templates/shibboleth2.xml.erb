@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- BUILD BY PUPPET -->
+<SPConfig xmlns="urn:mace:shibboleth:2.0:native:sp:config"
+    xmlns:conf="urn:mace:shibboleth:2.0:native:sp:config"
+    xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
+    xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"    
+    xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+    clockSkew="180">
+
+    <ApplicationDefaults id="default"
+                         entityID="https://<%=@site_fqdn-%>/dashboard-shib"
+                         REMOTE_USER="eppn persistent-id targeted-id">
+
+        <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
+                  checkAddress="false" handlerSSL="true" cookieProps="https">
+            <SSO>SAML2 SAML1</SSO>
+            <Logout>SAML2 Local</Logout>
+        </Sessions>
+
+        <Errors redirectErrors="https://<%=@site_fqdn-%>/dashboard/auth/auth_error/"/>
+       
+        <MetadataProvider type="Chaining">
+<% if @shib_testing_md -%>
+            <MetadataProvider type="XML"
+                              uri="https://idp.infn.it/testing/saml2/idp/metadata.php"
+                              backingFilePath="/var/cache/shibboleth/idp.infn.it-testing-metadata.xml"/>
+            <MetadataProvider type="XML"
+                              uri="https://shibidpdev.cca.unipd.it/idp/shibboleth"
+                              backingFilePath="/var/cache/shibboleth/idp.unipd.it-testing-metadata.xml"/>
+<% end -%>
+            <MetadataProvider type="XML"
+                              uri="https://www.garr.it/idem-metadata/idem-metadata-sha256.xml"
+                              backingFilePath="/var/cache/shibboleth/idem-metadata.xml"
+                              reloadInterval="7200"/>
+        </MetadataProvider>
+        
+        <AttributeExtractor type="XML" 
+                            validate="true"
+                            reloadChanges="false"
+                            path="attribute-map.xml"/>
+        <AttributeResolver type="Query" subjectMatch="true"/>
+        <AttributeFilter type="XML" validate="true" path="attribute-policy.xml"/>
+
+        <CredentialResolver type="File">
+            <Key><Path>/etc/shibboleth/sp-key.pem</Path></Key>
+            <Certificate>
+                <Path>/etc/shibboleth/sp-cert.pem</Path>
+                <Path>/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem</Path>
+            </Certificate>
+        </CredentialResolver>
+
+        <ApplicationOverride id="unipd_app" entityID="https://<%=@cv_site_fqdn-%>/dashboard-shib">
+
+            <Errors redirectErrors="https://<%=@cv_site_fqdn-%>/dashboard/auth/auth_error/"/>
+
+            <CredentialResolver type="File">
+                <Key><Path>/etc/shibboleth/sp-unipd-key.pem</Path></Key>
+                <Certificate>
+                    <Path>/etc/shibboleth/sp-unipd-cert.pem</Path>
+                    <Path>/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem</Path>
+                </Certificate>
+            </CredentialResolver>
+
+        </ApplicationOverride>
+
+        <ApplicationOverride id="unipd_ssoapp" entityID="https://<%=@cv_site_fqdn-%>:5000/v3">
+
+            <Errors redirectErrors="https://<%=@cv_site_fqdn-%>/dashboard/auth/auth_error/"/>
+
+            <CredentialResolver type="File">
+                <Key><Path>/etc/shibboleth/sp-unipd-key.pem</Path></Key>
+                <Certificate>
+                    <Path>/etc/shibboleth/sp-unipd-cert.pem</Path>
+                    <Path>/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem</Path>
+                </Certificate>
+            </CredentialResolver>
+
+        </ApplicationOverride>
+
+    </ApplicationDefaults>
+    
+    <SecurityPolicyProvider type="XML" validate="true" path="security-policy.xml"/>
+    <ProtocolProvider type="XML" validate="true" reloadChanges="false" path="protocols.xml"/>
+
+</SPConfig>
+

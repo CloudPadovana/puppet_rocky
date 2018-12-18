@@ -1,0 +1,139 @@
+Listen 5000
+Listen 5001
+Listen 35357
+
+<VirtualHost _default_:5001>
+    ServerName       https://<%=@cv_site_fqdn-%>:5000
+    UseCanonicalName On
+    TraceEnable      Off
+    LimitRequestBody 114688
+
+    ErrorLog        "/var/log/httpd/keystone_wsgi_main_error_unipd.log"
+    TransferLog     "/var/log/httpd/keystone_wsgi_main_transfer_unipd.log"
+    CustomLog       "/var/log/httpd/keystone_wsgi_main_access_unipd.log" combined
+    LogLevel        warn
+    ServerSignature Off
+    ErrorLogFormat  "%{cu}t %M"
+
+    WSGIScriptAlias       / /usr/bin/keystone-wsgi-public
+    WSGIPassAuthorization On
+    WSGIApplicationGroup  %{GLOBAL}
+    WSGIDaemonProcess     keystone-unipd-public processes=5 threads=1 user=keystone group=keystone display-name=keystone-unipd-main
+    WSGIProcessGroup      keystone-unipd-public
+
+
+    <Directory /usr/bin>
+        Require all granted
+        Order allow,deny
+        Allow from all
+    </Directory>
+
+<% if @enable_aai_ext -%>
+    <Location ~ "/v3/auth/OS-FEDERATION/identity_providers/unipdaai/protocols/mapped/websso">
+        AuthType            shibboleth
+        Require             shib-session
+        ShibRequestSetting  requireSession 1
+        ShibRequestSetting  applicationId unipd_ssoapp
+        ShibRequestSetting  entityID <%=@unipdaai_ent_id%>
+        ShibRequireSession  On
+        ShibExportAssertion Off
+    </Location>
+
+    <Location /Shibboleth.sso>
+        AuthType shibboleth
+        Require shib-session
+        ShibRequestSetting applicationId unipd_ssoapp
+    </Location>
+<% end -%>
+</VirtualHost>
+
+<VirtualHost _default_:5000>
+    ServerName       https://<%=@site_fqdn -%>:5000
+    UseCanonicalName On
+    TraceEnable      Off
+    LimitRequestBody 114688
+
+    ErrorLog        "/var/log/httpd/keystone_wsgi_main_error_infn.log"
+    TransferLog     "/var/log/httpd/keystone_wsgi_main_transfer_infn.log"
+    CustomLog       "/var/log/httpd/keystone_wsgi_main_access_infn.log" combined
+    LogLevel        warn
+    ServerSignature Off
+    ErrorLogFormat  "%{cu}t %M"
+
+    WSGIScriptAlias       / /usr/bin/keystone-wsgi-public
+    WSGIPassAuthorization On
+    WSGIApplicationGroup  %{GLOBAL}
+    WSGIDaemonProcess     keystone-infn-public processes=5 threads=1 user=keystone group=keystone display-name=keystone-infn-main
+    WSGIProcessGroup      keystone-infn-public
+
+
+    <Directory /usr/bin>
+        Require all granted
+        Order allow,deny
+        Allow from all
+    </Directory>
+
+<% if @enable_aai_ext -%>
+    <Location ~ "/v3/auth/OS-FEDERATION/identity_providers/infnaai/protocols/mapped/websso">
+        AuthType            shibboleth
+        Require             shib-session
+        ShibRequestSetting  requireSession 1
+        ShibRequestSetting  applicationId default
+        ShibRequestSetting  entityID <%=@infnaai_ent_id%>
+        ShibRequireSession  On
+        ShibExportAssertion Off
+    </Location>
+
+    <Location /Shibboleth.sso>
+        AuthType shibboleth
+        Require shib-session
+        ShibRequestSetting applicationId default
+    </Location>
+<% end -%>
+</VirtualHost>
+
+<VirtualHost *:35357>
+    TraceEnable      Off
+
+    WSGIDaemonProcess keystone-admin processes=5 threads=1 user=keystone group=keystone display-name=%{GROUP}
+    WSGIProcessGroup keystone-admin
+    WSGIScriptAlias / /usr/bin/keystone-wsgi-admin
+    WSGIApplicationGroup %{GLOBAL}
+    WSGIPassAuthorization On
+    LimitRequestBody 114688
+    <IfVersion >= 2.4>
+      ErrorLogFormat "%{cu}t %M"
+    </IfVersion>
+    ErrorLog /var/log/httpd/keystone.log
+    CustomLog /var/log/httpd/keystone_access.log combined
+
+    <Directory /usr/bin>
+        <IfVersion >= 2.4>
+            Require all granted
+        </IfVersion>
+        <IfVersion < 2.4>
+            Order allow,deny
+            Allow from all
+        </IfVersion>
+    </Directory>
+</VirtualHost>
+
+Alias /identity /usr/bin/keystone-wsgi-public
+<Location /identity>
+    SetHandler wsgi-script
+    Options +ExecCGI
+
+    WSGIProcessGroup keystone-public
+    WSGIApplicationGroup %{GLOBAL}
+    WSGIPassAuthorization On
+</Location>
+
+Alias /identity_admin /usr/bin/keystone-wsgi-admin
+<Location /identity_admin>
+    SetHandler wsgi-script
+    Options +ExecCGI
+
+    WSGIProcessGroup keystone-admin
+    WSGIApplicationGroup %{GLOBAL}
+    WSGIPassAuthorization On
+</Location>
