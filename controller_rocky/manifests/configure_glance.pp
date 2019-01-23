@@ -39,6 +39,11 @@ define remove_config ($conf_file, $section, $param, $value) {
   do_config { 'glance_api_registry_host': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'registry_host', value => $controller_rocky::params::vip_mgmt, }
   do_config { 'glance_api_show_multiple_locations': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'show_multiple_locations', value => $controller_rocky::params::glance_api_show_multiple_locations, }
   do_config { 'glance_api_show_image_direct_url': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'show_image_direct_url', value => $controller_rocky::params::glance_api_show_image_direct_url, }
+  #
+  # parametro necessario per la nuova funzionalita' di interoperable image import
+  #
+  do_config { 'glance_api_node_staging_uri': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'node_staging_uri', value => $controller_rocky::params::glance_api_node_staging_uri, }
+  #
   do_config { 'glance_api_db': conf_file => '/etc/glance/glance-api.conf', section => 'database', param => 'connection', value => $controller_rocky::params::glance_db, }
 
   do_config { 'glance_api_auth_uri': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'auth_uri', value => $controller_rocky::params::auth_uri, }
