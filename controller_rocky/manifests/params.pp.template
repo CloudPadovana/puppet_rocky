@@ -245,6 +245,7 @@ class controller_ocata::params ($cloud_role){
    $glance_notification_driver = 'messagingv2'
    $glance_api_default_store = 'rbd'
    $glance_api_rbd_store_chunk_size = '8'
+   $glance_api_node_staging_uri = 'file:///Images/staging/'
    $glance_api_show_image_direct_url = true
    $glance_api_show_multiple_locations = true
    $glance_enable_v1_api = 'True'
