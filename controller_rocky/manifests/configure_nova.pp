@@ -113,7 +113,10 @@ define do_config_list ($conf_file, $section, $param, $values) {
    do_config { 'nova_glance_api_servers': conf_file => '/etc/nova/nova.conf', section => 'glance', param => 'api_servers', value => $controller_rocky::params::glance_api_servers, }
    ###
 ####neutron config in nova.conf
-   do_config { 'nova_neutron_url': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'url', value => $controller_rocky::params::neutron_url, }
+   # FF  DEPRECATED in ROCKY [neutron]url diventa [neutron]endpoint_override
+   #do_config { 'nova_neutron_url': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'url', value => $controller_rocky::params::neutron_url, }
+   do_config { 'nova_neutron_endpoint_override': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'endpoint_override', value => $controller_rocky::params::neutron_endpoint_override, }
+   ###
    do_config { 'nova_neutron_auth_type': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'auth_type', value => $controller_rocky::params::auth_type, }
    do_config { 'nova_neutron_auth_url': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'auth_url', value => $controller_rocky::params::auth_url, }
    do_config { 'nova_neutron_project_domain_name': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'project_domain_name', value => $controller_rocky::params::project_domain_name, }
