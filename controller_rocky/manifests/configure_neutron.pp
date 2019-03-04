@@ -120,7 +120,7 @@ do_config { 'neutron_enable_proxy_headers_parsing': conf_file => '/etc/neutron/n
    do_config { 'ovs_enable_tunneling': conf_file => '/etc/neutron/plugins/ml2/openvswitch_agent.ini', section => 'ovs', param => 'enable_tunneling', value => $controller_rocky::params::ovs_enable_tunneling, }
    # The following parameter was introduced after the powercut of Nov 2018. Without this parameter we had problems with
    # external networks ### FF DEPRECATED in PIKE of_interface Open vSwitch agent configuration option --> the current default driver (native) will be the only supported of_interface driver
-   #do_config { 'ovs_of_interface': conf_file => '/etc/neutron/plugins/ml2/openvswitch_agent.ini', section => 'ovs', param => 'of_interface', value => $controller_ocata::params::ovs_of_interface, }
+   #do_config { 'ovs_of_interface': conf_file => '/etc/neutron/plugins/ml2/openvswitch_agent.ini', section => 'ovs', param => 'of_interface', value => $controller_rocky::params::ovs_of_interface, }
    ###
    do_config { 'ovs_firewall_driver': conf_file => '/etc/neutron/plugins/ml2/openvswitch_agent.ini', section => 'securitygroup', param => 'firewall_driver', value => $controller_rocky::params::ml2_firewall_driver, } 
 
@@ -129,8 +129,8 @@ do_config { 'neutron_enable_proxy_headers_parsing': conf_file => '/etc/neutron/n
    do_config { 'l3_interface_driver': conf_file => '/etc/neutron/l3_agent.ini', section => 'DEFAULT', param => 'interface_driver', value => $controller_rocky::params::interface_driver, }
    do_config { 'l3_external_network_bridge': conf_file => '/etc/neutron/l3_agent.ini', section => 'DEFAULT', param => 'external_network_bridge', value => $controller_rocky::params::l3_external_network_bridge, }
    ### FF DEPRECATED in PIKE gateway_external_network_id --> external_network_bridge
-   #do_config { 'l3_gateway_external_network_id': conf_file => '/etc/neutron/l3_agent.ini', section => 'DEFAULT', param => 'gateway_external_network_id', value => $controller_ocata::params::l3_gateway_external_network_id, }
-   do_config { 'l3_external_network_id': conf_file => '/etc/neutron/l3_agent.ini', section => 'DEFAULT', param => 'external_network_bridge', value => $controller_ocata::params::l3_external_network_id, }
+   #do_config { 'l3_gateway_external_network_id': conf_file => '/etc/neutron/l3_agent.ini', section => 'DEFAULT', param => 'gateway_external_network_id', value => $controller_rocky::params::l3_gateway_external_network_id, }
+   do_config { 'l3_external_network_id': conf_file => '/etc/neutron/l3_agent.ini', section => 'DEFAULT', param => 'external_network_bridge', value => $controller_rocky::params::l3_external_network_id, }
    ###
 
 
@@ -158,8 +158,8 @@ do_config { 'neutron_enable_proxy_headers_parsing': conf_file => '/etc/neutron/n
 # metadata_agent.ini
    do_config { 'metadata_auth_ca_cert': conf_file => '/etc/neutron/metadata_agent.ini', section => 'DEFAULT', param => 'auth_ca_cert', value => $controller_rocky::params::cafile, }
    ### FF DEPRECATED in PIKE nova_metadata_ip --> nova_metadata_host
-   #do_config { 'metadata_ip': conf_file => '/etc/neutron/metadata_agent.ini', section => 'DEFAULT', param => 'nova_metadata_ip', value => $controller_ocata::params::vip_mgmt, }
-   do_config { 'metadata_ip': conf_file => '/etc/neutron/metadata_agent.ini', section => 'DEFAULT', param => 'nova_metadata_host', value => $controller_ocata::params::vip_mgmt, }
+   #do_config { 'metadata_ip': conf_file => '/etc/neutron/metadata_agent.ini', section => 'DEFAULT', param => 'nova_metadata_ip', value => $controller_rocky::params::vip_mgmt, }
+   do_config { 'metadata_ip': conf_file => '/etc/neutron/metadata_agent.ini', section => 'DEFAULT', param => 'nova_metadata_host', value => $controller_rocky::params::vip_mgmt, }
    ###
    do_config { 'metadata_metadata_proxy_shared_secret': conf_file => '/etc/neutron/metadata_agent.ini', section => 'DEFAULT', param => 'metadata_proxy_shared_secret', value => $controller_rocky::params::metadata_proxy_shared_secret, }
   

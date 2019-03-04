@@ -1,6 +1,6 @@
-class compute_ocata::libvirt {
+class compute_rocky::libvirt {
 
-include compute_ocata::params
+include compute_rocky::params
 
    $libvirtpackages = [ "libvirt" ]
   

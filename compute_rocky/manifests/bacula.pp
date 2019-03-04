@@ -1,6 +1,6 @@
-class compute_ocata::bacula {
+class compute_rocky::bacula {
 
-include compute_ocata::params
+include compute_rocky::params
 
    $baculapackages = [ "bacula-client" ]
   

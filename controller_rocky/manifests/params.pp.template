@@ -1,7 +1,7 @@
-class controller_ocata::params ($cloud_role){
+class controller_rocky::params ($cloud_role){
 
 
-  if $::controller_ocata::cloud_role == "is_production" {
+  if $::controller_rocky::cloud_role == "is_production" {
 
    ##########################################
    # Cloud di produzione
@@ -9,10 +9,11 @@ class controller_ocata::params ($cloud_role){
    $cv_site_fqdn = "cloudveneto.ict.unipd.it"
    $admin_password = ''
    $admin_token = ''
+   ## FF da queens nova_keystone_authtoken e nova_placement_auth_url cambiano porte da 35357 a 5000 
+   $nova_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
+   $nova_placement_auth_url = 'http://xxx.xxx.xxx.xxx:5000/v3'
    $auth_uri = 'http://xxx.xxx.xxx.xxx:5000'
    $auth_url = 'http://xxx.xxx.xxx.xxx:35357'
-   ######
-   $placement_auth_url = ''
    #########
    $ceilometer_connection = ''
    $ceilometer_password = ''
@@ -21,6 +22,8 @@ class controller_ocata::params ($cloud_role){
    $cinder_ceph_rbd_secret_uuid = ''
    $cinder_ceph_rbd_user = ''
    $cinder_db = ''
+   ## FF da queens cambia la porta, /etc/cinder/cinder.conf [keystone_authtoken] auth_uri = http://controller:5000 e auth_url = http://controller:5000
+   $cinder_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
    $cinder_password = ''
    $cinder_public_endpoint = ''
    #$ec2_admin_password = ''
@@ -85,7 +88,7 @@ class controller_ocata::params ($cloud_role){
 
    } 
     
-   if $::controller_ocata::cloud_role == "is_test"    {
+   if $::controller_rocky::cloud_role == "is_test"    {
 
    ##########################################
    # Cloud di test
@@ -93,15 +96,18 @@ class controller_ocata::params ($cloud_role){
    $cv_site_fqdn = "cloudveneto-test.ict.unipd.it"
    $admin_password = ''
    $admin_token = ''
-   $auth_uri = ''
-   $auth_url = ''
-   ######
-   $placement_auth_url = ''
+   ## FF da queens nova_keystone_authtoken e nova_placement_auth_url cambiano porte da 35357 a 5000 
+   $nova_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
+   $nova_placement_auth_url = 'http://xxx.xxx.xxx.xxx:5000/v3'
+   $auth_uri = 'http://xxx.xxx.xxx.xxx:5000'
+   $auth_url = 'http://xxx.xxx.xxx.xxx:35357'
    #########
    $ceilometer_connection = ''
    $ceilometer_service_credentials_auth_url = ''
    $ceilometer_password = ''
    $cinder_db = ''
+   ## FF da queens cambia la porta, /etc/cinder/cinder.conf [keystone_authtoken] auth_uri = http://controller:5000 e auth_url = http://controller:5000
+   $cinder_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
    $cinder_password = ''  
    $cinder_public_endpoint = ''
 #######
@@ -173,6 +179,8 @@ class controller_ocata::params ($cloud_role){
     
 
    }
+   ### Admin account on mysql
+   $mysql_admin_password = "undefined"
 
    ##########################################
    # Attributi validi sia per la cloud di test che quella di produzione
@@ -369,7 +377,7 @@ class controller_ocata::params ($cloud_role){
   $shib_repo_url = "http://download.opensuse.org/repositories/security://shibboleth/CentOS_7/security:shibboleth.repo"
   $shib_info_url = "http://wiki.infn.it/progetti/cloud-areapd/home"
   
-  if $::controller_ocata::cloud_role == "is_production" {
+  if $::controller_rocky::cloud_role == "is_production" {
     $infnaai_ent_id = "https://idp.infn.it/saml2/idp/metadata.php"
     $shib_testing_md = false
   } else {

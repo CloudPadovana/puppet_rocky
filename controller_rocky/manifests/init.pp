@@ -1,4 +1,4 @@
-class controller_ocata ($cloud_role_foreman = "undefined") {
+class controller_rocky ($cloud_role_foreman = "undefined") {
 
   $cloud_role = $cloud_role_foreman
 
@@ -11,78 +11,78 @@ class controller_ocata ($cloud_role_foreman = "undefined") {
   ### yum install centos-release-openstack-ocata
 
   # Install CA
-  class {'controller_ocata::install_ca_cert':}
+  class {'controller_rocky::install_ca_cert':}
 
   # Ceph
-  class {'controller_ocata::ceph':}
+  class {'controller_rocky::ceph':}
   
   # Configure keystone
-  class {'controller_ocata::configure_keystone':}
+  class {'controller_rocky::configure_keystone':}
   
   # Configure glance
-  class {'controller_ocata::configure_glance':}
+  class {'controller_rocky::configure_glance':}
 
   # Configure nova
-  class {'controller_ocata::configure_nova':}
+  class {'controller_rocky::configure_nova':}
 
   # Configure ec2
-  class {'controller_ocata::configure_ec2':}
+  class {'controller_rocky::configure_ec2':}
 
   # Configure neutron
-  class {'controller_ocata::configure_neutron':}
+  class {'controller_rocky::configure_neutron':}
 
   # Configure cinder
-  class {'controller_ocata::configure_cinder':}
+  class {'controller_rocky::configure_cinder':}
 
   # Configure heat
-  class {'controller_ocata::configure_heat':}
+  class {'controller_rocky::configure_heat':}
 
   # Configure ceilometer
-  class {'controller_ocata::configure_ceilometer':}
+  class {'controller_rocky::configure_ceilometer':}
 
   # Configure horizon
-  class {'controller_ocata::configure_horizon':}
+  class {'controller_rocky::configure_horizon':}
 
   # Configure Shibboleth if AII and Shibboleth are enabled
-  if ($::controller_ocata::params::enable_aai_ext and $::controller_ocata::params::enable_shib)  {
-    class {'controller_ocata::configure_shibboleth':}
+  if ($::controller_rocky::params::enable_aai_ext and $::controller_rocky::params::enable_shib)  {
+    class {'controller_rocky::configure_shibboleth':}
   }
 
   # Configure OpenIdc if AII and openidc are enabled
-  if ($::controller_ocata::params::enable_aai_ext and $::controller_ocata::params::enable_oidc)  {
-    class {'controller_ocata::configure_openidc':}
+  if ($::controller_rocky::params::enable_aai_ext and $::controller_rocky::params::enable_oidc)  {
+    class {'controller_rocky::configure_openidc':}
   }
  
   # Service
-  class {'controller_ocata::service':}
+  class {'controller_rocky::service':}
 
   
   # do passwdless access
-  class {'controller_ocata::pwl_access':}
+  class {'controller_rocky::pwl_access':}
   
   
   # configure remote syslog
-  class {'controller_ocata::rsyslog':}
+  class {'controller_rocky::rsyslog':}
   
   
 
-#      Class['controller_ocata::firewall'] -> Class['controller_ocata::configure_glance']
-       Class['controller_ocata::install_ca_cert'] -> Class['controller_ocata::configure_keystone']
-       Class['controller_ocata::configure_keystone'] -> Class['controller_ocata::configure_glance']
-       Class['controller_ocata::configure_glance'] -> Class['controller_ocata::configure_nova']
-       Class['controller_ocata::configure_nova'] -> Class['controller_ocata::configure_neutron']
-       Class['controller_ocata::configure_neutron'] -> Class['controller_ocata::configure_cinder']
-       Class['controller_ocata::configure_cinder'] -> Class['controller_ocata::configure_horizon']
-       Class['controller_ocata::configure_horizon'] -> Class['controller_ocata::configure_heat']
-       Class['controller_ocata::configure_heat'] -> Class['controller_ocata::configure_ceilometer']
+#      Class['controller_rocky::firewall'] -> Class['controller_rocky::configure_glance']
+       Class['controller_rocky::install_ca_cert'] -> Class['controller_rocky::configure_keystone']
+       Class['controller_rocky::configure_keystone'] -> Class['controller_rocky::configure_glance']
+       Class['controller_rocky::configure_glance'] -> Class['controller_rocky::configure_nova']
+       Class['controller_rocky::configure_nova'] -> Class['controller_rocky::configure_neutron']
+       Class['controller_rocky::configure_neutron'] -> Class['controller_rocky::configure_cinder']
+       Class['controller_rocky::configure_cinder'] -> Class['controller_rocky::configure_horizon']
+       Class['controller_rocky::configure_horizon'] -> Class['controller_rocky::configure_heat']
+       Class['controller_rocky::configure_heat'] -> Class['controller_rocky::configure_ceilometer']
        if ($enable_aai_ext and $enable_shib)  {
-          Class['controller_ocata::configure_ceilometer'] -> Class['controller_ocata::configure_shibboleth']
+          Class['controller_rocky::configure_ceilometer'] -> Class['controller_rocky::configure_shibboleth']
        }
        if ($enable_aai_ext and $enable_oidc) {
-          Class['controller_ocata::configure_ceilometer'] -> Class['controller_ocata::configure_openidc']
+          Class['controller_rocky::configure_ceilometer'] -> Class['controller_rocky::configure_openidc']
        }
-       # Class['controller_ocata::configure_neutron'] -> Class['controller_ocata::configure_ceilometer']
-       Class['controller_ocata::configure_ceilometer'] -> Class['controller_ocata::service']
+       # Class['controller_rocky::configure_neutron'] -> Class['controller_rocky::configure_ceilometer']
+       Class['controller_rocky::configure_ceilometer'] -> Class['controller_rocky::service']
             
 
   }

@@ -1,46 +1,46 @@
-class controller_ocata::service inherits controller_ocata::params {
+class controller_rocky::service inherits controller_rocky::params {
   
 
   # Ceph
-#  class {'controller_ocata::ceph':}
+#  class {'controller_rocky::ceph':}
   
   # Configure keystone
-#  class {'controller_ocata::configure_keystone':}
+#  class {'controller_rocky::configure_keystone':}
   
   # Configure glance
-#  class {'controller_ocata::configure_glance':}
+#  class {'controller_rocky::configure_glance':}
 
   # Configure nova
-#  class {'controller_ocata::configure_nova':}
+#  class {'controller_rocky::configure_nova':}
 
   # Configure horizon
-#  class {'controller_ocata::configure_horizon':}
+#  class {'controller_rocky::configure_horizon':}
 
   # Configure ec2
-#  class {'controller_ocata::configure_ec2':}
+#  class {'controller_rocky::configure_ec2':}
 
   # Configure neutron
-#  class {'controller_ocata::configure_neutron':}
+#  class {'controller_rocky::configure_neutron':}
 
   # Configure cinder
-#  class {'controller_ocata::configure_cinder':}
+#  class {'controller_rocky::configure_cinder':}
 
   # Configure heat
-#  class {'controller_ocata::configure_heat':}
+#  class {'controller_rocky::configure_heat':}
 
   # Configure ceilometer
-#  class {'controller_ocata::configure_ceilometer':}
+#  class {'controller_rocky::configure_ceilometer':}
 
   # do passwdless access
-#  class {'controller_ocata::pwl_access':}
+#  class {'controller_rocky::pwl_access':}
   
   
   # configure remote syslog
-#  class {'controller_ocata::rsyslog':}
+#  class {'controller_rocky::rsyslog':}
   
   
 #   file {'INFN-CA.pem':
-#                   source      => 'puppet:///modules/controller_ocata/INFN-CA.pem',
+#                   source      => 'puppet:///modules/controller_rocky/INFN-CA.pem',
 #                   path        => '/etc/grid-security/certificates/INFN-CA.pem',
 #         }
 
@@ -51,7 +51,7 @@ class controller_ocata::service inherits controller_ocata::params {
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_horizon'],
+                   subscribe   => Class['controller_rocky::configure_horizon'],
            }
 
  service { "fetch-crl-cron":
@@ -68,7 +68,7 @@ class controller_ocata::service inherits controller_ocata::params {
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => [ Class['controller_ocata::configure_keystone'], Class['controller_ocata::configure_horizon'], ],
+                   subscribe   => [ Class['controller_rocky::configure_keystone'], Class['controller_rocky::configure_horizon'], ],
            }
 
  # Services for Glance
@@ -77,14 +77,14 @@ class controller_ocata::service inherits controller_ocata::params {
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_glance'],
+                   subscribe   => Class['controller_rocky::configure_glance'],
            }
     service { "openstack-glance-registry":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_glance'],
+                   subscribe   => Class['controller_rocky::configure_glance'],
             }
 
  # Services for nova       
@@ -93,42 +93,42 @@ class controller_ocata::service inherits controller_ocata::params {
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_nova'],
+                   subscribe   => Class['controller_rocky::configure_nova'],
            }
     service { "openstack-nova-consoleauth":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_nova'],
+                   subscribe   => Class['controller_rocky::configure_nova'],
            }
     service { "openstack-nova-scheduler":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_nova'],
+                   subscribe   => Class['controller_rocky::configure_nova'],
            }
     service { "openstack-nova-novncproxy":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_nova'],
+                   subscribe   => Class['controller_rocky::configure_nova'],
            }
     service { "openstack-nova-conductor":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_nova'],
+                   subscribe   => Class['controller_rocky::configure_nova'],
            }
     service { "openstack-nova-cert":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_nova'],
+                   subscribe   => Class['controller_rocky::configure_nova'],
            }
             
  # Services for ec2       
@@ -137,14 +137,14 @@ class controller_ocata::service inherits controller_ocata::params {
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_ec2'],
+                   subscribe   => Class['controller_rocky::configure_ec2'],
            }
     service { "openstack-ec2-api-metadata":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_ec2'],
+                   subscribe   => Class['controller_rocky::configure_ec2'],
            }
 
  # Services for neutron       
@@ -153,42 +153,42 @@ class controller_ocata::service inherits controller_ocata::params {
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_neutron'],
+                   subscribe   => Class['controller_rocky::configure_neutron'],
            }
     service { "neutron-server":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_neutron'],
+                   subscribe   => Class['controller_rocky::configure_neutron'],
            }
     service { "neutron-openvswitch-agent":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_neutron'],
+                   subscribe   => Class['controller_rocky::configure_neutron'],
            }
     service { "neutron-dhcp-agent":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_neutron'],
+                   subscribe   => Class['controller_rocky::configure_neutron'],
            }
     service { "neutron-metadata-agent":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_neutron'],
+                   subscribe   => Class['controller_rocky::configure_neutron'],
            }
     service { "neutron-l3-agent":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_neutron'],
+                   subscribe   => Class['controller_rocky::configure_neutron'],
            }
 
  # Services for cinder
@@ -197,28 +197,28 @@ class controller_ocata::service inherits controller_ocata::params {
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_cinder'],
+                   subscribe   => Class['controller_rocky::configure_cinder'],
            }
     service { "openstack-cinder-scheduler":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_cinder'],
+                   subscribe   => Class['controller_rocky::configure_cinder'],
            }
     service { "openstack-cinder-volume":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_cinder'],
+                   subscribe   => Class['controller_rocky::configure_cinder'],
            }
     service { "target":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_cinder'],
+                   subscribe   => Class['controller_rocky::configure_cinder'],
            }
            
  # Services for heat
@@ -227,21 +227,21 @@ class controller_ocata::service inherits controller_ocata::params {
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_heat'],
+                   subscribe   => Class['controller_rocky::configure_heat'],
            }
     service { "openstack-heat-api-cfn":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_heat'],
+                   subscribe   => Class['controller_rocky::configure_heat'],
            }
     service { "openstack-heat-engine":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_heat'],
+                   subscribe   => Class['controller_rocky::configure_heat'],
            }
            
  # Services for ceilometer
@@ -250,28 +250,28 @@ class controller_ocata::service inherits controller_ocata::params {
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_ceilometer'],
+                   subscribe   => Class['controller_rocky::configure_ceilometer'],
            }
     service { "openstack-ceilometer-notification":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_ceilometer'],
+                   subscribe   => Class['controller_rocky::configure_ceilometer'],
             }          
     service { "openstack-ceilometer-central":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_ceilometer'],
+                   subscribe   => Class['controller_rocky::configure_ceilometer'],
            }
     service { "openstack-ceilometer-collector":
                    ensure      => running,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_ceilometer'],
+                   subscribe   => Class['controller_rocky::configure_ceilometer'],
            }
 
   }

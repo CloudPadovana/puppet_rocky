@@ -1,11 +1,11 @@
-class controller_ocata::configure_horizon inherits controller_ocata::params {
+class controller_rocky::configure_horizon inherits controller_rocky::params {
   
   file { "/etc/httpd/conf.d/ssl.conf":
     ensure   => file,
     owner    => "root",
     group    => "root",
     mode     => '0644',
-    content  => template("controller_ocata/ssl.conf.erb"),
+    content  => template("controller_rocky/ssl.conf.erb"),
   }
   
   file { "/etc/httpd/conf.d/openstack-dashboard.conf":
@@ -13,7 +13,7 @@ class controller_ocata::configure_horizon inherits controller_ocata::params {
     owner    => "root",
     group    => "root",
     mode     => '0644',
-    content  => file("controller_ocata/openstack-dashboard.conf"),
+    content  => file("controller_rocky/openstack-dashboard.conf"),
   }
  
   file { "/etc/openstack-dashboard/local_settings":
@@ -21,7 +21,7 @@ class controller_ocata::configure_horizon inherits controller_ocata::params {
     owner    => "root",
     group    => "apache",
     mode     => '0640',
-    content  => template("controller_ocata/local_settings.erb"),
+    content  => template("controller_rocky/local_settings.erb"),
   }
 
   file { '/var/log/horizon/horizon_log':
@@ -52,7 +52,7 @@ class controller_ocata::configure_horizon inherits controller_ocata::params {
       owner    => "root",
       group    => "apache",
       mode     => '0640',
-      content  => template("controller_ocata/aai_settings.py.erb"),
+      content  => template("controller_rocky/aai_settings.py.erb"),
     }
 
     file { "/etc/openstack-auth-shib/notifications/notifications_en.txt":
@@ -60,7 +60,7 @@ class controller_ocata::configure_horizon inherits controller_ocata::params {
       owner    => "root",
       group    => "root",
       mode     => '0644',
-      content  => template("controller_ocata/notifications_en.txt.erb"),
+      content  => template("controller_rocky/notifications_en.txt.erb"),
       require  => Package["openstack-auth-${aai_ext_flavor}"],
     }
 
@@ -85,7 +85,7 @@ class controller_ocata::configure_horizon inherits controller_ocata::params {
 
   ### Patch for AAI testing IdP
 
-    if $::controller_ocata::cloud_role == "is_test" {
+    if $::controller_rocky::cloud_role == "is_test" {
 
       exec { "patch_infnaai_testing_idp":
         command => "/bin/sed -i 's|idp.infn.it/saml2|idp.infn.it/testing/saml2|g' /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.d/_1001_${aai_ext_flavor}_settings.py",
@@ -112,7 +112,7 @@ class controller_ocata::configure_horizon inherits controller_ocata::params {
     owner    => "root",
     group    => "root",
     mode     => '0600',
-    content  => template("controller_ocata/actions.conf.erb"),
+    content  => template("controller_rocky/actions.conf.erb"),
   }
   
   if "${::fqdn}" =~ /01/ {
@@ -126,7 +126,7 @@ class controller_ocata::configure_horizon inherits controller_ocata::params {
     owner    => "root",
     group    => "root",
     mode     => '0644',
-    content  => template("controller_ocata/openstack-auth-shib-cron.erb"),
+    content  => template("controller_rocky/openstack-auth-shib-cron.erb"),
   }
 
 }

@@ -1,6 +1,6 @@
-class compute_ocata::pwl_access {
+class compute_rocky::pwl_access {
 
-include compute_ocata::params
+include compute_rocky::params
 
   $home_dir = "/var/lib/nova"
   $config = "Host *
@@ -38,7 +38,7 @@ include compute_ocata::params
             group   => nova;
 
 	"private_key":
-	    source  => "puppet:///modules/compute_ocata/$compute_ocata::params::private_key",
+	    source  => "puppet:///modules/compute_rocky/$compute_rocky::params::private_key",
 	    path    => "$home_dir/.ssh/id_rsa",
             owner   => nova,
             group   => nova,
@@ -46,13 +46,13 @@ include compute_ocata::params
 
 	"public_key":
             path    => "$home_dir/.ssh/id_rsa.pub",
-            content => "$compute_ocata::params::pub_key",
+            content => "$compute_rocky::params::pub_key",
             owner   => nova,
             group   => nova;
 
         "authorized_keys":
             path    => "$home_dir/.ssh/authorized_keys",
-            content => "$compute_ocata::params::pub_key",
+            content => "$compute_rocky::params::pub_key",
             ensure  => present,
             owner   => nova,
             group   => nova;

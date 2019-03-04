@@ -1,4 +1,4 @@
-class controller_ocata::install_ca_cert inherits controller_ocata::params {
+class controller_rocky::install_ca_cert inherits controller_rocky::params {
 
   yumrepo { "EGI-trustanchors":
           baseurl=> "http://repository.egi.eu/sw/production/cas/1/current/",
@@ -22,7 +22,7 @@ class controller_ocata::install_ca_cert inherits controller_ocata::params {
   }
 
   file {'INFN-CA.pem':
-    source  => 'puppet:///modules/controller_ocata/INFN-CA.pem',
+    source  => 'puppet:///modules/controller_rocky/INFN-CA.pem',
     path    => '/etc/grid-security/certificates/INFN-CA.pem',
   }
 

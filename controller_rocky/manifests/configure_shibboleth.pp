@@ -1,4 +1,4 @@
-class controller_ocata::configure_shibboleth inherits controller_ocata::params {
+class controller_rocky::configure_shibboleth inherits controller_rocky::params {
 
   exec { "download_shib_repo":
     command => "/usr/bin/wget -q -O /etc/yum.repos.d/shibboleth.repo ${shib_repo_url}",
@@ -51,7 +51,7 @@ class controller_ocata::configure_shibboleth inherits controller_ocata::params {
     owner    => "root",
     group    => "root",
     mode     => '0644',
-    source   => "puppet:///modules/controller_ocata/attribute-map.xml",
+    source   => "puppet:///modules/controller_rocky/attribute-map.xml",
     tag      => ["shibboleth_conf"],
   }
 
@@ -60,7 +60,7 @@ class controller_ocata::configure_shibboleth inherits controller_ocata::params {
     owner    => "root",
     group    => "root",
     mode     => '0644',
-    content  => template("controller_ocata/idem-template-metadata.xml.erb"),
+    content  => template("controller_rocky/idem-template-metadata.xml.erb"),
     tag      => ["shibboleth_conf"],
   }
 
@@ -69,7 +69,7 @@ class controller_ocata::configure_shibboleth inherits controller_ocata::params {
     owner    => "root",
     group    => "root",
     mode     => '0644',
-    content  => template("controller_ocata/shibboleth2.xml.erb"),
+    content  => template("controller_rocky/shibboleth2.xml.erb"),
     tag      => ["shibboleth_conf"],
   }
 

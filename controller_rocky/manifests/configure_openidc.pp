@@ -1,4 +1,4 @@
-class controller_ocata::configure_openidc inherits controller_ocata::params {
+class controller_rocky::configure_openidc inherits controller_rocky::params {
 
   package { "mod_auth_openidc":
     ensure  => present,
@@ -9,7 +9,7 @@ class controller_ocata::configure_openidc inherits controller_ocata::params {
     owner    => "apache",
     group    => "apache",
     mode     => '0640',
-    content  => template("controller_ocata/openidc.conf.erb"),
+    content  => template("controller_rocky/openidc.conf.erb"),
     tag      => ["oidc_conf"],
   }
 

@@ -1,4 +1,4 @@
-class controller_ocata::ceph inherits controller_ocata::params {
+class controller_rocky::ceph inherits controller_rocky::params {
 
     yumrepo { "ceph":
                baseurl             => "http://download.ceph.com/rpm-luminous/el7/$::architecture/",
@@ -19,19 +19,19 @@ class controller_ocata::ceph inherits controller_ocata::params {
               ensure => 'installed',
               require => [ Yumrepo["ceph-noarch"], Yumrepo["ceph"] ]
              }
-####ceph.conf, ceph.client.cinder ceph.client.glance keyring file are in /controller_ocata/files dir
+####ceph.conf, ceph.client.cinder ceph.client.glance keyring file are in /controller_rocky/files dir
                                                             
      file {'ceph.conf':
-            source      => 'puppet:///modules/controller_ocata/ceph.conf',
+            source      => 'puppet:///modules/controller_rocky/ceph.conf',
             path        => '/etc/ceph/ceph.conf',
             backup      => true,
             require => Package["ceph-common"],
           }
 
-  if $::controller_ocata::cloud_role == "is_production" {
+  if $::controller_rocky::cloud_role == "is_production" {
 
       file {'cinder-prod.keyring':
-              source      => 'puppet:///modules/controller_ocata/ceph.client.cinder-prod.keyring',
+              source      => 'puppet:///modules/controller_rocky/ceph.client.cinder-prod.keyring',
               path        => '/etc/ceph/ceph.client.cinder-prod.keyring',
               backup      => true,
               owner   => cinder,
@@ -41,7 +41,7 @@ class controller_ocata::ceph inherits controller_ocata::params {
            }
 
       file {'glance-prod.keyring':
-              source      => 'puppet:///modules/controller_ocata/ceph.client.glance-prod.keyring',
+              source      => 'puppet:///modules/controller_rocky/ceph.client.glance-prod.keyring',
               path        => '/etc/ceph/ceph.client.glance-prod.keyring',
               backup      => true,
               owner   => glance,
@@ -52,10 +52,10 @@ class controller_ocata::ceph inherits controller_ocata::params {
 
   }                          
       
-  if $::controller_ocata::cloud_role == "is_test" {
+  if $::controller_rocky::cloud_role == "is_test" {
 
       file {'cinder-cloudtest.keyring':
-              source      => 'puppet:///modules/controller_ocata/ceph.client.cinder-cloudtest.keyring',
+              source      => 'puppet:///modules/controller_rocky/ceph.client.cinder-cloudtest.keyring',
               path        => '/etc/ceph/ceph.client.cinder-cloudtest.keyring',
               backup      => true,
               owner   => cinder,
@@ -65,7 +65,7 @@ class controller_ocata::ceph inherits controller_ocata::params {
            }
 
       file {'glance-test.keyring':
-              source      => 'puppet:///modules/controller_ocata/ceph.client.glance-cloudtest.keyring',
+              source      => 'puppet:///modules/controller_rocky/ceph.client.glance-cloudtest.keyring',
               path        => '/etc/ceph/ceph.client.glance-cloudtest.keyring',
               backup      => true,
               owner   => glance,

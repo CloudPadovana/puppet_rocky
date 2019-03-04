@@ -1,8 +1,8 @@
-class compute_ocata::systemsetting {
+class compute_rocky::systemsetting {
 
-# inherits compute_ocata::params {
+# inherits compute_rocky::params {
 
-include compute_ocata::params
+include compute_rocky::params
 
   # disable SELinux
   exec { "setenforce 0":
@@ -15,7 +15,7 @@ include compute_ocata::params
   Exec { path => '/usr/bin:/usr/sbin:/bin:/sbin' }
   Sysctl {
           notify      => Exec["load-sysctl"],
-          #require     => Class['compute_ocata::libvirt'],
+          #require     => Class['compute_rocky::libvirt'],
          }
 
    $my_sysctl_settings = {
@@ -35,7 +35,7 @@ include compute_ocata::params
         }
 
    file {'INFN-CA.pem':
-             source      => 'puppet:///modules/compute_ocata/INFN-CA.pem',
+             source      => 'puppet:///modules/compute_rocky/INFN-CA.pem',
              path        => '/etc/grid-security/certificates/INFN-CA.pem',
         }
 

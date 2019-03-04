@@ -1,32 +1,32 @@
-class compute_ocata::nagiossetting inherits compute_ocata::params {
+class compute_rocky::nagiossetting inherits compute_rocky::params {
 
      file {'nagios_check_ovs':
-             source      => 'puppet:///modules/compute_ocata/nagios_check_ovs.sh',
+             source      => 'puppet:///modules/compute_rocky/nagios_check_ovs.sh',
              path => '/usr/local/bin/nagios_check_ovs.sh',
              mode => '+x',
-             #subscribe   => Class['compute_ocata::neutron'],
+             #subscribe   => Class['compute_rocky::neutron'],
           }
 
      file {'nagios_check_kvm':
-             source      => 'puppet:///modules/compute_ocata/check_kvm',
+             source      => 'puppet:///modules/compute_rocky/check_kvm',
              path        => '/usr/local/bin/check_kvm',
              mode        => '+x',
-             #subscribe   => Class['compute_ocata::nova'],
+             #subscribe   => Class['compute_rocky::nova'],
           }
 
      file {'nagios_check_kvm_wrapper':
-             source      => 'puppet:///modules/compute_ocata/check_kvm_wrapper.sh',
+             source      => 'puppet:///modules/compute_rocky/check_kvm_wrapper.sh',
              path        => '/usr/local/bin/check_kvm_wrapper.sh',
              mode        => '+x',
              require => File['nagios_check_kvm'],
-             #subscribe   => Class['compute_ocata::nova'],
+             #subscribe   => Class['compute_rocky::nova'],
           }
 
      file {'check_total_disksize.sh':
-             source      => 'puppet:///modules/compute_ocata/check_total_disksize.sh',
+             source      => 'puppet:///modules/compute_rocky/check_total_disksize.sh',
              path        => '/usr/lib64/nagios/plugins/check_total_disksize.sh',
              mode        => '+x',
-             #subscribe   => Class['compute_ocata::nova'],
+             #subscribe   => Class['compute_rocky::nova'],
           }
 
 # NAGIOS - various crontabs

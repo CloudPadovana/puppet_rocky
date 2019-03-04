@@ -1,4 +1,4 @@
-class controller_ocata::pwl_access inherits controller_ocata::params {
+class controller_rocky::pwl_access inherits controller_rocky::params {
 
 #
 # Questa classe configura ssh per l'account nova in modo da permettere accesso password-less
@@ -34,7 +34,7 @@ class controller_ocata::pwl_access inherits controller_ocata::params {
             group   => nova;
 
 	"private_key":
-	    source  => "puppet:///modules/controller_ocata/$controller_ocata::params::private_key",
+	    source  => "puppet:///modules/controller_rocky/$controller_rocky::params::private_key",
 	    path    => "$home_dir/.ssh/id_rsa",
             owner   => nova,
             group   => nova,
@@ -42,13 +42,13 @@ class controller_ocata::pwl_access inherits controller_ocata::params {
 
 	"public_key":
             path    => "$home_dir/.ssh/id_rsa.pub",
-            content => "$controller_ocata::params::pub_key",
+            content => "$controller_rocky::params::pub_key",
             owner   => nova,
             group   => nova;
 
         "authorized_keys":
             path    => "$home_dir/.ssh/authorized_keys",
-            content => "$controller_ocata::params::pub_key",
+            content => "$controller_rocky::params::pub_key",
             ensure  => present,
             owner   => nova,
             group   => nova;

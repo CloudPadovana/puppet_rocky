@@ -1,4 +1,4 @@
-class controller_ocata::rsyslog inherits controller_ocata::params {
+class controller_rocky::rsyslog inherits controller_rocky::params {
 
 #
 # Questa classe configura rsyslog in modo da centralizzare i log su cld-foreman
@@ -17,7 +17,7 @@ class controller_ocata::rsyslog inherits controller_ocata::params {
       }
 
       file {'rsyslog_conf':
-          source      => 'puppet:///modules/controller_ocata/rsyslog.conf',
+          source      => 'puppet:///modules/controller_rocky/rsyslog.conf',
           path        => '/etc/rsyslog.conf',
           backup      => true,
           owner   => root,
@@ -27,7 +27,7 @@ class controller_ocata::rsyslog inherits controller_ocata::params {
          }
 
       file {'ignore_nagios':
-          source      => 'puppet:///modules/controller_ocata/ignore-systemd-session-slice-nagios.conf',
+          source      => 'puppet:///modules/controller_rocky/ignore-systemd-session-slice-nagios.conf',
           path        => '/etc/rsyslog.d/ignore-systemd-session-slice-nagios.conf',
           backup      => true,
           owner   => root,

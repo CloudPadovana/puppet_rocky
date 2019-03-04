@@ -1,48 +1,48 @@
-class compute_ocata ($cloud_role_foreman = "undefined") { 
+class compute_rocky ($cloud_role_foreman = "undefined") { 
 
   $cloud_role = $cloud_role_foreman  
 
   # system check setting (network, selinux, CA files)
-    class {'compute_ocata::systemsetting':}
+    class {'compute_rocky::systemsetting':}
 
   # install
-    class {'compute_ocata::install':}
+    class {'compute_rocky::install':}
 
   # setup firewall
-    class {'compute_ocata::firewall':}
+    class {'compute_rocky::firewall':}
 
   # setup bacula
-    class {'compute_ocata::bacula':}
+    class {'compute_rocky::bacula':}
   
   # setup libvirt
-    class {'compute_ocata::libvirt':}
+    class {'compute_rocky::libvirt':}
 
   # setup ceph
-    class {'compute_ocata::ceph':}
+    class {'compute_rocky::ceph':}
 
   # setup rsyslog
-    class {'compute_ocata::rsyslog':}
+    class {'compute_rocky::rsyslog':}
 
   # do configuration
-  #  class {'compute_ocata::configure':}
+  #  class {'compute_rocky::configure':}
 
   # service
-    class {'compute_ocata::service':}
+    class {'compute_rocky::service':}
 
   # install and configure nova
-     class {'compute_ocata::nova':}
+     class {'compute_rocky::nova':}
 
   # install and configure neutron
-     class {'compute_ocata::neutron':}
+     class {'compute_rocky::neutron':}
 
   # install and configure ceilometer
-     class {'compute_ocata::ceilometer':}
+     class {'compute_rocky::ceilometer':}
 
   # nagios settings
-     class {'compute_ocata::nagiossetting':}
+     class {'compute_rocky::nagiossetting':}
 
   # do passwdless access
-      class {'compute_ocata::pwl_access':}
+      class {'compute_rocky::pwl_access':}
 
 
 # Services needed
@@ -53,7 +53,7 @@ class compute_ocata ($cloud_role_foreman = "undefined") {
 #                        hasstatus   => true,
 #                        hasrestart  => true,
 #                        require     => Package["openstack-neutron-openvswitch"],
-#                        subscribe   => Class['compute_ocata::configure'],
+#                        subscribe   => Class['compute_rocky::configure'],
 #              }
               
 #       service { "neutron-openvswitch-agent":
@@ -62,7 +62,7 @@ class compute_ocata ($cloud_role_foreman = "undefined") {
 #                        hasstatus   => true,
 #                        hasrestart  => true,
 #                        require     => Package["openstack-neutron-openvswitch"],
-#                        subscribe   => Class['compute_ocata::configure'],
+#                        subscribe   => Class['compute_rocky::configure'],
 #               }
 
 #       service { "neutron-ovs-cleanup":
@@ -85,7 +85,7 @@ class compute_ocata ($cloud_role_foreman = "undefined") {
 #                    hasstatus   => true,
 #                    hasrestart  => true,
 #                    require     => Package["openstack-nova-compute"],
-#                    subscribe   => Class['compute_ocata::configure'],
+#                    subscribe   => Class['compute_rocky::configure'],
 #               }
 
 #        service { "openstack-ceilometer-compute":
@@ -94,7 +94,7 @@ class compute_ocata ($cloud_role_foreman = "undefined") {
 #                    hasstatus   => true,
 #                    hasrestart  => true,
 #                    require     => Package["openstack-ceilometer-compute"],
-#                    subscribe   => Class['compute_ocata::ceilometer'],
+#                    subscribe   => Class['compute_rocky::ceilometer'],
 #               }
 
 #       exec { 'create_bridge':
@@ -106,24 +106,24 @@ class compute_ocata ($cloud_role_foreman = "undefined") {
 
            
 # execution order
-             #Class['compute_ocata::firewall'] -> Class['compute_ocata::install']
-             #Class['compute_ocata::install'] -> Class['compute_ocata::configure']
-             #Class['compute_ocata::configure'] -> File['/etc/neutron/plugin.ini']
-             #Class['compute_ocata::configure'] -> Cron['nagios_check_ovs']
-             #Class['compute_ocata::configure'] -> Cron['nagios_check_kvm']
-             #Class['compute_ocata::configure'] -> Class['compute_ocata::pwl_access']
+             #Class['compute_rocky::firewall'] -> Class['compute_rocky::install']
+             #Class['compute_rocky::install'] -> Class['compute_rocky::configure']
+             #Class['compute_rocky::configure'] -> File['/etc/neutron/plugin.ini']
+             #Class['compute_rocky::configure'] -> Cron['nagios_check_ovs']
+             #Class['compute_rocky::configure'] -> Cron['nagios_check_kvm']
+             #Class['compute_rocky::configure'] -> Class['compute_rocky::pwl_access']
              #Service["openvswitch"] -> Exec['create_bridge']
-             Class['compute_ocata::firewall'] -> Class['compute_ocata::systemsetting']
-             Class['compute_ocata::systemsetting'] -> Class['compute_ocata::install']
-             Class['compute_ocata::install'] -> Class['compute_ocata::bacula']
-             Class['compute_ocata::bacula'] -> Class['compute_ocata::nova']
-             Class['compute_ocata::nova'] -> Class['compute_ocata::libvirt']
-             Class['compute_ocata::libvirt'] -> Class['compute_ocata::neutron']
-             Class['compute_ocata::neutron'] -> Class['compute_ocata::ceph']
-             Class['compute_ocata::neutron'] -> Class['compute_ocata::nagiossetting']
-             Class['compute_ocata::neutron'] -> Class['compute_ocata::pwl_access']
-             Class['compute_ocata::neutron'] -> Class['compute_ocata::ceilometer']
-             Class['compute_ocata::ceilometer'] -> Class['compute_ocata::service']
+             Class['compute_rocky::firewall'] -> Class['compute_rocky::systemsetting']
+             Class['compute_rocky::systemsetting'] -> Class['compute_rocky::install']
+             Class['compute_rocky::install'] -> Class['compute_rocky::bacula']
+             Class['compute_rocky::bacula'] -> Class['compute_rocky::nova']
+             Class['compute_rocky::nova'] -> Class['compute_rocky::libvirt']
+             Class['compute_rocky::libvirt'] -> Class['compute_rocky::neutron']
+             Class['compute_rocky::neutron'] -> Class['compute_rocky::ceph']
+             Class['compute_rocky::neutron'] -> Class['compute_rocky::nagiossetting']
+             Class['compute_rocky::neutron'] -> Class['compute_rocky::pwl_access']
+             Class['compute_rocky::neutron'] -> Class['compute_rocky::ceilometer']
+             Class['compute_rocky::ceilometer'] -> Class['compute_rocky::service']
 ################           
 }
   

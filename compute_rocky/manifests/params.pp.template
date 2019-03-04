@@ -1,5 +1,5 @@
-#class compute_ocata::params {
-class compute_ocata::params ($cloud_role) {
+#class compute_rocky::params {
+class compute_rocky::params ($cloud_role) {
 ########creando la classe cloud_prod con parametro cloud_role posso introdurre la condizione production, test o qualunque altro tipo di cloud semplicemente sovrascrivendo via foreman il valore della variabile. Qui andrebbe ovviamente inserito un if per ogni tipo di cloud utilizzata con i parametri caratteristici della cloud
 
 ####
@@ -35,7 +35,11 @@ class compute_ocata::params ($cloud_role) {
   ###     
   $novncproxy_base_url = 'https://xxxxxx:6080/vnc_auto.html'
   $nova_password  = ''
-  $placement_auth_url = 'http://xxxxxx:35357/v3'
+  ## FF da queens queste porte da 35357 a 5000
+  $nova_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
+  #$placement_auth_url = 'http://xxx.xxx.xxx.xxx:35357/v3'
+  $nova_placement_auth_url = 'http://xxx.xxx.xxx.xxx:5000/v3'
+  ##
   $placement_username = 'placement'
   $placement_password = ''
   $private_key          = 'id_rsa_ctrl-01'     
@@ -49,7 +53,10 @@ class compute_ocata::params ($cloud_role) {
  if $cloud_role == "is_test" {
    ### Setting per la cloud di test
   $auth_uri = 'xxxx:5000'
-  $auth_url = 'xxxx:35357'
+  ## FF da queens porta admin diventa 5000
+  #$auth_url = 'xxxx:35357'
+  $auth_url = 'xxxx:5000'
+  ##
   $ceilometer_auth_url = 'http://xxxx:5000/v3'       
   $ceilometer_password = ''       
   $disk_allocation_ratio = '5.0'
@@ -67,7 +74,11 @@ class compute_ocata::params ($cloud_role) {
   ###         
   $novncproxy_base_url = 'https://xxxxx:6080/vnc_auto.html'
   $nova_password  = 'NOVA_PASS'
-  $placement_auth_url = 'http://xxxxxx:35357/v3'
+  ## FF da queens queste porte da 35357 a 5000
+  $nova_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
+  #$placement_auth_url = 'http://xxx.xxx.xxx.xxx:35357/v3'
+  $nova_placement_auth_url = 'http://xxx.xxx.xxx.xxx:5000/v3'
+  ##
   $placement_username = 'placement'
   $placement_password = ''
   $private_key          = 'id_rsa_controller-01'
@@ -126,7 +137,8 @@ class compute_ocata::params ($cloud_role) {
   $neutron_username      = 'neutron'       
   $nova_enabled_apis = 'osapi_compute,metadata'
   $nova_firewall_driver    = 'nova.virt.firewall.NoopFirewallDriver'
-  $nova_instance_usage_audit = true
+#  $nova_instance_usage_audit = true
+  $nova_instance_usage_audit = false
   $nova_instance_usage_audit_period = 'hour'
   $nova_notification_driver = 'messagingv2'
   $nova_notify_on_state_change = 'vm_and_task_state'       

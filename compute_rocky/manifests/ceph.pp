@@ -1,4 +1,4 @@
-class compute_ocata::ceph inherits compute_ocata::params {
+class compute_rocky::ceph inherits compute_rocky::params {
 
      yumrepo { "ceph":
                  baseurl             => "http://download.ceph.com/rpm-luminous/el7/$::architecture/",
@@ -21,7 +21,7 @@ class compute_ocata::ceph inherits compute_ocata::params {
               }
                                                             
       file {'ceph.conf':
-              source      => 'puppet:///modules/compute_ocata/ceph.conf',
+              source      => 'puppet:///modules/compute_rocky/ceph.conf',
               path        => '/etc/ceph/ceph.conf',
               backup      => true,
               require => Package["ceph-common"],
@@ -30,7 +30,7 @@ class compute_ocata::ceph inherits compute_ocata::params {
       file {'secret.xml':
              path        => '/etc/nova/secret.xml',
              backup      => true,
-             content  => template('compute_ocata/secret.erb'),
+             content  => template('compute_rocky/secret.erb'),
              require => Package["openstack-nova-common"],
            }
 
@@ -38,14 +38,14 @@ class compute_ocata::ceph inherits compute_ocata::params {
            
       exec { 'get-or-set virsh secret':
               command => $cm,
-              unless  => "/usr/bin/virsh secret-list | grep -i $compute_ocata::params::libvirt_rbd_secret_uuid",
+              unless  => "/usr/bin/virsh secret-list | grep -i $compute_rocky::params::libvirt_rbd_secret_uuid",
               require => File['secret.xml'],
             }
 
             
       exec { 'set-secret-value virsh':
-          command => "/usr/bin/virsh secret-set-value --secret $compute_ocata::params::libvirt_rbd_secret_uuid --base64 $compute_ocata::params::libvirt_rbd_key",
-        unless  => "/usr/bin/virsh secret-get-value $compute_ocata::params::libvirt_rbd_secret_uuid | grep $compute_ocata::params::libvirt_rbd_key",
+          command => "/usr/bin/virsh secret-set-value --secret $compute_rocky::params::libvirt_rbd_secret_uuid --base64 $compute_rocky::params::libvirt_rbd_key",
+        unless  => "/usr/bin/virsh secret-get-value $compute_rocky::params::libvirt_rbd_secret_uuid | grep $compute_rocky::params::libvirt_rbd_key",
         require => Exec['get-or-set virsh secret'],
            }
               

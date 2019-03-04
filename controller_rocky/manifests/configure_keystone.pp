@@ -1,4 +1,4 @@
-class controller_ocata::configure_keystone inherits controller_ocata::params {
+class controller_rocky::configure_keystone inherits controller_rocky::params {
 
 #
 # Questa classe:
@@ -57,24 +57,24 @@ define do_config_list ($conf_file, $section, $param, $values) {
 }
 
 # keystone.conf
-   do_config { 'keystone_admin_token': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'admin_token', value => $controller_ocata::params::admin_token, }
+  do_config { 'keystone_admin_token': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'admin_token', value => $controller_rocky::params::admin_token, }
 
-  do_config { 'keystone_public_endpoint': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'public_endpoint', value => $controller_ocata::params::keystone_public_endpoint, }
-   do_config { 'keystone_admin_endpoint': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'admin_endpoint', value => $controller_ocata::params::keystone_admin_endpoint, }
+  do_config { 'keystone_public_endpoint': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'public_endpoint', value => $controller_rocky::params::keystone_public_endpoint, }
+  do_config { 'keystone_admin_endpoint': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'admin_endpoint', value => $controller_rocky::params::keystone_admin_endpoint, }
 
-   do_config { 'keystone_db': conf_file => '/etc/keystone/keystone.conf', section => 'database', param => 'connection', value => $controller_ocata::params::keystone_db, }
+  do_config { 'keystone_db': conf_file => '/etc/keystone/keystone.conf', section => 'database', param => 'connection', value => $controller_rocky::params::keystone_db, }
 
-  do_config { 'keystone_token_provider': conf_file => '/etc/keystone/keystone.conf', section => 'token', param => 'provider', value => $controller_ocata::params::keystone_token_provider, }
-  do_config { 'keystone_token_expiration': conf_file => '/etc/keystone/keystone.conf', section => 'token', param => 'expiration', value => $controller_ocata::params::token_expiration, }
+  do_config { 'keystone_token_provider': conf_file => '/etc/keystone/keystone.conf', section => 'token', param => 'provider', value => $controller_rocky::params::keystone_token_provider, }
+  do_config { 'keystone_token_expiration': conf_file => '/etc/keystone/keystone.conf', section => 'token', param => 'expiration', value => $controller_rocky::params::token_expiration, }
 
 
 
        
 #######Proxy headers parsing
-do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone/keystone.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_ocata::params::enable_proxy_headers_parsing, }
+  do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone/keystone.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_rocky::params::enable_proxy_headers_parsing, }
 
 
-##  do_config { 'keystone_auth_methods': conf_file => '/etc/keystone/keystone.conf', section => 'auth', param => 'methods', value => $controller_ocata::params::keystone_auth_methods, }
+##  do_config { 'keystone_auth_methods': conf_file => '/etc/keystone/keystone.conf', section => 'auth', param => 'methods', value => $controller_rocky::params::keystone_auth_methods, }
 
 
 
@@ -83,7 +83,7 @@ do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone
      owner    => "root",
      group    => "root",
      mode     => '0644',
-     content  => template("controller_ocata/wsgi-keystone.conf.erb"),
+     content  => template("controller_rocky/wsgi-keystone.conf.erb"),
    }
 
    file { '/etc/httpd/conf.d/wsgi-keystone.conf':
@@ -124,7 +124,7 @@ do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone
       owner    => "keystone",
       group    => "keystone",
       mode     => '0640',
-      source  => "puppet:///modules/controller_ocata/policy.json",
+      source  => "puppet:///modules/controller_rocky/policy.json",
     }
 
     ### Patch for error handling in OS-Federation
@@ -137,7 +137,7 @@ do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone
       owner    => "keystone",
       group    => "keystone",
       mode     => '0640',
-      source  => "puppet:///modules/controller_ocata/controllers.patch",
+      source  => "puppet:///modules/controller_rocky/controllers.patch",
     }
     
     exec { "patch-controllers":
@@ -151,7 +151,7 @@ do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone
       owner    => "keystone",
       group    => "keystone",
       mode     => '0640',
-      source  => "puppet:///modules/controller_ocata/sso_callback_template.patch",
+      source  => "puppet:///modules/controller_rocky/sso_callback_template.patch",
     }
     
     exec { "patch-sso-callback-template":

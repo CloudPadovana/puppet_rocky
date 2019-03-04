@@ -1,9 +1,9 @@
-class compute_ocata::install inherits compute_ocata::params {
-#include compute_ocata::params
+class compute_rocky::install inherits compute_rocky::params {
+#include compute_rocky::params
 
 #$cloud_role = $cloud_role::cloud_role
-$cloud_role = $compute_ocata::params::cloud_role          
-#$cloud_role= $compute_ocata::cloud_role
+$cloud_role = $compute_rocky::params::cloud_role          
+#$cloud_role= $compute_rocky::cloud_role
 #  $computepackages = [ "openstack-nova-compute",
 #                         "openstack-utils",
 #                         "openstack-neutron-openvswitch",
@@ -88,7 +88,7 @@ $cloud_role = $compute_ocata::params::cloud_role
                                 match  => 'Defaults:neutron',
                     }
  
-if $::compute_ocata::cloud_role == "is_prod_localstorage" or $::compute_ocata::cloud_role ==  "is_prod_sharedstorage" {                             
+if $::compute_rocky::cloud_role == "is_prod_localstorage" or $::compute_rocky::cloud_role ==  "is_prod_sharedstorage" {                             
 #  yumrepo { "glusterfs-epel":
 #          baseurl=> "http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.4/EPEL.repo/epel-7/$::architecture/",
 #          descr=> "GlusterFS is a clustered file-system capable of scaling to several petabytes",

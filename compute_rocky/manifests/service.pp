@@ -1,5 +1,5 @@
-class compute_ocata::service inherits compute_ocata::params {
-#include compute_ocata::params
+class compute_rocky::service inherits compute_rocky::params {
+#include compute_rocky::params
 
 # Services needed
 
@@ -11,7 +11,7 @@ class compute_ocata::service inherits compute_ocata::params {
                         hasstatus   => true,
                         hasrestart  => true,
                         require     => Package["openstack-neutron-openvswitch"],
-                     #  subscribe   => Class['compute_ocata::neutron'],
+                     #  subscribe   => Class['compute_rocky::neutron'],
                }
               ####invece di configure metto nova o neutron
        service { "neutron-openvswitch-agent":
@@ -20,7 +20,7 @@ class compute_ocata::service inherits compute_ocata::params {
                         hasstatus   => true,
                         hasrestart  => true,
                         require     => Package["openstack-neutron-openvswitch"],
-                        subscribe   => Class['compute_ocata::neutron'],
+                        subscribe   => Class['compute_rocky::neutron'],
                }
        
        service { "neutron-ovs-cleanup":
@@ -43,7 +43,7 @@ class compute_ocata::service inherits compute_ocata::params {
                     hasstatus   => true,
                     hasrestart  => true,
                     require     => Package["openstack-nova-compute"],
-                    subscribe   => Class['compute_ocata::nova']
+                    subscribe   => Class['compute_rocky::nova']
 
                }
 
@@ -52,7 +52,7 @@ class compute_ocata::service inherits compute_ocata::params {
                     enable      => true,
                     hasstatus   => true,
                     hasrestart  => true,
-                    subscribe   => Class['compute_ocata::nova']
+                    subscribe   => Class['compute_rocky::nova']
 
                }
 
@@ -62,7 +62,7 @@ class compute_ocata::service inherits compute_ocata::params {
                     hasstatus   => true,
                     hasrestart  => true,
                     require     => Package["openstack-ceilometer-compute"],
-                    subscribe   => Class['compute_ocata::ceilometer'],
+                    subscribe   => Class['compute_rocky::ceilometer'],
                 }
 
         exec { 'create_bridge':
@@ -72,7 +72,7 @@ class compute_ocata::service inherits compute_ocata::params {
              }
                             
 
-    if $::compute_ocata::cloud_role == "is_prod_localstorage" {
+    if $::compute_rocky::cloud_role == "is_prod_localstorage" {
 
                   file { 'nova-instances':
                             path        => "/var/lib/nova/instances",
@@ -81,7 +81,7 @@ class compute_ocata::service inherits compute_ocata::params {
                        }
                              }
 
-    if $::compute_ocata::cloud_role == "is_prod_sharedstorage" {
+    if $::compute_rocky::cloud_role == "is_prod_sharedstorage" {
                   file { 'nova-instances':
                             path        => "/var/lib/nova/instances",
                             ensure      => directory,

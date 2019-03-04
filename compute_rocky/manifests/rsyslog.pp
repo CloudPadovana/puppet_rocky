@@ -1,6 +1,6 @@
-class compute_ocata::rsyslog inherits compute_ocata::params {
+class compute_rocky::rsyslog inherits compute_rocky::params {
 
-#include compute_ocata::params
+#include compute_rocky::params
 
   $rsyslogpackages = [ "rsyslog" ]
   
@@ -32,7 +32,7 @@ class compute_ocata::rsyslog inherits compute_ocata::params {
 
       
     file {'ignore_nagios':
-      source      => 'puppet:///modules/compute_ocata/ignore-systemd-session-slice-nagios.conf',
+      source      => 'puppet:///modules/compute_rocky/ignore-systemd-session-slice-nagios.conf',
       path        => '/etc/rsyslog.d/ignore-systemd-session-slice-nagios.conf',
       backup      => true,
       owner   => root,

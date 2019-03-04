@@ -1,6 +1,6 @@
-class compute_ocata::firewall inherits compute_ocata::params {
+class compute_rocky::firewall inherits compute_rocky::params {
 
-#include compute_ocata::params
+#include compute_rocky::params
 
   service { "NetworkManager":
              ensure      => stopped,
