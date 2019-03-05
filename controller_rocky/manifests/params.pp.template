@@ -36,7 +36,8 @@ class controller_rocky::params ($cloud_role){
    $glance_api_servers = ''
    $glance_db = ''
    ## FF in queens la porta e' 5000 per glance
-   $glance_auth_uri = 'http://xxx.xxx.xxx.xxx:5000'
+   ## FF in rocky [keystone_authtoken] auth_uri diventa www_authenticate_uri
+   $glance_www_authenticate_uri = 'http://xxx.xxx.xxx.xxx:5000'
    $glance_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
    $glance_password = ''
    $keystone_admin_endpoint =  ''
@@ -129,7 +130,8 @@ class controller_rocky::params ($cloud_role){
    $glance_api_servers = ''
    $glance_password = ''
    ## FF in queens la porta e' 5000 per glance
-   $glance_auth_uri = 'http://xxx.xxx.xxx.xxx:5000'
+   ## FF in rocky [keystone_authtoken] auth_uri diventa www_authenticate_uri
+   $glance_www_authenticate_uri = 'http://xxx.xxx.xxx.xxx:5000'
    $glance_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
 ###ceph
    $glance_api_rbd_store_pool = ''
