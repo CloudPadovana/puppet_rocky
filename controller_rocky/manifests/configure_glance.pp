@@ -46,8 +46,9 @@ define remove_config ($conf_file, $section, $param, $value) {
   #
   do_config { 'glance_api_db': conf_file => '/etc/glance/glance-api.conf', section => 'database', param => 'connection', value => $controller_rocky::params::glance_db, }
 
-  do_config { 'glance_api_auth_uri': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'auth_uri', value => $controller_rocky::params::auth_uri, }
-  do_config { 'glance_api_auth_url': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'auth_url', value => $controller_rocky::params::auth_url, }
+  # FF in queens auth_uri ed auth_url sono sulla porta 5000 per glance
+  do_config { 'glance_api_auth_uri': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'auth_uri', value => $controller_rocky::params::glance_auth_uri, }
+  do_config { 'glance_api_auth_url': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'auth_url', value => $controller_rocky::params::glance_auth_url, }
   do_config { 'glance_api_project_domain_name': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'project_domain_name', value => $controller_rocky::params::project_domain_name, }
   do_config { 'glance_api_user_domain_name': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'user_domain_name', value => $controller_rocky::params::user_domain_name, }
   do_config { 'glance_api_project_name': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'project_name', value => $controller_rocky::params::project_name, }
@@ -83,8 +84,9 @@ define remove_config ($conf_file, $section, $param, $value) {
   do_config { 'glance_reg_db': conf_file => '/etc/glance/glance-registry.conf', section => 'database', param => 'connection', value => $controller_rocky::params::glance_db, }
 #  do_config { 'glance_reg_image_verbose': conf_file => '/etc/glance/glance-registry.conf', section => 'DEFAULT', param => 'verbose', value => false, }
   do_config { 'glance_reg_image_size_cap': conf_file => '/etc/glance/glance-registry.conf', section => 'DEFAULT', param => 'image_size_cap', value => $controller_rocky::params::glance_image_size_cap, }
-  do_config { 'glance_reg_auth_uri': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'auth_uri', value => $controller_rocky::params::auth_uri, }
-  do_config { 'glance_reg_auth_url': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'auth_url', value => $controller_rocky::params::auth_url, }
+  # FF in queens auth_uri ed auth_url sono sulla porta 5000 per glance
+  do_config { 'glance_reg_auth_uri': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'auth_uri', value => $controller_rocky::params::glance_auth_uri, }
+  do_config { 'glance_reg_auth_url': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'auth_url', value => $controller_rocky::params::glance_auth_url, }
   do_config { 'glance_reg_project_domain_name': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'project_domain_name', value => $controller_rocky::params::project_domain_name, }
   do_config { 'glance_reg_user_domain_name': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'user_domain_name', value => $controller_rocky::params::user_domain_name, }
   do_config { 'glance_reg_project_name': conf_file => '/etc/glance/glance-registry.conf', section => 'keystone_authtoken', param => 'project_name', value => $controller_rocky::params::project_name, }
