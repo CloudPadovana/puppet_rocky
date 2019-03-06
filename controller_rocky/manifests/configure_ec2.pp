@@ -4,6 +4,7 @@ class controller_rocky::configure_ec2 inherits controller_rocky::params {
 # Questa classe:
 # - popola il file /etc/ec2api/ec2api.conf
 # 
+### FF da queens per i metadata deve modificare anche il file /etc/neutron/metadata_agent.ini
   
 define do_config ($conf_file, $section, $param, $value) {
              exec { "${name}":
@@ -23,6 +24,13 @@ define remove_config ($conf_file, $section, $param, $value) {
                                                                                                                                              
 
 # ec2api.conf
+   ## FF da queens in poi
+   #do_config { 'ec2_port': conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'ec2_port', value => $controller_rocky::params::ec2_port, }
+   #do_config { 'ec2api_listen_port': conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'ec2api_listen_port', value => $controller_rocky::params::ec2api_listen_port, }
+   #do_config { 'api_paste_config': conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'api_paste_config', value => $controller_rocky::params::ec2_api_paste_config, }
+   #do_config { 'disable_ec2_classic': conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'disable_ec2_classic', value => $controller_rocky::params::ec2_disable_ec2_classic, }
+   #do_config { 'nova_metadata_port': conf_file => '/etc/neutron/metadata_agent.ini', section => 'DEFAULT', param => 'nova_metadata_port', value => $controller_rocky::params::ec2_nova_metadata_port, }
+   #####
    do_config { 'ec2_keystone_url': conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'keystone_url', value => $controller_rocky::params::ec2_keystone_url, }
    do_config { 'ec2_my_ip': conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'my_ip', value => $controller_rocky::params::ec2_my_ip, }
    do_config { 'ec2_external_network': conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'external_network', value => $controller_rocky::params::ec2_external_network, }

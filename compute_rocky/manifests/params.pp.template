@@ -17,8 +17,8 @@ class compute_rocky::params ($cloud_role) {
  if $cloud_role == "is_prod_localstorage" or $cloud_role == "is_prod_sharedstorage" {
 
    ### Setting per la cloud di produzione
-  $auth_uri = ''
-  $auth_url = ''
+  $auth_uri = 'http://xxx.xxx.xxx.xxx:5000'
+  $auth_url = 'http://xxx.xxx.xxx.xxx:35357'
   $ceilometer_auth_url = ''      
   $ceilometer_password = '' 
   $disk_allocation_ratio = '' 
@@ -28,11 +28,15 @@ class compute_rocky::params ($cloud_role) {
   $libvirt_rbd_secret_uuid = ''
   $libvirt_rbd_user = ''
   $memcached_servers    = ''
+  ## FF in rocky [neutron] auth_url passa dalla porta 35357 a 5000 
+  $neutron_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
   $neutron_password   = ''
   ### FF DEPRECATED in ROCKY [neutron]url --> [neutron]endpoint_override
   #$neutron_url          = ''        
-  $endpoint_override     = ''   
+  $neutron_endpoint_override = ''   
   ###     
+  ## FF in rocky neutron [keystone_authtoken] auth_url passa da porta 35357 a 5000
+  neutron_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
   $novncproxy_base_url = 'https://xxxxxx:6080/vnc_auto.html'
   $nova_password  = ''
   ## FF da queens queste porte da 35357 a 5000
@@ -52,10 +56,8 @@ class compute_rocky::params ($cloud_role) {
 
  if $cloud_role == "is_test" {
    ### Setting per la cloud di test
-  $auth_uri = 'xxxx:5000'
-  ## FF da queens porta admin diventa 5000
-  #$auth_url = 'xxxx:35357'
-  $auth_url = 'xxxx:5000'
+  $auth_uri = 'http://xxx.xxx.xxx.xxx:5000'
+  $auth_url = 'http://xxx.xxx.xxx.xxx:35357'
   ##
   $ceilometer_auth_url = 'http://xxxx:5000/v3'       
   $ceilometer_password = ''       
@@ -67,10 +69,14 @@ class compute_rocky::params ($cloud_role) {
   $libvirt_rbd_secret_uuid = ''
   $libvirt_rbd_user = 'cinder-cloudtest'
   $memcached_servers    = 'x'
+  ## FF in rocky [neutron] auth_url passa dalla porta 35357 a 5000 
+  $neutron_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
   $neutron_password   = ''
+  ## FF in rocky neutron [keystone_authtoken] auth_url passa da porta 35357 a 5000
+  $neutron_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
   ### FF DEPRECATED in ROCKY [neutron]url --> [neutron]endpoint_override
   #$neutron_url          = ''          
-  $endpoint_override          = ''  
+  $neutron_endpoint_override = ''  
   ###         
   $novncproxy_base_url = 'https://xxxxx:6080/vnc_auto.html'
   $nova_password  = 'NOVA_PASS'

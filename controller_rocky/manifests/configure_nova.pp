@@ -91,6 +91,9 @@ define do_config_list ($conf_file, $section, $param, $values) {
 
    do_config { 'nova_db': conf_file => '/etc/nova/nova.conf', section => 'database', param => 'connection', value => $controller_rocky::params::nova_db, }
    do_config { 'nova_enabled_apis': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'enabled_apis', value => $controller_rocky::params::enabled_apis, }
+   ## FF in rocky si puo' creare il DB placement, con relativa connection url. Se non viene creato si continua ad usare solo il nova_api db
+   #do_config { 'nova_placement_db': conf_file => '/etc/nova/nova.conf', section => 'placement_database', param => 'connection', value => $controller_rocky::params::nova_placement_db, }
+   ###
 
    do_config { 'nova_oslo_lock_path': conf_file => '/etc/nova/nova.conf', section => 'oslo_concurrency', param => 'lock_path', value => $controller_rocky::params::nova_oslo_lock_path, }
 
@@ -119,7 +122,9 @@ define do_config_list ($conf_file, $section, $param, $values) {
    do_config { 'nova_neutron_endpoint_override': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'endpoint_override', value => $controller_rocky::params::neutron_endpoint_override, }
    ###
    do_config { 'nova_neutron_auth_type': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'auth_type', value => $controller_rocky::params::auth_type, }
-   do_config { 'nova_neutron_auth_url': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'auth_url', value => $controller_rocky::params::auth_url, }
+   
+   ##FF in rocky [neutron] auth_url da 35357 diventa 5000
+   do_config { 'nova_neutron_auth_url': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'auth_url', value => $controller_rocky::params::neutron_auth_url, }
    do_config { 'nova_neutron_project_domain_name': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'project_domain_name', value => $controller_rocky::params::project_domain_name, }
    do_config { 'nova_neutron_user_domain_name': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'user_domain_name', value => $controller_rocky::params::user_domain_name, }
    do_config { 'nova_neutron_region_name': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'region_name', value => $controller_rocky::params::region_name, }

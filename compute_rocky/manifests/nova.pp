@@ -140,7 +140,8 @@ define do_config_list ($conf_file, $section, $param, $values) {
   #The Placement API can be set to connect to a specific keystone endpoint interface using the os_interface option in the [placement] section inside nova.conf. This value is not required but can be used if a non-default endpoint interface is desired for connecting to the Placement service. By default, keystoneauth will connect to the “public” endpoint.
   ### DEPRECATED IN QUEEN [PLACEMENT]os_interface --> [PLACEMENT]valid_interfaces
   ###
-  do_config { 'nova_neutron_auth_url': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'auth_url', value => $compute_rocky::params::auth_url, }
+  ## FF in rocky [neutron] auth_url passa da porta 35357 a 5000
+  do_config { 'nova_neutron_auth_url': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'auth_url', value => $compute_rocky::params::neutron_auth_url, }
   do_config { 'nova_neutron_auth_type': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'auth_type', value => $compute_rocky::params::auth_type, }
   do_config { 'nova_neutron_project_domain_name': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'project_domain_name', value => $compute_rocky::params::project_domain_name, }
   do_config { 'nova_neutron_user_domain_name': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'user_domain_name', value => $compute_rocky::params::user_domain_name, }
