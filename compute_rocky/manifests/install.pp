@@ -1,21 +1,9 @@
 class compute_rocky::install inherits compute_rocky::params {
 #include compute_rocky::params
 
-#$cloud_role = $cloud_role::cloud_role
 $cloud_role = $compute_rocky::params::cloud_role          
-#$cloud_role= $compute_rocky::cloud_role
-#  $computepackages = [ "openstack-nova-compute",
-#                         "openstack-utils",
-#                         "openstack-neutron-openvswitch",
-#                         "openstack-nova-common",
-#                         "openstack-neutron-common",
-#                         "openstack-neutron-ml2",
-#                         "yum-plugin-priorities",
-#                         "ipset",
-#                         "sysfsutils" ]
 
 ### Repository settings (remove old rpm and install new one)
-#
   
   define removepackage {
     exec {
@@ -25,10 +13,11 @@ $cloud_role = $compute_rocky::params::cloud_role
     }
   }
 
-  $oldrelease = [ 'centos-release-openstack-mitaka',
-                  'centos-release-ceph-hammer',
+  $oldrelease = [ 'centos-release-openstack-ocata',
+                  'centos-release-ceph-jewel',
+                  'zeromq',
                 ]
-  $newrelease = 'centos-release-openstack-ocata'
+  $newrelease = 'centos-release-openstack-rocky'
 
   removepackage{
      $oldrelease :
@@ -69,19 +58,11 @@ $cloud_role = $compute_rocky::params::cloud_role
   
   $ceilometerpackages = [ "openstack-ceilometer-compute",
                           "python2-wsme" ]
-                           # ,
-                           #"python-ceilometerclient",
-                           #"python2-pecan" ]
   package { $ceilometerpackages: 
    ensure => "installed",
    require => Package[$newrelease]
   }
 
-#####nella guida di installazione a ocata per i compute sembra non ci siano python-ceilometerclient python2-pecan
-
-#  package { 'glusterfs-fuse': ensure => 'installed' }
-         
- # Disable useless OVS loggin in secure file
           file_line { '/etc/sudoers.d/neutron  syslog':
                 path   => '/etc/sudoers.d/neutron',
                 line   => 'Defaults:neutron !requiretty, !syslog',
@@ -89,25 +70,8 @@ $cloud_role = $compute_rocky::params::cloud_role
                     }
  
 if $::compute_rocky::cloud_role == "is_prod_localstorage" or $::compute_rocky::cloud_role ==  "is_prod_sharedstorage" {                             
-#  yumrepo { "glusterfs-epel":
-#          baseurl=> "http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.4/EPEL.repo/epel-7/$::architecture/",
-#          descr=> "GlusterFS is a clustered file-system capable of scaling to several petabytes",
-#          enabled=> 1,
-#          gpgcheck=> 1,
-#          gpgkey=> 'http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.4/EPEL.repo/pub.key',
-#           }
-
-#   yumrepo { "glusterfs-noarch-epel":
-#          baseurl             => "http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.4/EPEL.repo/epel-7/noarch/",
-#          descr               => "GlusterFS is a clustered file-system capable of scaling to several petabytes",
-#          enabled             => 1,
-#          gpgcheck            => 1,
-#          gpgkey              => 'http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.4/EPEL.repo/pub.key',
-#            }
-
    package { 'glusterfs-fuse':
               ensure => 'installed',
- #             require => [ Yumrepo["glusterfs-epel"], Yumrepo["glusterfs-noarch-epel"] ]
            }
-                                                                                     } ###chiudo if 
+                                                                                     } 
 }
