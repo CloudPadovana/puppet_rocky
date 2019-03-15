@@ -167,7 +167,8 @@ define do_config_list ($conf_file, $section, $param, $values) {
               conf_file => '/etc/nova/nova.conf',
               section   => 'pci',
               param     => 'alias',
-              values    => [ "$controller_rocky::params::pci_alias_1", "$controller_rocky::params::pci_alias_2" ],
+              values    => [ "$controller_rocky::params::pci_titanxp_VGA", "$controller_rocky::params::pci_titanxp_SND", "$controller_rocky::params::pci_quadro_VGA", "$controller_rocky::params::pci_quadro_Audio", "$controller_rocky::params::pci_quadro_USB", "$controller_rocky::params::pci_quadro_SerialBus", "$controller_rocky::params::pci_geforcegtx_VGA", "$controller_rocky::params::pci_geforcegtx_SND"  ],
+              #values    => [ "$controller_rocky::params::pci_alias_1", "$controller_rocky::params::pci_alias_2" ],
             }
 
   do_config { 'nova_pci_passthrough_whitelist': conf_file => '/etc/nova/nova.conf', section => 'pci', param => 'passthrough_whitelist', value => $controller_rocky::params::pci_passthrough_whitelist, }
