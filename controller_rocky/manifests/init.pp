@@ -8,7 +8,6 @@ class controller_rocky ($cloud_role_foreman = "undefined") {
 
 
      package { $ocatapackages: ensure => "installed" }
-  ### yum install centos-release-openstack-ocata
 
   # Install CA
   class {'controller_rocky::install_ca_cert':}
@@ -37,8 +36,8 @@ class controller_rocky ($cloud_role_foreman = "undefined") {
   # Configure heat
   class {'controller_rocky::configure_heat':}
 
-  # Configure ceilometer
-  class {'controller_rocky::configure_ceilometer':}
+#  # Configure ceilometer
+#  class {'controller_rocky::configure_ceilometer':}
 
   # Configure horizon
   class {'controller_rocky::configure_horizon':}
@@ -66,7 +65,6 @@ class controller_rocky ($cloud_role_foreman = "undefined") {
   
   
 
-#      Class['controller_rocky::firewall'] -> Class['controller_rocky::configure_glance']
        Class['controller_rocky::install_ca_cert'] -> Class['controller_rocky::configure_keystone']
        Class['controller_rocky::configure_keystone'] -> Class['controller_rocky::configure_glance']
        Class['controller_rocky::configure_glance'] -> Class['controller_rocky::configure_nova']
@@ -74,15 +72,14 @@ class controller_rocky ($cloud_role_foreman = "undefined") {
        Class['controller_rocky::configure_neutron'] -> Class['controller_rocky::configure_cinder']
        Class['controller_rocky::configure_cinder'] -> Class['controller_rocky::configure_horizon']
        Class['controller_rocky::configure_horizon'] -> Class['controller_rocky::configure_heat']
-       Class['controller_rocky::configure_heat'] -> Class['controller_rocky::configure_ceilometer']
-       if ($enable_aai_ext and $enable_shib)  {
-          Class['controller_rocky::configure_ceilometer'] -> Class['controller_rocky::configure_shibboleth']
-       }
-       if ($enable_aai_ext and $enable_oidc) {
-          Class['controller_rocky::configure_ceilometer'] -> Class['controller_rocky::configure_openidc']
-       }
-       # Class['controller_rocky::configure_neutron'] -> Class['controller_rocky::configure_ceilometer']
-       Class['controller_rocky::configure_ceilometer'] -> Class['controller_rocky::service']
+       #Class['controller_rocky::configure_heat'] -> Class['controller_rocky::configure_ceilometer']
+       #if ($enable_aai_ext and $enable_shib)  {
+       #   Class['controller_rocky::configure_ceilometer'] -> Class['controller_rocky::configure_shibboleth']
+       #}
+       #if ($enable_aai_ext and $enable_oidc) {
+       #   Class['controller_rocky::configure_ceilometer'] -> Class['controller_rocky::configure_openidc']
+       #}
+       #Class['controller_rocky::configure_ceilometer'] -> Class['controller_rocky::service']
             
 
   }
