@@ -17,7 +17,7 @@ $cloud_role = $compute_rocky::params::cloud_role
                   'centos-release-ceph-jewel',
                   'zeromq',
                 ]
-  $newrelease = 'centos-release-openstack-rocky'
+  $newrelease =  'centos-release-openstack-rocky'
 
   removepackage{
      $oldrelease :
@@ -56,13 +56,14 @@ $cloud_role = $compute_rocky::params::cloud_role
     require => Package[$newrelease]
   }
   
-  $ceilometerpackages = [ "openstack-ceilometer-compute",
-                          "python2-wsme" ]
-  package { $ceilometerpackages: 
-   ensure => "installed",
-   require => Package[$newrelease]
-  }
-
+  ## FF non lo usiamo piu'##
+  #$ceilometerpackages = [ "openstack-ceilometer-compute",
+  #                        "python2-wsme" ]
+  #package { $ceilometerpackages: 
+  # ensure => "installed",
+  # require => Package[$newrelease]
+  #}
+  ########
           file_line { '/etc/sudoers.d/neutron  syslog':
                 path   => '/etc/sudoers.d/neutron',
                 line   => 'Defaults:neutron !requiretty, !syslog',
