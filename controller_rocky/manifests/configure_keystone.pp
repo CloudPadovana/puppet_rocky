@@ -131,34 +131,35 @@ define do_config_list ($conf_file, $section, $param, $values) {
     package { "patch":
       ensure  => installed,
     }
-
-    file { "/usr/share/keystone/controllers.patch":
-      ensure   => file,
-      owner    => "keystone",
-      group    => "keystone",
-      mode     => '0640',
-      source  => "puppet:///modules/controller_rocky/controllers.patch",
-    }
+    ## FF: Paolo deve controllare###
+    #file { "/usr/share/keystone/controllers.patch":
+    #  ensure   => file,
+    #  owner    => "keystone",
+    #  group    => "keystone",
+    #  mode     => '0640',
+    #  source  => "puppet:///modules/controller_rocky/controllers.patch",
+    #}
     
-    exec { "patch-controllers":
-      command => "/usr/bin/patch /usr/lib/python2.7/site-packages/keystone/federation/controllers.py /usr/share/keystone/controllers.patch",
-      unless  => "/bin/grep Keystone-patch-0001 /usr/lib/python2.7/site-packages/keystone/federation/controllers.py 2>/dev/null >/dev/null",
-      require => [ File["/usr/share/keystone/controllers.patch"], Package["patch"] ],
-    }
+    #exec { "patch-controllers":
+    #  command => "/usr/bin/patch /usr/lib/python2.7/site-packages/keystone/federation/controllers.py /usr/share/keystone/controllers.patch",
+    #  unless  => "/bin/grep Keystone-patch-0001 /usr/lib/python2.7/site-packages/keystone/federation/controllers.py 2>/dev/null >/dev/null",
+    #  require => [ File["/usr/share/keystone/controllers.patch"], Package["patch"] ],
+    #}
     
-    file { "/usr/share/keystone/sso_callback_template.patch":
-      ensure   => file,
-      owner    => "keystone",
-      group    => "keystone",
-      mode     => '0640',
-      source  => "puppet:///modules/controller_rocky/sso_callback_template.patch",
-    }
+    #file { "/usr/share/keystone/sso_callback_template.patch":
+    #  ensure   => file,
+    #  owner    => "keystone",
+    #  group    => "keystone",
+    #  mode     => '0640',
+    #  source  => "puppet:///modules/controller_rocky/sso_callback_template.patch",
+    #}
     
-    exec { "patch-sso-callback-template":
-      command => "/usr/bin/patch /etc/keystone/sso_callback_template.html /usr/share/keystone/sso_callback_template.patch",
-      unless  => "/bin/grep code /etc/keystone/sso_callback_template.html 2>/dev/null >/dev/null",
-      require => [ File["/usr/share/keystone/sso_callback_template.patch"], Package["patch"] ],
-    }
+    #exec { "patch-sso-callback-template":
+    #  command => "/usr/bin/patch /etc/keystone/sso_callback_template.html /usr/share/keystone/sso_callback_template.patch",
+    #  unless  => "/bin/grep code /etc/keystone/sso_callback_template.html 2>/dev/null >/dev/null",
+    #  require => [ File["/usr/share/keystone/sso_callback_template.patch"], Package["patch"] ],
+    #}
+    ################################
   }
      
 }
