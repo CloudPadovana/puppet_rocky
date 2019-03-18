@@ -55,15 +55,17 @@ class compute_rocky::service inherits compute_rocky::params {
                     subscribe   => Class['compute_rocky::nova']
 
                }
-
-        service { "openstack-ceilometer-compute":
-                    ensure      => stopped,
-                    enable      => true,
-                    hasstatus   => true,
-                    hasrestart  => true,
-                    require     => Package["openstack-ceilometer-compute"],
-                    subscribe   => Class['compute_rocky::ceilometer'],
-                }
+        
+        ## FF non usiamo piu' ceilometer ##
+        #service { "openstack-ceilometer-compute":
+        #            ensure      => stopped,
+        #            enable      => true,
+        #            hasstatus   => true,
+        #            hasrestart  => true,
+        #            require     => Package["openstack-ceilometer-compute"],
+        #            subscribe   => Class['compute_rocky::ceilometer'],
+        #        }
+        ###################################
 
         exec { 'create_bridge':
                      command     => "/usr/bin/ovs-vsctl add-br br-int",
