@@ -191,7 +191,7 @@ define remove_config ($conf_file, $section, $param, $value) {
     conf_file => '/etc/heat/heat.conf',
     section   => 'clients_keystone',
     param     => 'auth_uri',
-    value     => $controller_rocky::params::heat_clients_keystone_auth_uri,
+    value     => $controller_rocky::params::auth_uri,
   }
   
   do_config { 'heat_clients_keystone_endpoint_type':
