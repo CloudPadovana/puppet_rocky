@@ -80,13 +80,13 @@ class controller_rocky::service inherits controller_rocky::params {
                    subscribe   => Class['controller_rocky::configure_nova'],
            }
     ## FF Da pike openstack-nova-cert non c'e' piu'
-    service { "openstack-nova-cert":
-                   ensure      => running,
-                   enable      => true,
-                   hasstatus   => true,
-                   hasrestart  => true,
-                   subscribe   => Class['controller_rocky::configure_nova'],
-           }
+    #service { "openstack-nova-cert":
+    #               ensure      => running,
+    #               enable      => true,
+    #               hasstatus   => true,
+    #               hasrestart  => true,
+    #               subscribe   => Class['controller_rocky::configure_nova'],
+    #       }
     ###
             
  # Services for ec2       
