@@ -84,8 +84,8 @@ define do_config_list ($conf_file, $section, $param, $values) {
    #do_config { 'nova_vncserver_listen': conf_file => '/etc/nova/nova.conf', section => 'vnc', param => 'vncserver_listen', value => $controller_ocata::params::vip_pub, }
    #do_config { 'nova_vncserver_proxyclient_address': conf_file => '/etc/nova/nova.conf', section => 'vnc', param => 'vncserver_proxyclient_address', value => $controller_ocata::params::vip_mgmt, }
    do_config { 'nova_vnc_server_listen': conf_file => '/etc/nova/nova.conf', section => 'vnc', param => 'server_listen', value => $controller_rocky::params::vip_pub, }
-   do_config { 'nova_vnc_server_proxyclient_address': conf_file => '/etc/nova/nova.conf', section => 'vnc', param => 'server_proxyclient_address', value => $controller_rocky::params::vip_mgmt, 
-   ###}
+   do_config { 'nova_vnc_server_proxyclient_address': conf_file => '/etc/nova/nova.conf', section => 'vnc', param => 'server_proxyclient_address', value => $controller_rocky::params::vip_mgmt, }
+   ###
    do_config { 'nova_vnc_enabled': conf_file => '/etc/nova/nova.conf', section => 'vnc', param => 'enabled', value => $controller_rocky::params::vnc_enabled, }
    do_config { 'nova_api_db': conf_file => '/etc/nova/nova.conf', section => 'api_database', param => 'connection', value => $controller_rocky::params::nova_api_db, }
 
