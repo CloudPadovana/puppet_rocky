@@ -142,8 +142,8 @@ define do_config_list ($conf_file, $section, $param, $values) {
    do_config { 'nova_placement_project_domain_name': conf_file => '/etc/nova/nova.conf', section => 'placement', param => 'project_domain_name', value => $controller_rocky::params::project_domain_name, }
    do_config { 'nova_placement_user_domain_name': conf_file => '/etc/nova/nova.conf', section => 'placement', param => 'user_domain_name', value => $controller_rocky::params::user_domain_name, }
    ### FF DEPRECATED in QUEENS os_region_name --> region_name
-   #do_config { 'nova_placement_os_region_name': conf_file => '/etc/nova/nova.conf', section => 'placement', param => 'os_region_name', value => $compute_ocata::params::region_name, }
-   do_config { 'nova_placement_region_name': conf_file => '/etc/nova/nova.conf', section => 'placement', param => 'region_name', value => $compute_rocky::params::region_name, }
+   #do_config { 'nova_placement_os_region_name': conf_file => '/etc/nova/nova.conf', section => 'placement', param => 'os_region_name', value => $controller_ocata::params::region_name, }
+   do_config { 'nova_placement_region_name': conf_file => '/etc/nova/nova.conf', section => 'placement', param => 'region_name', value => $controller_rocky::params::region_name, }
    ###
    do_config { 'nova_placement_project_name': conf_file => '/etc/nova/nova.conf', section => 'placement', param => 'project_name', value => $controller_rocky::params::project_name, }
    do_config { 'nova_placement_username': conf_file => '/etc/nova/nova.conf', section => 'placement', param => 'username', value => $controller_rocky::params::placement_username, }
@@ -163,14 +163,7 @@ define do_config_list ($conf_file, $section, $param, $values) {
 #######Proxy headers parsing
   do_config { 'nova_enable_proxy_headers_parsing': conf_file => '/etc/nova/nova.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_rocky::params::enable_proxy_headers_parsing, }
 
-  do_config_list { "nova_pci_alias":
-              conf_file => '/etc/nova/nova.conf',
-              section   => 'pci',
-              param     => 'alias',
-              values    => [ "$controller_rocky::params::pci_titanxp_VGA", "$controller_rocky::params::pci_titanxp_SND", "$controller_rocky::params::pci_quadro_VGA", "$controller_rocky::params::pci_quadro_Audio", "$controller_rocky::params::pci_quadro_USB", "$controller_rocky::params::pci_quadro_SerialBus", "$controller_rocky::params::pci_geforcegtx_VGA", "$controller_rocky::params::pci_geforcegtx_SND"  ],
-              #values    => [ "$controller_rocky::params::pci_alias_1", "$controller_rocky::params::pci_alias_2" ],
-            }
-
+  do_config_list { "nova_pci_alias": conf_file => '/etc/nova/nova.conf', section => 'pci', param => 'alias', values => [ "$controller_rocky::params::pci_titanxp_VGA", "$controller_rocky::params::pci_titanxp_SND", "$controller_rocky::params::pci_quadro_VGA", "$controller_rocky::params::pci_quadro_Audio", "$controller_rocky::params::pci_quadro_USB", "$controller_rocky::params::pci_quadro_SerialBus", "$controller_rocky::params::pci_geforcegtx_VGA", "$controller_rocky::params::pci_geforcegtx_SND"  ], }
   do_config { 'nova_pci_passthrough_whitelist': conf_file => '/etc/nova/nova.conf', section => 'pci', param => 'passthrough_whitelist', value => $controller_rocky::params::pci_passthrough_whitelist, }
 
 
