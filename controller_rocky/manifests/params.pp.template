@@ -169,7 +169,7 @@ class controller_rocky::params ($cloud_role){
    $nova_db = ''
    $nova_password = ''
    ## FF da queens nova_keystone_authtoken e nova_placement_auth_url cambiano porte da 35357 a 5000 
-   $nova_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000'
+   $nova_keystone_authtoken_auth_url = 'http://xxx.xxx.xxx.xxx:5000/v3'
    $nova_placement_auth_url = 'http://xxx.xxx.xxx.xxx:5000/v3'
    ## FF in rocky si puo' creare il DB placement, con relativa connection url. Se non viene creato si continua ad usare solo il nova_api db
    #$nova_placement_db = '' }
@@ -341,7 +341,7 @@ class controller_rocky::params ($cloud_role){
    $neutron_service_plugins = 'router'
    $neutron_username = 'neutron'
    $neutron_verbose = false
-   $nova_cinder_catalog_info = 'volumev2:cinderv2:internalURL'
+   $nova_cinder_catalog_info = 'volumev3:cinderv3:internalURL'
    $nova_cpu_allocation_ratio = '4.0'
    $nova_default_schedule_zone = 'nova'
    ### FF deprecato in PIKE
