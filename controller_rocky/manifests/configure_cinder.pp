@@ -102,16 +102,19 @@ do_config { 'cinder_enable_proxy_headers_parsing': conf_file => '/etc/cinder/cin
 ##   do_config { 'cinder_control_exchange': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'control_exchange', value => $controller_rocky::params::cinder_control_exchange, }
 ##   do_config { 'cinder_glusterfs_sparsed_volumes': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'glusterfs_sparsed_volumes', value => $controller_rocky::params::cinder_glusterfs_sparsed_volumes, }
 
-           
-file {'cinder_policy.yaml':
-             source      => 'puppet:///modules/controller_rocky/cinder_policy.yaml',
-             path        => '/etc/cinder/policy.yaml',
-             backup      => true,
-             owner   => root,
-             group   => cinder,
-             mode    => 0640,
-
-           }
+#
+# Commentato il setting del policy file di cinder (che ha errori). Da sistemare
+# Massimo Sgaravatto      
+#       
+#file {'cinder_policy.yaml':
+#             source      => 'puppet:///modules/controller_rocky/cinder_policy.yaml',
+#             path        => '/etc/cinder/policy.yaml',
+#             backup      => true,
+#             owner   => root,
+#             group   => cinder,
+#             mode    => 0640,
+#
+#           }
 
 
        
