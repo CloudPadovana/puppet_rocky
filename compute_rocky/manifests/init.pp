@@ -5,6 +5,9 @@ class compute_rocky ($cloud_role_foreman = "undefined") {
   # system check setting (network, selinux, CA files)
     class {'compute_rocky::systemsetting':}
 
+  # stop services 
+    class {'compute_rocky::stopservices':}
+
   # install
     class {'compute_rocky::install':}
 
@@ -32,10 +35,6 @@ class compute_rocky ($cloud_role_foreman = "undefined") {
   # install and configure neutron
      class {'compute_rocky::neutron':}
 
-  ## FF non lo usiamo piu' ###
-  # install and configure ceilometer
-  #   class {'compute_rocky::ceilometer':}
-
   # nagios settings
      class {'compute_rocky::nagiossetting':}
 
@@ -45,7 +44,9 @@ class compute_rocky ($cloud_role_foreman = "undefined") {
 
 # execution order
              Class['compute_rocky::firewall'] -> Class['compute_rocky::systemsetting']
-             Class['compute_rocky::systemsetting'] -> Class['compute_rocky::install']
+             Class['compute_rocky::systemsetting'] -> Class['compute_rocky::stopservices']
+             Class['compute_rocky::stopservices'] -> Class['compute_rocky::install']
+             #Class['compute_rocky::systemsetting'] -> Class['compute_rocky::install']
              Class['compute_rocky::install'] -> Class['compute_rocky::bacula']
              Class['compute_rocky::bacula'] -> Class['compute_rocky::nova']
              Class['compute_rocky::nova'] -> Class['compute_rocky::libvirt']
@@ -53,8 +54,6 @@ class compute_rocky ($cloud_role_foreman = "undefined") {
              Class['compute_rocky::neutron'] -> Class['compute_rocky::ceph']
              Class['compute_rocky::neutron'] -> Class['compute_rocky::nagiossetting']
              Class['compute_rocky::neutron'] -> Class['compute_rocky::pwl_access']
-             #Class['compute_rocky::neutron'] -> Class['compute_rocky::ceilometer']
-             Class['compute_rocky::ceilometer'] -> Class['compute_rocky::service']
 ################           
 }
   
