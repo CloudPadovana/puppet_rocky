@@ -59,8 +59,13 @@ define do_config_list ($conf_file, $section, $param, $values) {
 # keystone.conf
   do_config { 'keystone_admin_token': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'admin_token', value => $controller_rocky::params::admin_token, }
 
+
   do_config { 'keystone_public_endpoint': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'public_endpoint', value => $controller_rocky::params::keystone_public_endpoint, }
-  do_config { 'keystone_admin_endpoint': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'admin_endpoint', value => $controller_rocky::params::keystone_admin_endpoint, }
+
+# Deprecated
+# Reason: With the removal of the 2.0 API keystone does not distinguish between
+# admin and public endpoints.
+#do_config { 'keystone_admin_endpoint': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'admin_endpoint', value #=> $controller_rocky::params::keystone_admin_endpoint, }
 
   do_config { 'keystone_db': conf_file => '/etc/keystone/keystone.conf', section => 'database', param => 'connection', value => $controller_rocky::params::keystone_db, }
 
