@@ -46,7 +46,8 @@ define remove_config ($conf_file, $section, $param, $value) {
    do_config { 'ec2_external_network': conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'external_network', value => $controller_rocky::params::ec2_external_network, }
    do_config { 'ec2_ssl_ca_file': conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'ssl_ca_file', value => $controller_rocky::params::cafile, }
    do_config { 'ec2_log_file': conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'log_file', value => $controller_rocky::params::ec2_log_file, }
-   do_config { 'ec2_logging_context_format_string': conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'logging_context_format_string', value => $controller_rocky::params::ec2_logging_context_format_string, } 
+# Problem with this parameter. Each time puppet runs: it resets it
+       #   do_config { 'ec2_logging_context_format_string': conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'logging_context_format_string', value => $controller_rocky::params::ec2_logging_context_format_string, } 
    do_config { 'ec2_cinder_service_type': conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'cinder_service_type', value => $controller_rocky::params::ec2_cinder_service_type, } 
        do_config { 'ec2_full_vpc_support': conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'full_vpc_support', value => $controller_rocky::params::ec2_full_vpc_support, }
    do_config { 'keystone_ec2_tokens_url':  conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'keystone_ec2_tokens_url', value => "${controller_rocky::params::ec2_keystone_url}/ec2tokens",}
