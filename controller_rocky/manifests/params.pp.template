@@ -252,10 +252,15 @@ class controller_rocky::params ($cloud_role){
    $cinder_volume_driver = 'cinder.volume.drivers.glusterfs.GlusterfsDriver'
    $dhcp_agents_per_network = '2'
    $dhcp_driver = 'neutron.agent.linux.dhcp.Dnsmasq'
+   $ec2_cache_backend ='oslo_cache.dict'
+   $ec2_cache_enabled = true
+   $ec2_cinder_service_type = 'volumev3'
+   $ec2_lock_path = '/var/lib/ec2-api/tmp'
    $ec2_user = 'ec2_user'
    $ec2_full_vpc_support = false
    #$ec2_identity_uri = $auth_url
    $ec2_log_file = '/var/log/ec2api/ec2api.log'
+   $ec2_logging_context_format_string = '\"%(asctime)s.%(msecs)03d %(levelname)s %(name)s [%(request_id)s %(user_name)s %(project_name)s] %(instance)s%(message)s\"'
    $ec2_my_ip = $vip_mgmt
    $ec2_nova_metadata_ip = $vip_mgmt
    $ec2_verbose = false
