@@ -73,7 +73,6 @@ define remove_config ($conf_file, $section, $param, $value) {
 # Settings needed for ceilomer       
   do_config { 'glance_api_transport_url': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'transport_url', value => $controller_rocky::params::transport_url, }
    
-  do_config { 'glance_api_notification_driver': conf_file => '/etc/glance/glance-api.conf', section => 'oslo_messaging_notifications', param => 'driver', value => $controller_rocky::params::glance_notification_driver, }
 ####Non necessario in ocata
 # do_config { 'glance_container_formats': conf_file => '/etc/glance/glance-api.conf', section => 'image_format', param => 'container_formats', value => $controller_rocky::params::glance_container_formats, }
 #######Proxy headers parsing
