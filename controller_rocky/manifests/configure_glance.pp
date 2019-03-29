@@ -36,7 +36,10 @@ define remove_config ($conf_file, $section, $param, $value) {
 
 # 25 GB max size for an image
   do_config { 'glance_image_size_cap': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'image_size_cap', value => $controller_rocky::params::glance_image_size_cap, }
-  do_config { 'glance_api_registry_host': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'registry_host', value => $controller_rocky::params::vip_mgmt, }
+
+# registry_host is deprecated
+# As far as I (Massimo) understand, it was at any rate useless in our environment
+#       do_config { 'glance_api_registry_host': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'registry_host', value => $controller_rocky::params::vip_mgmt, }
   do_config { 'glance_api_show_multiple_locations': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'show_multiple_locations', value => $controller_rocky::params::glance_api_show_multiple_locations, }
   do_config { 'glance_api_show_image_direct_url': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'show_image_direct_url', value => $controller_rocky::params::glance_api_show_image_direct_url, }
   #
