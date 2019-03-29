@@ -5,8 +5,22 @@ class controller_rocky::configure_glance inherits controller_rocky::params {
 # Crea la directory per node_staging_uri
 # - popola il file /etc/glance/glance-api.conf
 # - popola il file /etc/glance/glance-registry.conf
-#   
+#   Crea il file /etc/glance/policy.json
 
+# Changes wrt default:
+# role:admi required for delete_image_location, get_image_location, set_image_location
+# See https://wiki.openstack.org/wiki/OSSN/OSSN-0065
+
+  
+    file { "/etc/glance/policy.json":
+            ensure   => file,
+            owner    => "root",
+            group    => "glance",
+            mode     => '0640',
+            source  => "puppet:///modules/controller_rocky/glance.policy.json",
+          }
+          
+  
 
 file { $controller_rocky::params::glance_api_node_staging_path:
         ensure => 'directory',
