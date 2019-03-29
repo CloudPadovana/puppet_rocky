@@ -30,9 +30,9 @@ define remove_config ($conf_file, $section, $param, $value) {
 
 #   do_config { 'glance_api_notification_driver': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'notification_driver', value => $controller_rocky::params::glance_notification_driver, }
 
-#
-# v1 api must be enabled, otherwise euca-describe-images doesn't work       
-  do_config { 'glance_enable_v1_api': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'enable_v1_api', value => $controller_rocky::params::glance_enable_v1_api, }
+# v1 api was enabled in Ocata, otherwise euca-describe-images didn't work      
+# v1 api removed in rocky
+#  do_config { 'glance_enable_v1_api': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'enable_v1_api', value => $controller_rocky::params::glance_enable_v1_api, }
 
 # 25 GB max size for an image
   do_config { 'glance_image_size_cap': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'image_size_cap', value => $controller_rocky::params::glance_image_size_cap, }
