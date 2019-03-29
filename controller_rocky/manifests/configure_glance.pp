@@ -122,6 +122,6 @@ define remove_config ($conf_file, $section, $param, $value) {
   do_config { 'glance_reg_flavor': conf_file => '/etc/glance/glance-registry.conf', section => 'paste_deploy', param => 'flavor', value => $controller_rocky::params::flavor, }
  
  # Settings needed for ceilomer       
-  do_config { 'glance_reg_notification_driver': conf_file => '/etc/glance/glance-registry.conf', section => 'oslo_messaging_notifications', param => 'driver', value => $controller_rocky::params::glance_notification_driver, }
+#  do_config { 'glance_reg_notification_driver': conf_file => '/etc/glance/glance-registry.conf', section => 'oslo_messaging_notifications', param => 'driver', value => $controller_rocky::params::glance_notification_driver, }
   do_config { 'glance_reg_transport_url': conf_file => '/etc/glance/glance-registry.conf', section => 'DEFAULT', param => 'transport_url', value => $controller_rocky::params::transport_url, }
 }
