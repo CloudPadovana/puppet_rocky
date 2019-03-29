@@ -2,9 +2,19 @@ class controller_rocky::configure_glance inherits controller_rocky::params {
 
 #
 # Questa classe:
+# Crea la directory per node_staging_uri
 # - popola il file /etc/glance/glance-api.conf
 # - popola il file /etc/glance/glance-registry.conf
 #   
+
+
+file { $controller_rocky::params::glance_api_node_staging_path:
+        ensure => 'directory',
+        owner  => 'glance',
+        group  => 'glance',
+        mode   => '0750',
+      }
+      
 
   
 define do_config ($conf_file, $section, $param, $value) {
