@@ -52,6 +52,8 @@ define remove_config ($conf_file, $section, $param, $value) {
 
 # glance-api.conf
 
+#
+# This was set in the past for ceilometer
 #   do_config { 'glance_api_notification_driver': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'notification_driver', value => $controller_rocky::params::glance_notification_driver, }
 
 # v1 api was enabled in Ocata, otherwise euca-describe-images didn't work      
@@ -61,7 +63,7 @@ define remove_config ($conf_file, $section, $param, $value) {
 # 25 GB max size for an image
   do_config { 'glance_image_size_cap': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'image_size_cap', value => $controller_rocky::params::glance_image_size_cap, }
 
-# registry_host is deprecated
+# registry_host is deprecated in Rocky
 # As far as I (Massimo) understand, it was at any rate useless in our environment
 #       do_config { 'glance_api_registry_host': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'registry_host', value => $controller_rocky::params::vip_mgmt, }
   do_config { 'glance_api_show_multiple_locations': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'show_multiple_locations', value => $controller_rocky::params::glance_api_show_multiple_locations, }
@@ -70,13 +72,14 @@ define remove_config ($conf_file, $section, $param, $value) {
   # parametro necessario per la nuova funzionalita' di interoperable image import
   #
   do_config { 'glance_api_node_staging_uri': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'node_staging_uri', value => $controller_rocky::params::glance_api_node_staging_uri, }
+
+# New ways in rocky to define glance backends       
   do_config { 'glance_api_enabled_backends': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'enabled_backends', value => $controller_rocky::params::glance_api_enabled_backends, }
 
 
-
-       #
   do_config { 'glance_api_db': conf_file => '/etc/glance/glance-api.conf', section => 'database', param => 'connection', value => $controller_rocky::params::glance_db, }
 
+       
   # FF in queens auth_uri ed auth_url sono sulla porta 5000 per glance
   # FF in rocky [keystone_authtoken] auth_uri diventa www_authenticate_uri
   do_config { 'glance_api_www_authenticate_uri': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'www_authenticate_uri', value => $controller_rocky::params::www_authenticate_uri, }
@@ -97,20 +100,21 @@ define remove_config ($conf_file, $section, $param, $value) {
 #  do_config { 'glance_api_store': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'stores', value => $controller_rocky::params::glance_store, }
 #  do_config { 'glance_api_default_store': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'default_store', value => $controller_rocky::params::glance_api_default_store, }
   do_config { 'glance_api_default_store': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'default_backend', value => $controller_rocky::params::glance_api_default_store, }
-       
+
+# File backend       
   do_config { 'glance_api_store_datadir': conf_file => '/etc/glance/glance-api.conf', section => 'file', param => 'filesystem_store_datadir', value => $controller_rocky::params::glance_store_datadir, }
 
+# Ceph backend       
   do_config { 'glance_api_rbd_store_pool': conf_file => '/etc/glance/glance-api.conf', section => 'rbd', param => 'rbd_store_pool', value => $controller_rocky::params::glance_api_rbd_store_pool, }
   do_config { 'glance_api_rbd_store_user': conf_file => '/etc/glance/glance-api.conf', section => 'rbd', param => 'rbd_store_user', value => $controller_rocky::params::glance_api_rbd_store_user, }
   do_config { 'glance_api_rbd_store_ceph_conf': conf_file => '/etc/glance/glance-api.conf', section => 'rbd', param => 'rbd_store_ceph_conf', value => $controller_rocky::params::ceph_rbd_ceph_conf, }
   do_config { 'glance_api_rbd_store_chunk_size': conf_file => '/etc/glance/glance-api.conf', section => 'rbd', param => 'rbd_store_chunk_size', value => $controller_rocky::params::glance_api_rbd_store_chunk_size, }
        
 ###############
-# Settings needed for ceilomer       
+# Settings needed for ceilomer
+# Probably useess now (but doesn't cause problems)       
   do_config { 'glance_api_transport_url': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'transport_url', value => $controller_rocky::params::transport_url, }
    
-####Non necessario in ocata
-# do_config { 'glance_container_formats': conf_file => '/etc/glance/glance-api.conf', section => 'image_format', param => 'container_formats', value => $controller_rocky::params::glance_container_formats, }
 #######Proxy headers parsing
   do_config { 'glance_enable_proxy_headers_parsing': conf_file => '/etc/glance/glance-api.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_rocky::params::enable_proxy_headers_parsing, }
 
@@ -118,6 +122,7 @@ define remove_config ($conf_file, $section, $param, $value) {
   # glance-registry.conf
 
   do_config { 'glance_reg_db': conf_file => '/etc/glance/glance-registry.conf', section => 'database', param => 'connection', value => $controller_rocky::params::glance_db, }
+
 #  do_config { 'glance_reg_image_verbose': conf_file => '/etc/glance/glance-registry.conf', section => 'DEFAULT', param => 'verbose', value => false, }
   do_config { 'glance_reg_image_size_cap': conf_file => '/etc/glance/glance-registry.conf', section => 'DEFAULT', param => 'image_size_cap', value => $controller_rocky::params::glance_image_size_cap, }
   # FF in rocky [keystone_authtoken] auth_uri diventa www_authenticate_uri
@@ -135,7 +140,7 @@ define remove_config ($conf_file, $section, $param, $value) {
 
   do_config { 'glance_reg_flavor': conf_file => '/etc/glance/glance-registry.conf', section => 'paste_deploy', param => 'flavor', value => $controller_rocky::params::flavor, }
  
- # Settings needed for ceilomer       
+# Settings needed for ceilomer     
 #  do_config { 'glance_reg_notification_driver': conf_file => '/etc/glance/glance-registry.conf', section => 'oslo_messaging_notifications', param => 'driver', value => $controller_rocky::params::glance_notification_driver, }
   do_config { 'glance_reg_transport_url': conf_file => '/etc/glance/glance-registry.conf', section => 'DEFAULT', param => 'transport_url', value => $controller_rocky::params::transport_url, }
 }
