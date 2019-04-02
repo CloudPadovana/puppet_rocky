@@ -376,7 +376,8 @@ class controller_rocky::params ($cloud_role){
    $quota_floatingip = '0'
    $region_name = 'regionOne'
    #$scheduler_default_filters e' stato sostituito con enabled_filters
-   $enabled_filters   = 'AggregateMultiTenancyIsolation,AggregateInstanceExtraSpecsFilter,RetryFilter,AvailabilityZoneFilter,RamFilter,CoreFilter,AggregateRamFilter,AggregateCoreFilter,DiskFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter'
+   #$enabled_filters   = 'AggregateMultiTenancyIsolation,AggregateInstanceExtraSpecsFilter,RetryFilter,AvailabilityZoneFilter,RamFilter,CoreFilter,AggregateRamFilter,AggregateCoreFilter,DiskFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter'
+   $enabled_filters   = 'AggregateMultiTenancyIsolation,AggregateInstanceExtraSpecsFilter,RetryFilter,AvailabilityZoneFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter'
    $service_metadata_proxy = true
    $token_expiration = '32400'
    $user_domain_name = 'default'
