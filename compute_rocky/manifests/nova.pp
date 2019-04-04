@@ -89,7 +89,7 @@ define do_config_list ($conf_file, $section, $param, $values) {
   do_config { 'nova_my_ip': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'my_ip', value => $compute_rocky::params::my_ip, }
   ### FF DEPRECATED in PIKE firewall_driver
   ### MS: Ma la documentazione dice di settarlo            
-  do_config { 'nova_firewall_driver': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'firewall_driver', value => $compute_ocata::params::nova_firewall_driver, }
+  do_config { 'nova_firewall_driver': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'firewall_driver', value => $compute_rocky::params::nova_firewall_driver, }
   ###
 
 ######

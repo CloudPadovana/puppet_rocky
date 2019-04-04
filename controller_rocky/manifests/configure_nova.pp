@@ -67,7 +67,7 @@ define do_config_list ($conf_file, $section, $param, $values) {
    do_config { 'nova_my_ip': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'my_ip', value => $controller_rocky::params::vip_mgmt, }
    ### FF DEPRECATED in PIKE firewall_driver
    ### MS: in realta` pero` la guida di installazione dice di metterlo.
-   do_config { 'nova_firewall_driver': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'firewall_driver', value => $controller_ocata::params::nova_firewall_driver, }
+   do_config { 'nova_firewall_driver': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'firewall_driver', value => $controller_rocky::params::nova_firewall_driver, }
    ###
    do_config { 'nova_use_neutron': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'use_neutron', value => $controller_rocky::params::use_neutron, }
    do_config { 'nova_cpu_allocation_ratio': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'cpu_allocation_ratio', value => $controller_rocky::params::nova_cpu_allocation_ratio, }

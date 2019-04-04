@@ -354,7 +354,8 @@ class controller_rocky::params ($cloud_role){
    $nova_cpu_allocation_ratio = '4.0'
    $nova_default_schedule_zone = 'nova'
    ### FF deprecato in PIKE
-   #$nova_firewall_driver = 'nova.virt.firewall.NoopFirewallDriver'
+   ### MS ma la doc dice cmq di settarlo
+   $nova_firewall_driver = 'nova.virt.firewall.NoopFirewallDriver'
    ###
    $nova_inject_key = true
    $nova_inject_partition = '-1'
