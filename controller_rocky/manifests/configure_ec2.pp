@@ -53,7 +53,7 @@ define remove_config ($conf_file, $section, $param, $value) {
    do_config { 'keystone_ec2_tokens_url':  conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'keystone_ec2_tokens_url', value => "${controller_rocky::params::ec2_keystone_url}/ec2tokens",}
    do_config { 'ec2_db': conf_file => '/etc/ec2api/ec2api.conf', section => 'database', param => 'connection', value => $controller_rocky::params::ec2_db, }
 #   do_config { 'ec2_auth_uri': conf_file => '/etc/ec2api/ec2api.conf', section => 'keystone_authtoken', param => 'auth_uri', value => $controller_rocky::params::auth_url, }   
-   do_config { 'ec2_www_authenticate_uri': conf_file => '/etc/ec2api/ec2api.conf', section => 'keystone_authtoken', param => 'www_authenticate_uri', value => $controller_rocky::params::ec2_keystone_url, }   
+   do_config { 'ec2_www_authenticate_uri': conf_file => '/etc/ec2api/ec2api.conf', section => 'keystone_authtoken', param => 'www_authenticate_uri', value => $controller_rocky::params::www_authenticate_uri, }   
    do_config { 'ec2_auth_url': conf_file => '/etc/ec2api/ec2api.conf', section => 'keystone_authtoken', param => 'auth_url', value => $controller_rocky::params::ec2_keystone_url, }   
    do_config { 'ec2_user': conf_file => '/etc/ec2api/ec2api.conf', section => 'keystone_authtoken', param => 'username', value => $controller_rocky::params::ec2_user, }
    do_config { 'ec2_password': conf_file => '/etc/ec2api/ec2api.conf', section => 'keystone_authtoken', param => 'password', value => $controller_rocky::params::ec2_password, }

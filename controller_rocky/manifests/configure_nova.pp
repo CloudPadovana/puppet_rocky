@@ -98,6 +98,7 @@ define do_config_list ($conf_file, $section, $param, $values) {
    do_config { 'nova_oslo_lock_path': conf_file => '/etc/nova/nova.conf', section => 'oslo_concurrency', param => 'lock_path', value => $controller_rocky::params::nova_oslo_lock_path, }
 
 
+   do_config { 'nova_www_authenticate_uri': conf_file => '/etc/nova/nova.conf', section => 'keystone_authtoken', param => 'www_authenticate_uri', value => $controller_rocky::params::www_authenticate_uri, }
    do_config { 'nova_memcached_servers': conf_file => '/etc/nova/nova.conf', section => 'keystone_authtoken', param => 'memcached_servers', value => $controller_rocky::params::memcached_servers, }
    ## FF da queens la porta cambia da 35357 a 5000 --> auth_url = http://controller:5000/v3
    do_config { 'nova_keystone_authtoken_auth_url': conf_file => '/etc/nova/nova.conf', section => 'keystone_authtoken', param => 'auth_url', value => $controller_rocky::params::nova_keystone_authtoken_auth_url, }  

@@ -39,7 +39,8 @@ class controller_rocky::params ($cloud_role){
    $keystone_db =  ''
    $keystone_public_endpoint =  ''
    ## FF in rocky [keystone_authtoken] auth_uri diventa www_authenticate_uri
-   $www_authenticate_uri = 'http://xxx.xxx.xxx.xxx:5000'
+   ## Ma secondo la documentazione bisogna specificare l'endpoint pubblico
+   $www_authenticate_uri = 'https://xxx.xxx.xxx.xxx:5000'
    ##
    $heat_db = ''
    $heat_metadata_server_url = ''
@@ -144,7 +145,8 @@ class controller_rocky::params ($cloud_role){
    $keystone_db =  ''
    $keystone_public_endpoint =  ''
    ## FF in rocky [keystone_authtoken] auth_uri diventa www_authenticate_uri
-   $www_authenticate_uri = 'http://xxx.xxx.xxx.xxx:5000'
+   ## Ma secondo la documentazione bisogna specificare l'endpoint pubblico
+   $www_authenticate_uri = 'https://xxx.xxx.xxx.xxx:5000'
    $heat_db = ''    
    $heat_metadata_server_url = ''
    $heat_password = ''
