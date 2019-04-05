@@ -98,8 +98,8 @@ define remove_config ($conf_file, $section, $param, $value) {
 do_config { 'cinder_enable_proxy_headers_parsing': conf_file => '/etc/cinder/cinder.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_rocky::params::enable_proxy_headers_parsing, }       
 ####################       
        
-# Settings needed for ceilometer
-   do_config { 'cinder_notification_driver': conf_file => '/etc/cinder/cinder.conf', section => 'oslo_messaging_notifications', param => 'driver', value => $controller_rocky::params::cinder_notification_driver, }
+# Settings needed for ceilometer (but we don't use anymore ceilometer)
+#   do_config { 'cinder_notification_driver': conf_file => '/etc/cinder/cinder.conf', section => 'oslo_messaging_notifications', param => 'driver', value => $controller_rocky::params::cinder_notification_driver, }
 
 #
 # Sembra che i seguenti non servano piu`:
