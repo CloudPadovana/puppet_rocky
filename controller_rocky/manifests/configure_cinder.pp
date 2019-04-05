@@ -28,7 +28,8 @@ define remove_config ($conf_file, $section, $param, $value) {
    do_config { 'cinder_auth_strategy': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'auth_strategy', value => $controller_rocky::params::auth_strategy, }       
    do_config { 'cinder_my_ip': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'my_ip', value => $controller_rocky::params::cinder_my_ip, }       
    do_config { 'cinder_public_endpoint': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'public_endpoint', value => $controller_rocky::params::cinder_public_endpoint, }
-   do_config { 'cinder_iscsi_helper': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'iscsi_helper', value => $controller_rocky::params::cinder_iscsi_helper, }
+   #MS iscsi_helper deprecated; replaced with target_helper    
+   do_config { 'cinder_iscsi_helper': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'target_helper', value => $controller_rocky::params::cinder_iscsi_helper, }
    do_config { 'cinder_glance_api_servers': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'glance_api_servers', value => $controller_rocky::params::glance_api_servers, }
    do_config { 'cinder_enabled_backends': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'enabled_backends', value => $controller_rocky::params::cinder_enabled_backends, }
    do_config { 'cinder_default_volume_type': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'default_volume_type', value => $controller_rocky::params::cinder_default_volume_type, }
@@ -46,7 +47,8 @@ define remove_config ($conf_file, $section, $param, $value) {
 #   do_config { 'cinder_rabbit_hosts': conf_file => '/etc/cinder/cinder.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_hosts', value => $controller_rocky::params::rabbit_hosts, }       
 #   do_config { 'cinder_rabbit_ha_queues': conf_file => '/etc/cinder/cinder.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_ha_queues', value => $controller_rocky::params::rabbit_ha_queues, }
    ## FF da queens cambiano le porte, /etc/cinder/cinder.conf [keystone_authtoken] auth_uri = http://controller:5000 e auth_url = http://controller:5000
-   do_config { 'cinder_auth_uri': conf_file => '/etc/cinder/cinder.conf', section => 'keystone_authtoken', param => 'auth_uri', value => $controller_rocky::params::auth_uri, }   
+   ## MS Anche per cinder dovrebbe essere auth_uri --> www_authenticate_uri
+   do_config { 'cinder_www_authenticate_uri': conf_file => '/etc/cinder/cinder.conf', section => 'keystone_authtoken', param => 'www_authenticate_uri', value => $controller_rocky::params::www_authenticate_uri, }   
    do_config { 'cinder_auth_url': conf_file => '/etc/cinder/cinder.conf', section => 'keystone_authtoken', param => 'auth_url', value => $controller_rocky::params::cinder_keystone_authtoken_auth_url, }
    do_config { 'cinder_auth_type': conf_file => '/etc/cinder/cinder.conf', section => 'keystone_authtoken', param => 'auth_type', value => $controller_rocky::params::auth_type, }
    do_config { 'cinder_project_domain_name': conf_file => '/etc/cinder/cinder.conf', section => 'keystone_authtoken', param => 'project_domain_name', value => $controller_rocky::params::project_domain_name, }
