@@ -12,8 +12,67 @@ SSLCryptoDevice         builtin
 SSLProtocol             +TLSv1 +TLSv1.1 +TLSv1.2
 SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256"
 
+
+
+
+<VirtualHost <%=@keystone_cap_fqdn -%>:443>
+    ServerName       <%=@keystone_cap_fqdn -%>:443
+    UseCanonicalName On
+    TraceEnable      Off
+    LimitRequestBody 114688
+
+    ErrorLog        "/var/log/httpd/keystone_wsgi_public_error_infn.log"
+    TransferLog     "/var/log/httpd/keystone_wsgi_public_transfer_infn.log"
+    CustomLog       "/var/log/httpd/keystone_wsgi_public_access_infn.log" combined
+    LogLevel        warn
+    ServerSignature Off
+    ErrorLogFormat  "%{cu}t %M"
+
+    SSLEngine             on
+    SSLCertificateFile    <%=@keystone_infn_cert%>
+    SSLCertificateKeyFile <%=@keystone_infn_key%>
+    SSLCACertificateFile  <%=@cafile%>
+
+    WSGIScriptAlias       / /usr/bin/keystone-wsgi-public
+    WSGIPassAuthorization On
+    WSGIApplicationGroup  %{GLOBAL}
+    WSGIDaemonProcess     keystone-infn-public processes=5 threads=1 user=keystone group=keystone display-name=keystone-infn-public
+    WSGIProcessGroup      keystone-infn-public
+
+
+    <Directory /usr/bin>
+        Require all granted
+        Order allow,deny
+        Allow from all
+    </Directory>
+
+<% if @enable_aai_ext -%>
+
+    <Location ~ "/v3/auth/OS-FEDERATION/identity_providers/infnaai/protocols/mapped/websso">
+        AuthType            shibboleth
+        Require             shib-session
+        ShibRequestSetting  requireSession 1
+        ShibRequestSetting  applicationId default
+        ShibRequestSetting  entityID <%=@infnaai_ent_id%>
+        ShibRequireSession  On
+        ShibExportAssertion Off
+    </Location>
+
+    <Location /Shibboleth.sso>
+        AuthType shibboleth
+        Require shib-session
+        ShibRequestSetting applicationId infn_ssoapp
+    </Location>
+
+<% end -%>
+</VirtualHost>
+
+
+
+
+
 <VirtualHost _default_:443>
-    ServerName       <%=@site_fqdn%>
+    ServerName       <%=@site_fqdn%>:443
     UseCanonicalName On
     TraceEnable      Off
     RedirectMatch    permanent  ^/$ /dashboard
@@ -45,28 +104,92 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 
     BrowserMatch "MSIE [2-5]" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
 
-    <% if @enable_aai_ext and @enable_shib -%>
-        WSGIScriptAlias /dashboard-infn "/usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi"
+<% if @enable_aai_ext and @enable_shib -%>
 
-        <Location /dashboard-infn>
-            AuthType           shibboleth
-            require            shib-session
-            ShibRequestSetting requireSession 1
-            ShibRequestSetting applicationId default
-            ShibRequestSetting entityID <%=@infnaai_ent_id%>
-        </Location>
+    WSGIScriptAlias /dashboard-infn "/usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi"
 
-        <Location /Shibboleth.sso>
-            AuthType None
-            Require all granted
-            ShibRequestSetting applicationId default
-        </Location>
-    <% end -%>
+    <Location /dashboard-infn>
+        AuthType           shibboleth
+        require            shib-session
+        ShibRequestSetting requireSession 1
+        ShibRequestSetting applicationId default
+        ShibRequestSetting entityID <%=@infnaai_ent_id%>
+    </Location>
 
+    <Location /Shibboleth.sso>
+        AuthType None
+        Require all granted
+        ShibRequestSetting applicationId default
+    </Location>
+
+<% end -%>
 </VirtualHost>
 
+
+
+
+
+
+
+<VirtualHost <%=@keystone_cv_fqdn -%>:1443>
+    ServerName       <%=@keystone_cv_fqdn -%>:1443
+    UseCanonicalName On
+    TraceEnable      Off
+    LimitRequestBody 114688
+
+    ErrorLog        "/var/log/httpd/keystone_wsgi_public_error_unipd.log"
+    TransferLog     "/var/log/httpd/keystone_wsgi_public_transfer_unipd.log"
+    CustomLog       "/var/log/httpd/keystone_wsgi_public_access_unipd.log" combined
+    LogLevel        warn
+    ServerSignature Off
+    ErrorLogFormat  "%{cu}t %M"
+
+    SSLEngine             on
+    SSLCertificateFile    <%=@keystone_unipd_cert%>
+    SSLCertificateKeyFile <%=@keystone_unipd_key%>
+    SSLCACertificateFile  <%=@cafile%>
+
+    WSGIScriptAlias       / /usr/bin/keystone-wsgi-public
+    WSGIPassAuthorization On
+    WSGIApplicationGroup  %{GLOBAL}
+    WSGIDaemonProcess     keystone-unipd-public processes=5 threads=1 user=keystone group=keystone display-name=keystone-unipd-public
+    WSGIProcessGroup      keystone-unipd-public
+
+
+    <Directory /usr/bin>
+        Require all granted
+        Order allow,deny
+        Allow from all
+    </Directory>
+
+<% if @enable_aai_ext -%>
+
+    <Location ~ "/v3/auth/OS-FEDERATION/identity_providers/unipdaai/protocols/mapped/websso">
+        AuthType            shibboleth
+        Require             shib-session
+        ShibRequestSetting  requireSession 1
+        ShibRequestSetting  applicationId unipd_ssoapp
+        ShibRequestSetting  entityID <%=@unipdaai_ent_id%>
+        ShibRequireSession  On
+        ShibExportAssertion Off
+    </Location>
+
+    <Location /Shibboleth.sso>
+        AuthType shibboleth
+        Require shib-session
+        ShibRequestSetting applicationId unipd_ssoapp
+    </Location>
+
+<% end -%>
+</VirtualHost>
+
+
+
+
+
+
 <VirtualHost _default_:1443>
-    ServerName       <%=@cv_site_fqdn%>
+    ServerName       <%=@cv_site_fqdn%>:1443
     UseCanonicalName On
     TraceEnable      Off
     RedirectMatch    permanent  ^/$ /dashboard
@@ -98,22 +221,28 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 
     BrowserMatch "MSIE [2-5]" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
 
-    <% if @enable_aai_ext and @enable_shib -%>
-        WSGIScriptAlias /dashboard-unipd "/usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi"
+<% if @enable_aai_ext and @enable_shib -%>
 
-        <Location /dashboard-unipd>
-            AuthType           shibboleth
-            require            shib-session
-            ShibRequestSetting requireSession 1
-            ShibRequestSetting applicationId unipd_app
-            ShibRequestSetting entityID <%=@unipdaai_ent_id%>
-        </Location>
+    WSGIScriptAlias /dashboard-unipd "/usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi"
 
-        <Location /Shibboleth.sso>
-            AuthType None
-            Require all granted
-            ShibRequestSetting applicationId unipd_app
-        </Location>
-    <% end -%>
+    <Location /dashboard-unipd>
+        AuthType           shibboleth
+        require            shib-session
+        ShibRequestSetting requireSession 1
+        ShibRequestSetting applicationId unipd_app
+        ShibRequestSetting entityID <%=@unipdaai_ent_id%>
+    </Location>
 
+    <Location /Shibboleth.sso>
+        AuthType None
+        Require all granted
+        ShibRequestSetting applicationId unipd_app
+    </Location>
+
+<% end -%>
 </VirtualHost>
+
+
+
+
+

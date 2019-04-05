@@ -10,7 +10,7 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
     require => Exec["download_shib_repo"],
   }
   
-  file { "/etc/shibboleth/sp-key.pem":
+  file { "/etc/shibboleth/horizon-infn-key.pem":
     ensure   => file,
     owner    => "shibd",
     group    => "shibd",
@@ -19,7 +19,7 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
     tag      => ["shibboleth_sec"],
   }
 
-  file { "/etc/shibboleth/sp-cert.pem":
+  file { "/etc/shibboleth/horizon-infn-cert.pem":
     ensure   => file,
     owner    => "shibd",
     group    => "shibd",
@@ -28,7 +28,7 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
     tag      => ["shibboleth_sec"],
   }
 
-  file { "/etc/shibboleth/sp-unipd-key.pem":
+  file { "/etc/shibboleth/horizon-unipd-key.pem":
     ensure   => file,
     owner    => "shibd",
     group    => "shibd",
@@ -37,12 +37,48 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
     tag      => ["shibboleth_sec"],
   }
 
-  file { "/etc/shibboleth/sp-unipd-cert.pem":
+  file { "/etc/shibboleth/horizon-unipd-cert.pem":
     ensure   => file,
     owner    => "shibd",
     group    => "shibd",
     mode     => '0600',
     source   => "${unipd_cert}",
+    tag      => ["shibboleth_sec"],
+  }
+
+  file { "/etc/shibboleth/keystone-infn-key.pem":
+    ensure   => file,
+    owner    => "shibd",
+    group    => "shibd",
+    mode     => '0400',
+    source   => "${keystone_infn_key}",
+    tag      => ["shibboleth_sec"],
+  }
+
+  file { "/etc/shibboleth/keystone-infn-cert.pem":
+    ensure   => file,
+    owner    => "shibd",
+    group    => "shibd",
+    mode     => '0600',
+    source   => "${keystone_infn_cert}",
+    tag      => ["shibboleth_sec"],
+  }
+
+  file { "/etc/shibboleth/keystone-unipd-key.pem":
+    ensure   => file,
+    owner    => "shibd",
+    group    => "shibd",
+    mode     => '0400',
+    source   => "${keystone_unipd_key}",
+    tag      => ["shibboleth_sec"],
+  }
+
+  file { "/etc/shibboleth/keystone-unipd-cert.pem":
+    ensure   => file,
+    owner    => "shibd",
+    group    => "shibd",
+    mode     => '0600',
+    source   => "${keystone_unipd_cert}",
     tag      => ["shibboleth_sec"],
   }
 
