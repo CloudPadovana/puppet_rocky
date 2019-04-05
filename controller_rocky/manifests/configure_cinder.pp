@@ -78,11 +78,15 @@ define remove_config ($conf_file, $section, $param, $value) {
   do_config { 'cinder_ceph_rbd_max_clone_depth': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rbd_max_clone_depth', value => $controller_rocky::params::ceph_rbd_max_clone_depth, }
   do_config { 'cinder_ceph_rbd_store_chunk_size': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rbd_store_chunk_size', value => $controller_rocky::params::ceph_rbd_store_chunk_size, }
   do_config { 'cinder_ceph_rados_connect_timeout': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rados_connect_timeout', value => $controller_rocky::params::ceph_rados_connect_timeout, }
-
 ### DEPRECATED in PIKE - removed in QUEENS       
 #  do_config { 'cinder_ceph_glance_api_version': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'glance_api_version', value => $controller_rocky::params::ceph_glance_api_version, }
   do_config { 'cinder_ceph_rbd_user': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rbd_user', value => $controller_rocky::params::cinder_ceph_rbd_user, }
   do_config { 'cinder_ceph_rbd_secret_uuid': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rbd_secret_uuid', value => $controller_rocky::params::cinder_ceph_rbd_secret_uuid, }
+ #
+ # Optimization since the pool is used only for cinder      
+  do_config { 'cinder_ceph_rbd_exclusive_cinder_pool': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rbd_exclusive_cinder_pool', value => $controller_rocky::params::cinder_ceph_rbd_exclusive_cinder_pool, }
+
+       
 ##########EqualLogic
    do_config { 'cinder_eqlog_volume_group': conf_file => '/etc/cinder/cinder.conf', section => 'equallogic-unipd', param => 'volume_group', value => $controller_rocky::params::eqlog_volume_group, }
    do_config { 'cinder_eqlog_volume_backend_name': conf_file => '/etc/cinder/cinder.conf', section => 'equallogic-unipd', param => 'volume_backend_name', value => $controller_rocky::params::eqlog_volume_backend_name, }
