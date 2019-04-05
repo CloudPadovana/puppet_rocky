@@ -14,8 +14,15 @@
 
         <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
                   checkAddress="false" handlerSSL="true" cookieProps="https">
+
             <SSO>SAML2 SAML1</SSO>
+
             <Logout>SAML2 Local</Logout>
+
+            <Handler type="MetadataGenerator" Location="/Metadata"
+                     template="/etc/openstack-auth-shib/idem-template-metadata.xml"
+                     signing="true"/>
+
         </Sessions>
 
         <Errors redirectErrors="https://<%=@site_fqdn-%>/dashboard/auth/auth_error/"/>
