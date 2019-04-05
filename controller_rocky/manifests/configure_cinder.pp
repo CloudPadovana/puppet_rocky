@@ -35,17 +35,13 @@ define remove_config ($conf_file, $section, $param, $value) {
    do_config { 'cinder_default_volume_type': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'default_volume_type', value => $controller_rocky::params::cinder_default_volume_type, }
 
   ### DEPRECATED in PIKE - removed in QUEENS
+  ### In Ocata it was needed otherwise creation of volumes from images doesn't work     
   # do_config { 'cinder_glance_api_version': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'glance_api_version', value => $controller_rocky::params::glance_api_version, }
-  ###
 
-  # The following is needed otherwise creation of volumes from images doesn't work     
 
   do_config { 'cinder_db': conf_file => '/etc/cinder/cinder.conf', section => 'database', param => 'connection', value => $controller_rocky::params::cinder_db, }
-#######transport_url
   do_config { 'cinder_transport_url': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'transport_url', value => $controller_rocky::params::transport_url, }
 
-#   do_config { 'cinder_rabbit_hosts': conf_file => '/etc/cinder/cinder.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_hosts', value => $controller_rocky::params::rabbit_hosts, }       
-#   do_config { 'cinder_rabbit_ha_queues': conf_file => '/etc/cinder/cinder.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_ha_queues', value => $controller_rocky::params::rabbit_ha_queues, }
    ## FF da queens cambiano le porte, /etc/cinder/cinder.conf [keystone_authtoken] auth_uri = http://controller:5000 e auth_url = http://controller:5000
    ## MS Anche per cinder dovrebbe essere auth_uri --> www_authenticate_uri
    do_config { 'cinder_www_authenticate_uri': conf_file => '/etc/cinder/cinder.conf', section => 'keystone_authtoken', param => 'www_authenticate_uri', value => $controller_rocky::params::www_authenticate_uri, }   
@@ -66,7 +62,7 @@ define remove_config ($conf_file, $section, $param, $value) {
    do_config { 'cinder_iscsi_volume_driver': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'volume_driver', value => $controller_rocky::params::iscsi_volume_driver, }
    do_config { 'cinder_iscsi_shares_config': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'nfs_shares_config', value => $controller_rocky::params::cinder_iscsi_shares_config, }
    do_config { 'cinder_iscsi_nfs_mount_point_base': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'nfs_mount_point_base', value => $controller_rocky::params::cinder_iscsi_nfs_mount_point_base, }
-   # The following is needed otherwise there are problems attaching i-scsi volumes to VMs    
+   # The following is needed (at least in Ocata) otherwise there are problems attaching i-scsi volumes to VMs    
    do_config { 'cinder_iscsi_nfs_nas_secure_file_permissions': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'nas_secure_file_permissions', value => $controller_rocky::params::cinder_iscsi_nfs_nas_secure_file_permissions, }
 ############# Ceph configuration
  do_config { 'cinder_ceph_volume_group': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'volume_group', value => $controller_rocky::params::ceph_volume_group, }
@@ -83,7 +79,7 @@ define remove_config ($conf_file, $section, $param, $value) {
   do_config { 'cinder_ceph_rbd_user': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rbd_user', value => $controller_rocky::params::cinder_ceph_rbd_user, }
   do_config { 'cinder_ceph_rbd_secret_uuid': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rbd_secret_uuid', value => $controller_rocky::params::cinder_ceph_rbd_secret_uuid, }
  #
- # Optimization since the pool is used only for cinder      
+ # MS: Optimization that can be applied since the pool is used only for cinder      
   do_config { 'cinder_ceph_rbd_exclusive_cinder_pool': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rbd_exclusive_cinder_pool', value => $controller_rocky::params::cinder_ceph_rbd_exclusive_cinder_pool, }
 
        
@@ -111,8 +107,6 @@ do_config { 'cinder_enable_proxy_headers_parsing': conf_file => '/etc/cinder/cin
 ##   do_config { 'cinder_glusterfs_sparsed_volumes': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'glusterfs_sparsed_volumes', value => $controller_rocky::params::cinder_glusterfs_sparsed_volumes, }
 
 #
-# Commentato il setting del policy file di cinder (che ha errori). Da sistemare
-# Massimo Sgaravatto      
 #       
 file {'cinder_policy.yaml':
              source      => 'puppet:///modules/controller_rocky/cinder_policy.yaml',
