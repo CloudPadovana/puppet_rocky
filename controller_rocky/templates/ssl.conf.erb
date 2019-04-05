@@ -15,7 +15,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 
 
 
-<VirtualHost <%=@keystone_cap_fqdn -%>:443>
+<VirtualHost *:443>
     ServerName       <%=@keystone_cap_fqdn -%>:443
     UseCanonicalName On
     TraceEnable      Off
@@ -71,7 +71,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 
 
 
-<VirtualHost _default_:443>
+<VirtualHost *:443>
     ServerName       <%=@site_fqdn%>:443
     UseCanonicalName On
     TraceEnable      Off
@@ -131,7 +131,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 
 
 
-<VirtualHost <%=@keystone_cv_fqdn -%>:1443>
+<VirtualHost *:1443>
     ServerName       <%=@keystone_cv_fqdn -%>:1443
     UseCanonicalName On
     TraceEnable      Off
@@ -188,7 +188,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 
 
 
-<VirtualHost _default_:1443>
+<VirtualHost *:1443>
     ServerName       <%=@cv_site_fqdn%>:1443
     UseCanonicalName On
     TraceEnable      Off
