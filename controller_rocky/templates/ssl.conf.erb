@@ -132,7 +132,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 
 
 <VirtualHost *:1443>
-    ServerName       <%=@keystone_cv_fqdn -%>:1443
+    ServerName       <%=@keystone_cv_fqdn -%>:443
     UseCanonicalName On
     TraceEnable      Off
     LimitRequestBody 114688
@@ -189,7 +189,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 
 
 <VirtualHost *:1443>
-    ServerName       <%=@cv_site_fqdn%>:1443
+    ServerName       <%=@cv_site_fqdn%>:443
     UseCanonicalName On
     TraceEnable      Off
     RedirectMatch    permanent  ^/$ /dashboard
