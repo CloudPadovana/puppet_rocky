@@ -2,10 +2,10 @@
 "admin_or_owner": "is_admin:True or (role:admin and is_admin_project:True) or project_id:%(project_id)s"
 
 # Define non-standard role for the CloudVeneto platform
-"admin_or_user":"is_admin:True or (role:admin and is_admin_project:True) or user_id:%(user_id)s"
+"admin_or_user": "is_admin:True or (role:admin and is_admin_project:True) or user_id:%(user_id)s"
 
 # Use the newly created role as default
-"default":"rule:admin_or_user"
+"default": "rule:admin_or_user"
 
 # Decides what is required for the 'is_admin:True' check to succeed.
 "context_is_admin": "role:admin"

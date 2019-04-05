@@ -114,15 +114,14 @@ do_config { 'cinder_enable_proxy_headers_parsing': conf_file => '/etc/cinder/cin
 # Commentato il setting del policy file di cinder (che ha errori). Da sistemare
 # Massimo Sgaravatto      
 #       
-#file {'cinder_policy.yaml':
-#             source      => 'puppet:///modules/controller_rocky/cinder_policy.yaml',
-#             path        => '/etc/cinder/policy.yaml',
-#             backup      => true,
-#             owner   => root,
-#             group   => cinder,
-#             mode    => 0640,
-#
-#           }
+file {'cinder_policy.yaml':
+             source      => 'puppet:///modules/controller_rocky/cinder_policy.yaml',
+             path        => '/etc/cinder/policy.yaml',
+             backup      => true,
+             owner   => root,
+             group   => cinder,
+             mode    => 0640,
+           }
 
 
        
