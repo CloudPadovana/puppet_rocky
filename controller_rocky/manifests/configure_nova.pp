@@ -65,16 +65,20 @@ define do_config_list ($conf_file, $section, $param, $values) {
 
    do_config { 'nova_transport_url': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'transport_url', value => $controller_rocky::params::transport_url, }
    do_config { 'nova_my_ip': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'my_ip', value => $controller_rocky::params::vip_mgmt, }
-   ### FF DEPRECATED in PIKE firewall_driver 
-   #do_config { 'nova_firewall_driver': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'firewall_driver', value => $controller_ocata::params::nova_firewall_driver, }
+   ### FF DEPRECATED in PIKE firewall_driver
+   ### MS: in realta` pero` la guida di installazione dice di metterlo.
+   do_config { 'nova_firewall_driver': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'firewall_driver', value => $controller_rocky::params::nova_firewall_driver, }
    ###
    do_config { 'nova_use_neutron': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'use_neutron', value => $controller_rocky::params::use_neutron, }
    do_config { 'nova_cpu_allocation_ratio': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'cpu_allocation_ratio', value => $controller_rocky::params::nova_cpu_allocation_ratio, }
    do_config { 'nova_disk_allocation_ratio': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'disk_allocation_ratio', value => $controller_rocky::params::nova_disk_allocation_ratio, }
    do_config { 'nova_ram_allocation_ratio': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'ram_allocation_ratio', value => $controller_rocky::params::nova_ram_allocation_ratio, }
-   ### FF DEPRECATED in PIKE:
-   #You can safely remove the AggregateCoreFilter, AggregateRamFilter, and AggregateDiskFilter from your [filter_scheduler]enabled_filters and you do not need to replace them with any other core/ram/disk filters. The placement query in the FilterScheduler takes care of the core/ram/disk filtering, so CoreFilter, RamFilter, and DiskFilter are redundant.
-   ###
+
+    #
+    #You can safely remove the AggregateCoreFilter, AggregateRamFilter, and AggregateDiskFilter from your [filter_scheduler]enabled_filters and you do not
+    # need to replace them with any other core/ram/disk filters. The placement query in the FilterScheduler takes care of the core/ram/disk filtering,
+    # so CoreFilter, RamFilter, and DiskFilter are redundant.
+    #
    do_config { 'nova_enabled_filters': conf_file => '/etc/nova/nova.conf', section => 'filter_scheduler', param => 'enabled_filters', value => $controller_rocky::params::enabled_filters, }
    do_config { 'nova_default_schedule_zone': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'default_schedule_zone', value => $controller_rocky::params::nova_default_schedule_zone, }
    do_config { 'nova_scheduler_max_attempts': conf_file => '/etc/nova/nova.conf', section => 'scheduler', param => 'max_attempts', value => $controller_rocky::params::nova_scheduler_max_attempts, }
@@ -91,8 +95,10 @@ define do_config_list ($conf_file, $section, $param, $values) {
 
    do_config { 'nova_db': conf_file => '/etc/nova/nova.conf', section => 'database', param => 'connection', value => $controller_rocky::params::nova_db, }
    do_config { 'nova_enabled_apis': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'enabled_apis', value => $controller_rocky::params::enabled_apis, }
+
    ## FF in rocky si puo' creare il DB placement, con relativa connection url. Se non viene creato si continua ad usare solo il nova_api db
    #do_config { 'nova_placement_db': conf_file => '/etc/nova/nova.conf', section => 'placement_database', param => 'connection', value => $controller_rocky::params::nova_placement_db, }
+   ## MS Pero` poi bisognerebbe spostarsi a mano i dati: lasciamo cosi` ... 
    ###
 
    do_config { 'nova_oslo_lock_path': conf_file => '/etc/nova/nova.conf', section => 'oslo_concurrency', param => 'lock_path', value => $controller_rocky::params::nova_oslo_lock_path, }
@@ -168,9 +174,6 @@ define do_config_list ($conf_file, $section, $param, $values) {
   do_config { 'nova_pci_passthrough_whitelist': conf_file => '/etc/nova/nova.conf', section => 'pci', param => 'passthrough_whitelist', value => $controller_rocky::params::pci_passthrough_whitelist, }
 
 
-# Pare che questi non servano piu`
-#   do_config { 'nova_novncproxy_base_url': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'novncproxy_base_url', value => $controller_rocky::params::novncproxy_base_url, }
-#   do_config { 'nova_region_name': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'os_region_name', value => $controller_rocky::params::region_name, }
 
 ######nova_policy and 00-nova-placement are copied from /controller_rocky/files dir       
 file {'nova_policy.json':
