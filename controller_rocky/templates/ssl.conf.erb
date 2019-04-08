@@ -52,7 +52,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
         AuthType            shibboleth
         Require             shib-session
         ShibRequestSetting  requireSession 1
-        ShibRequestSetting  applicationId default
+        ShibRequestSetting  applicationId infn_ssoapp
         ShibRequestSetting  entityID <%=@infnaai_ent_id%>
         ShibRequireSession  On
         ShibExportAssertion Off
