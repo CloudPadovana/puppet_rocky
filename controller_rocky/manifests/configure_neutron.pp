@@ -43,6 +43,8 @@ define remove_config ($conf_file, $section, $param, $value) {
    do_config { 'neutron_l3_ha': conf_file => '/etc/neutron/neutron.conf', section => 'DEFAULT', param => 'l3_ha', value => $controller_rocky::params::neutron_l3_ha, }
    do_config { 'neutron_allow_automatic_l3agent_failover': conf_file => '/etc/neutron/neutron.conf', section => 'DEFAULT', param => 'allow_automatic_l3agent_failover', value => $controller_rocky::params::neutron_allow_automatic_l3agent_failover, }
    do_config { 'neutron_max_l3_agents_per_router': conf_file => '/etc/neutron/neutron.conf', section => 'DEFAULT', param => 'max_l3_agents_per_router', value => $controller_rocky::params::neutron_max_l3_agents_per_router, }
+       
+#MS: The min_l3_agents_per_router configuration option was deprecated in Newton cycle and removed in Ocata       
    do_config { 'neutron_min_l3_agents_per_router': conf_file => '/etc/neutron/neutron.conf', section => 'DEFAULT', param => 'min_l3_agents_per_router', value => $controller_rocky::params::neutron_min_l3_agents_per_router, }
    do_config { 'neutron_allow_automatic_dhcp_failover': conf_file => '/etc/neutron/neutron.conf', section => 'DEFAULT', param => 'allow_automatic_dhcp_failover', value => $controller_rocky::params::allow_automatic_dhcp_failover, }
 
