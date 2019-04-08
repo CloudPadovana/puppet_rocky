@@ -853,14 +853,4 @@ LAUNCH_INSTANCE_LEGACY_ENABLED = True
 LAUNCH_INSTANCE_NG_ENABLED = False
 OPENSTACK_SSL_CACERT='<%=@cafile-%>'
 
-<% if @enable_aai_ext -%>
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = '<%=@aai_mail_host-%>'
-EMAIL_PORT = 25
-SERVER_EMAIL = '<%=@aai_mail_sender-%>'
-MANAGERS = (
-<% @aai_mail_admins.each do | aai_mail_admin | -%>
-   <%= aai_mail_admin %>,
-<% end -%>
-)
-<% end -%>
+
