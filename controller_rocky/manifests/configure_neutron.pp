@@ -134,9 +134,9 @@ do_config { 'neutron_enable_proxy_headers_parsing': conf_file => '/etc/neutron/n
    
    ### FF DEPRECATED in PIKE gateway_external_network_id --> external_network_bridge
    #do_config { 'l3_gateway_external_network_id': conf_file => '/etc/neutron/l3_agent.ini', section => 'DEFAULT', param => 'gateway_external_network_id', value => $controller_rocky::params::l3_gateway_external_network_id, }
-   ## MS external_network_bridge reported as deprecated in the log file. At any rate we were using the default value
-   #do_config { 'l3_external_network_id': conf_file => '/etc/neutron/l3_agent.ini', section => 'DEFAULT', param => 'external_network_bridge', value => $controller_rocky::params::l3_external_network_id, }
-   ## do_config { 'l3_external_network_bridge': conf_file => '/etc/neutron/l3_agent.ini', section => 'DEFAULT', param => 'external_network_bridge', value => $controller_rocky::params::l3_external_network_bridge, }
+   ## MS external_network_bridge reported as deprecated in the log file. Ma la documentazione dice di settarlo ...
+   ##do_config { 'l3_external_network_id': conf_file => '/etc/neutron/l3_agent.ini', section => 'DEFAULT', param => 'external_network_bridge', value => $controller_rocky::params::l3_external_network_id, }
+   do_config { 'l3_external_network_bridge': conf_file => '/etc/neutron/l3_agent.ini', section => 'DEFAULT', param => 'external_network_bridge', value => $controller_rocky::params::l3_external_network_bridge, }
    ###
 
 
