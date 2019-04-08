@@ -165,9 +165,11 @@ define do_config_list ($conf_file, $section, $param, $values) {
 ####config di libvirt per utilizzare ceph
   do_config { 'nova_libvirt_rbd_user': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'rbd_user', value => $compute_rocky::params::libvirt_rbd_user, }
   do_config { 'nova_libvirt_rbd_secret_uuid': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'rbd_secret_uuid', value => $compute_rocky::params::libvirt_rbd_secret_uuid, }
+
   do_config { 'nova_cinder_ssl_ca_file': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'ssl_ca_file', value => $compute_rocky::params::cafile, }
   do_config { 'nova_cinder_cafile': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'cafile', value => $compute_rocky::params::cafile, }
   do_config { 'nova_cinder_endpoint_template': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'endpoint_template', value => $compute_rocky::params::endpoint_template, }
+  do_config { 'nova_cinder_os_region_name': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'os_region_name', value => $compute_rocky::params::region_name, }
 
 #### per https nel compute non dovrebbe servire
 do_config { 'nova_enable_proxy_headers_parsing': conf_file => '/etc/nova/nova.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $compute_rocky::params::enable_proxy_headers_parsing, }
