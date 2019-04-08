@@ -319,7 +319,9 @@ class controller_rocky::params ($cloud_role){
 ##################
    $enable_proxy_headers_parsing = true
 ##################
-   $interface_driver = 'neutron.agent.linux.interface.OVSInterfaceDriver'
+   # MS: openvswitch si puo` usare al posto di neutron.agent.linux.interface.OVSInterfaceDriver                                                                                                  
+   # $interface_driver = 'neutron.agent.linux.interface.OVSInterfaceDriver'                                                                                                                      
+   $interface_driver = 'openvswitch'
 #####iscsi params
    $iscsi_volume_backend_name = 'iscsi-infnpd'
    $iscsi_volume_driver = 'cinder.volume.drivers.nfs.NfsDriver'
