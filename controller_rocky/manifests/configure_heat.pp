@@ -144,12 +144,13 @@ define remove_config ($conf_file, $section, $param, $value) {
     param     => 'cafile',
     value     => $controller_rocky::params::cafile,
   }
-  
-  do_config { 'heat_trustee_auth_plugin':
+
+  # MS auth_plugin deprecated; replaced with auth_type
+  do_config { 'heat_trustee_auth_type':
     conf_file => '/etc/heat/heat.conf',
     section   => 'trustee',
-    param     => 'auth_plugin',
-    value     => $controller_rocky::params::auth_plugin,
+    param     => 'auth_type',
+    value     => $controller_rocky::params::auth_type,
   }
   
   do_config { 'heat_trustee_auth_url':
