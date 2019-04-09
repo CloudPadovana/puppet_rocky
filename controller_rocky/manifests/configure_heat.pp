@@ -72,12 +72,18 @@ define remove_config ($conf_file, $section, $param, $value) {
     value     => $controller_rocky::params::heat_db,
   }
   
-
+# MS auth_uri deprecated. Use option "www_authenticate_uri"
+#  do_config { 'heat_auth_uri':
+#    conf_file => '/etc/heat/heat.conf',
+#    section   => 'keystone_authtoken',
+#    param     => 'auth_uri',
+#    value     => $controller_rocky::params::auth_uri,
+#  }   
   do_config { 'heat_auth_uri':
     conf_file => '/etc/heat/heat.conf',
     section   => 'keystone_authtoken',
-    param     => 'auth_uri',
-    value     => $controller_rocky::params::auth_uri,
+    param     => 'www_authenticate_uri',
+    value     => $controller_rocky::params::www_authenticate_uri,
   }   
 
   do_config { 'heat_auth_url':
