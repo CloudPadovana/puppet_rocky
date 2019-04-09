@@ -337,7 +337,9 @@ class controller_rocky::params ($cloud_role){
    ###
    $ml2_enable_ipset = true
    $ml2_enable_security_group = true
-   $ml2_firewall_driver = 'neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver'
+   # Shorter name for ml2_firewall_driver                                                                                                                                             
+   $ml2_firewall_driver = 'iptables_hybrid'
+   # $ml2_firewall_driver = 'neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver'    
    $ml2_flat_networks = '*'
    $ml2_local_ip = $::data_ip
    $ml2_mechanism_drivers = 'openvswitch'
