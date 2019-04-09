@@ -45,7 +45,7 @@ define remove_config ($conf_file, $section, $param, $value) {
    do_config { 'neutron_max_l3_agents_per_router': conf_file => '/etc/neutron/neutron.conf', section => 'DEFAULT', param => 'max_l3_agents_per_router', value => $controller_rocky::params::neutron_max_l3_agents_per_router, }
        
 #MS: The min_l3_agents_per_router configuration option was deprecated in Newton cycle and removed in Ocata       
-   do_config { 'neutron_min_l3_agents_per_router': conf_file => '/etc/neutron/neutron.conf', section => 'DEFAULT', param => 'min_l3_agents_per_router', value => $controller_rocky::params::neutron_min_l3_agents_per_router, }
+#   do_config { 'neutron_min_l3_agents_per_router': conf_file => '/etc/neutron/neutron.conf', section => 'DEFAULT', param => 'min_l3_agents_per_router', value => $controller_rocky::params::neutron_min_l3_agents_per_router, }
    do_config { 'neutron_allow_automatic_dhcp_failover': conf_file => '/etc/neutron/neutron.conf', section => 'DEFAULT', param => 'allow_automatic_dhcp_failover', value => $controller_rocky::params::allow_automatic_dhcp_failover, }
 
    do_config { 'neutron_db': conf_file => '/etc/neutron/neutron.conf', section => 'database', param => 'connection', value => $controller_rocky::params::neutron_db, }
@@ -124,7 +124,8 @@ do_config { 'neutron_enable_proxy_headers_parsing': conf_file => '/etc/neutron/n
    do_config { 'ovs_bridge_mappings': conf_file => '/etc/neutron/plugins/ml2/openvswitch_agent.ini', section => 'ovs', param => 'bridge_mappings', value => $controller_rocky::params::ml2_bridge_mappings, }
    do_config { 'ovs_enable_tunneling': conf_file => '/etc/neutron/plugins/ml2/openvswitch_agent.ini', section => 'ovs', param => 'enable_tunneling', value => $controller_rocky::params::ovs_enable_tunneling, }
    # The following parameter was introduced after the powercut of Nov 2018. Without this parameter we had problems with
-   # external networks ### FF DEPRECATED in PIKE of_interface Open vSwitch agent configuration option --> the current default driver (native) will be the only supported of_interface driver
+   # external networks
+   ### FF DEPRECATED in PIKE of_interface Open vSwitch agent configuration option --> the current default driver (native) will be the only supported of_interface driver
    #do_config { 'ovs_of_interface': conf_file => '/etc/neutron/plugins/ml2/openvswitch_agent.ini', section => 'ovs', param => 'of_interface', value => $controller_rocky::params::ovs_of_interface, }
    ###
    do_config { 'ovs_firewall_driver': conf_file => '/etc/neutron/plugins/ml2/openvswitch_agent.ini', section => 'securitygroup', param => 'firewall_driver', value => $controller_rocky::params::ml2_firewall_driver, } 
