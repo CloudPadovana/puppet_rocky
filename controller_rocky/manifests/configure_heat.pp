@@ -72,8 +72,6 @@ define remove_config ($conf_file, $section, $param, $value) {
     value     => $controller_rocky::params::heat_db,
   }
   
-#  do_config { 'heat_rabbit_hosts': conf_file => '/etc/heat/heat.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_hosts', value => $controller_rocky::params::rabbit_hosts, }       
-#  do_config { 'heat_rabbit_ha_queues': conf_file => '/etc/heat/heat.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_ha_queues', value => $controller_rocky::params::rabbit_ha_queues, }
 
   do_config { 'heat_auth_uri':
     conf_file => '/etc/heat/heat.conf',
