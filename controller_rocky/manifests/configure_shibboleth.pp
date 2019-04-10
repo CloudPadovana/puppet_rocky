@@ -96,12 +96,13 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
     owner    => "root",
     group    => "root",
     mode     => '0644',
-    content  => epp("controller_rocky/idem-template-metadata.xml.epp", {
-                  'entityid' => "https://${site_fqdn}/dashboard-shib",
-                  'info_url' => "${shib_info_url}",
-                  'sp_name'  => "Cloud Area Padovana (Horizon)",
-                  'sp_org'   => "INFN"
-                }),
+    source   => "http://artifacts.pd.infn.it/templates/CAP/misc/idem-template-metadata.xml.epp",
+#    content  => epp("controller_rocky/idem-template-metadata.xml.epp", {
+#                  'entityid' => "https://${site_fqdn}/dashboard-shib",
+#                  'info_url' => "${shib_info_url}",
+#                  'sp_name'  => "Cloud Area Padovana (Horizon)",
+#                  'sp_org'   => "INFN"
+#                }),
     tag      => ["shibboleth_conf"],
   }
 
@@ -110,12 +111,13 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
     owner    => "root",
     group    => "root",
     mode     => '0644',
-    content  => epp("controller_rocky/idem-template-metadata.xml.epp", {
-                  'entityid' => "https://${keystone_cap_fqdn}/v3",
-                  'info_url' => "${shib_info_url}",
-                  'sp_name'  => "Cloud Area Padovana (Keystone)",
-                  'sp_org'   => "INFN"
-                }),
+    source   => "http://artifacts.pd.infn.it/templates/CAP/misc/idem-template-metadata.xml.epp",
+#    content  => epp("controller_rocky/idem-template-metadata.xml.epp", {
+#                  'entityid' => "https://${keystone_cap_fqdn}/v3",
+#                  'info_url' => "${shib_info_url}",
+#                  'sp_name'  => "Cloud Area Padovana (Keystone)",
+#                  'sp_org'   => "INFN"
+#                }),
     tag      => ["shibboleth_conf"],
   }
 
@@ -125,12 +127,13 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
     owner    => "root",
     group    => "root",
     mode     => '0644',
-    content  => epp("controller_rocky/idem-template-metadata.xml.epp", {
-                  'entityid' => "https://${cv_site_fqdn}/dashboard-shib",
-                  'info_url' => "${shib_info_url}",
-                  'sp_name'  => "Cloud Veneto (Horizon)",
-                  'sp_org'   => "Università degli Studi di Padova"
-                }),
+    source   => "http://artifacts.pd.infn.it/templates/CAP/misc/idem-template-metadata.xml.epp",
+#    content  => epp("controller_rocky/idem-template-metadata.xml.epp", {
+#                  'entityid' => "https://${cv_site_fqdn}/dashboard-shib",
+#                  'info_url' => "${shib_info_url}",
+#                  'sp_name'  => "Cloud Veneto (Horizon)",
+#                  'sp_org'   => "Università degli Studi di Padova"
+#                }),
     tag      => ["shibboleth_conf"],
   }
 
@@ -140,12 +143,13 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
     owner    => "root",
     group    => "root",
     mode     => '0644',
-    content  => epp("controller_rocky/idem-template-metadata.xml.epp", {
-                  'entityid' => "https://${keystone_cv_fqdn}/v3",
-                  'info_url' => "${shib_info_url}",
-                  'sp_name'  => "Cloud Veneto (Keystone)",
-                  'sp_org'   => "Università degli Studi di Padova"
-                }),
+    source   => "http://artifacts.pd.infn.it/templates/CAP/misc/idem-template-metadata.xml.epp",
+#    content  => epp("controller_rocky/idem-template-metadata.xml.epp", {
+#                  'entityid' => "https://${keystone_cv_fqdn}/v3",
+#                  'info_url' => "${shib_info_url}",
+#                  'sp_name'  => "Cloud Veneto (Keystone)",
+#                  'sp_org'   => "Università degli Studi di Padova"
+#                }),
     tag      => ["shibboleth_conf"],
   }
 
