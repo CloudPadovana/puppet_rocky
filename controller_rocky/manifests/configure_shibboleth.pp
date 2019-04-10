@@ -91,66 +91,34 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
     tag      => ["shibboleth_conf"],
   }
 
-  file { "/etc/shibboleth/horizon-infn-metadata.xml":
-    ensure   => file,
-    owner    => "root",
-    group    => "root",
-    mode     => '0644',
-    source   => "http://artifacts.pd.infn.it/templates/CAP/misc/idem-template-metadata.xml.epp",
-#    content  => epp("controller_rocky/idem-template-metadata.xml.epp", {
-#                  'entityid' => "https://${site_fqdn}/dashboard-shib",
-#                  'info_url' => "${shib_info_url}",
-#                  'sp_name'  => "Cloud Area Padovana (Horizon)",
-#                  'sp_org'   => "INFN"
-#                }),
-    tag      => ["shibboleth_conf"],
+  srvmetadata { "/etc/shibboleth/horizon-infn-metadata.xml":
+    entityid => "https://${site_fqdn}/dashboard-shib",
+    info_url => "${shib_info_url}",
+    sp_name  => "Cloud Area Padovana (Horizon)",
+    sp_org   => "INFN"
   }
 
-  file { "/etc/shibboleth/keystone-infn-metadata.xml":
-    ensure   => file,
-    owner    => "root",
-    group    => "root",
-    mode     => '0644',
-    source   => "http://artifacts.pd.infn.it/templates/CAP/misc/idem-template-metadata.xml.epp",
-#    content  => epp("controller_rocky/idem-template-metadata.xml.epp", {
-#                  'entityid' => "https://${keystone_cap_fqdn}/v3",
-#                  'info_url' => "${shib_info_url}",
-#                  'sp_name'  => "Cloud Area Padovana (Keystone)",
-#                  'sp_org'   => "INFN"
-#                }),
-    tag      => ["shibboleth_conf"],
+  srvmetadata { "/etc/shibboleth/keystone-infn-metadata.xml":
+    entityid => "https://${keystone_cap_fqdn}/v3",
+    info_url => "${shib_info_url}",
+    sp_name  => "Cloud Area Padovana (Keystone)",
+    sp_org   => "INFN"
   }
 
 
-  file { "/etc/shibboleth/horizon-unipd-metadata.xml":
-    ensure   => file,
-    owner    => "root",
-    group    => "root",
-    mode     => '0644',
-    source   => "http://artifacts.pd.infn.it/templates/CAP/misc/idem-template-metadata.xml.epp",
-#    content  => epp("controller_rocky/idem-template-metadata.xml.epp", {
-#                  'entityid' => "https://${cv_site_fqdn}/dashboard-shib",
-#                  'info_url' => "${shib_info_url}",
-#                  'sp_name'  => "Cloud Veneto (Horizon)",
-#                  'sp_org'   => "Università degli Studi di Padova"
-#                }),
-    tag      => ["shibboleth_conf"],
+  srvmetadata { "/etc/shibboleth/horizon-unipd-metadata.xml":
+    entityid => "https://${cv_site_fqdn}/dashboard-shib",
+    info_url => "${shib_info_url}",
+    sp_name  => "Cloud Veneto (Horizon)",
+    sp_org   => "Università degli Studi di Padova"
   }
 
 
-  file { "/etc/shibboleth/keystone-unipd-metadata.xml":
-    ensure   => file,
-    owner    => "root",
-    group    => "root",
-    mode     => '0644',
-    source   => "http://artifacts.pd.infn.it/templates/CAP/misc/idem-template-metadata.xml.epp",
-#    content  => epp("controller_rocky/idem-template-metadata.xml.epp", {
-#                  'entityid' => "https://${keystone_cv_fqdn}/v3",
-#                  'info_url' => "${shib_info_url}",
-#                  'sp_name'  => "Cloud Veneto (Keystone)",
-#                  'sp_org'   => "Università degli Studi di Padova"
-#                }),
-    tag      => ["shibboleth_conf"],
+  srvmetadata { "/etc/shibboleth/keystone-unipd-metadata.xml":
+    entityid => "https://${keystone_cv_fqdn}/v3",
+    info_url => "${shib_info_url}",
+    sp_name  => "Cloud Veneto (Keystone)",
+    sp_org   => "Università degli Studi di Padova"
   }
 
   file { "/etc/shibboleth/shibboleth2.xml":
@@ -170,5 +138,19 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
   
   Package["shibboleth"] -> File <| tag == 'shibboleth_sec' |> ~> Service["shibd"]
   Package["shibboleth"] -> File <| tag == 'shibboleth_conf' |> ~> Service["shibd"]
+
+  #
+  # TODO remove the defined resource when using puppet 4 (resort to epp)
+  #
+  define srvmetadata ($entityid, $info_url, $sp_name, $sp_org) {
+    file { "$title":
+      ensure   => file,
+      owner    => "root",
+      group    => "root",
+      mode     => '0644',
+      content  => template("controller_rocky/idem-template-metadata.xml.erb"),
+      tag      => ["shibboleth_conf"],
+    }
+  }
 
 }
