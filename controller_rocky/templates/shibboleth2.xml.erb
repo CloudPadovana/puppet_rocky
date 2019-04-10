@@ -20,7 +20,7 @@
             <Logout>SAML2 Local</Logout>
 
             <Handler type="MetadataGenerator" Location="/Metadata"
-                     template="/etc/openstack-auth-shib/idem-template-metadata.xml"
+                     template="/etc/shibboleth/horizon-infn-metadata.xml"
                      signing="true"/>
 
         </Sessions>
@@ -61,8 +61,20 @@
         </CredentialResolver>
 
 
-
         <ApplicationOverride id="infn_ssoapp" entityID="https://<%=@keystone_cap_fqdn-%>/v3">
+
+            <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
+                      checkAddress="false" handlerSSL="true" cookieProps="https">
+
+                <SSO>SAML2 SAML1</SSO>
+
+                <Logout>SAML2 Local</Logout>
+
+                <Handler type="MetadataGenerator" Location="/Metadata"
+                         template="/etc/shibboleth/keystone-infn-metadata.xml"
+                         signing="true"/>
+
+            </Sessions>
 
             <Errors redirectErrors="https://<%=@cv_site_fqdn-%>/dashboard/auth/auth_error/"/>
 
@@ -77,13 +89,20 @@
         </ApplicationOverride>
 
 
-
-
-
-
-
-
         <ApplicationOverride id="unipd_app" entityID="https://<%=@cv_site_fqdn-%>/dashboard-shib">
+
+            <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
+                      checkAddress="false" handlerSSL="true" cookieProps="https">
+
+                <SSO>SAML2 SAML1</SSO>
+
+                <Logout>SAML2 Local</Logout>
+
+                <Handler type="MetadataGenerator" Location="/Metadata"
+                         template="/etc/shibboleth/horizon-unipd-metadata.xml"
+                         signing="true"/>
+
+            </Sessions>
 
             <Errors redirectErrors="https://<%=@cv_site_fqdn-%>/dashboard/auth/auth_error/"/>
 
@@ -97,7 +116,21 @@
 
         </ApplicationOverride>
 
+
         <ApplicationOverride id="unipd_ssoapp" entityID="https://<%=@keystone_cv_fqdn-%>/v3">
+
+            <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
+                      checkAddress="false" handlerSSL="true" cookieProps="https">
+
+                <SSO>SAML2 SAML1</SSO>
+
+                <Logout>SAML2 Local</Logout>
+
+                <Handler type="MetadataGenerator" Location="/Metadata"
+                         template="/etc/shibboleth/keystone-unipd-metadata.xml"
+                         signing="true"/>
+
+            </Sessions>
 
             <Errors redirectErrors="https://<%=@cv_site_fqdn-%>/dashboard/auth/auth_error/"/>
 

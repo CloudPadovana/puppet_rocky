@@ -429,7 +429,7 @@ class controller_rocky::params ($cloud_role){
 
   $enable_shib = true
   $shib_repo_url = "http://download.opensuse.org/repositories/security://shibboleth/CentOS_7/security:shibboleth.repo"
-  $shib_info_url = "http://wiki.infn.it/progetti/cloud-areapd/home"
+  $shib_info_url = "https://cloud-areapd.pd.infn.it/Users_Guide/html-desktop/"
   
   if $::controller_rocky::cloud_role == "is_production" {
     $infnaai_ent_id = "https://idp.infn.it/saml2/idp/metadata.php"
