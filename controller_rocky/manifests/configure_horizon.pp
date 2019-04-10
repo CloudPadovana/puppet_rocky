@@ -48,7 +48,7 @@ class controller_rocky::configure_horizon inherits controller_rocky::params {
       unless  => "/bin/grep Rocky /etc/yum.repos.d/openstack-security-integrations.repo 2>/dev/null >/dev/null",
     }
 
-    package { ["openstack-auth-${aai_ext_flavor}", "openstack-auth-shib"]:
+    package { ["openstack-auth-cap", "openstack-auth-shib"]:
       ensure  => latest,
       require => Exec["download_cap_repo"],
     }
@@ -67,7 +67,7 @@ class controller_rocky::configure_horizon inherits controller_rocky::params {
       group    => "root",
       mode     => '0644',
       content  => template("controller_rocky/notifications_en.txt.erb"),
-      require  => Package["openstack-auth-${aai_ext_flavor}"],
+      require  => Package["openstack-auth-cap"],
     }
 
 
@@ -94,15 +94,15 @@ class controller_rocky::configure_horizon inherits controller_rocky::params {
     if $::controller_rocky::cloud_role == "is_test" {
 
       exec { "patch_infnaai_testing_idp":
-        command => "/bin/sed -i 's|idp.infn.it/saml2|idp.infn.it/testing/saml2|g' /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.d/_1001_${aai_ext_flavor}_settings.py",
-        unless  => "/bin/grep idp.infn.it/testing/saml2 /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.d/_1001_${aai_ext_flavor}_settings.py 2>/dev/null >/dev/null",
-        require => Package["openstack-auth-${aai_ext_flavor}"],
+        command => "/bin/sed -i 's|idp.infn.it/saml2|idp.infn.it/testing/saml2|g' /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.d/_1001_cap_settings.py",
+        unless  => "/bin/grep idp.infn.it/testing/saml2 /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.d/_1001_cap_settings.py 2>/dev/null >/dev/null",
+        require => Package["openstack-auth-cap"],
       }
 
       exec { "patch_unipdaai_testing_idp":
-        command => "/bin/sed -i 's|shibidp.cca.unipd.it|shibidpdev.cca.unipd.it|g' /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.d/_1001_${aai_ext_flavor}_settings.py",
-        unless  => "/bin/grep shibidpdev.cca.unipd.it /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.d/_1001_${aai_ext_flavor}_settings.py 2>/dev/null >/dev/null",
-        require => Package["openstack-auth-${aai_ext_flavor}"],
+        command => "/bin/sed -i 's|shibidp.cca.unipd.it|shibidpdev.cca.unipd.it|g' /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.d/_1001_cap_settings.py",
+        unless  => "/bin/grep shibidpdev.cca.unipd.it /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.d/_1001_cap_settings.py 2>/dev/null >/dev/null",
+        require => Package["openstack-auth-cap"],
       }
 
     }
