@@ -34,6 +34,7 @@ class controller_rocky::configure_horizon inherits controller_rocky::params {
 
   exec { "port_80_closed":
     command => "/usr/bin/sed -i -e 's|^Listen\\s*80\\s*|#Listen 80|g' /etc/httpd/conf/httpd.conf" ,
+    unless  => "/bin/grep '#Listen\\s*80\\s*$' /etc/httpd/conf/httpd.conf",
   }
 
 
