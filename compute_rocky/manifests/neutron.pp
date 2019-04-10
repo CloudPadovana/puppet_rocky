@@ -71,7 +71,7 @@ class compute_rocky::neutron inherits compute_rocky::params {
   do_config { 'neutron_cafile': conf_file => '/etc/neutron/neutron.conf', section => 'keystone_authtoken', param => 'cafile', value => $compute_rocky::params::cafile, }
   ## FF in rocky [keystone_authtoken] auth_uri diventa www_authenticate_uri
   #do_config { 'neutron_auth_uri': conf_file => '/etc/neutron/neutron.conf', section => 'keystone_authtoken', param => 'auth_uri', value => $compute_rocky::params::auth_uri, }
-  do_config { 'neutron_www_authenticate_uri': conf_file => '/etc/neutron/neutron.conf', section => 'keystone_authtoken', param => 'www_authenticate_uri', value => $compute_rocky::params::auth_uri, }
+  do_config { 'neutron_www_authenticate_uri': conf_file => '/etc/neutron/neutron.conf', section => 'keystone_authtoken', param => 'www_authenticate_uri', value => $compute_rocky::params::www_authenticate_uri, }
   ##FF in rocky [keystone_authtoken] auth_url passa da 35357 a 5000
   do_config { 'neutron_keystone_authtoken_auth_url': conf_file => '/etc/neutron/neutron.conf', section => 'keystone_authtoken', param => 'auth_url', value => $compute_rocky::params::neutron_keystone_authtoken_auth_url, }
 ########

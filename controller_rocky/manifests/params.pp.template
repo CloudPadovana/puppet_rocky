@@ -12,7 +12,7 @@ class controller_rocky::params ($cloud_role){
    $admin_password = ''
    $admin_token = ''
    $auth_uri = 'http://xxx.xxx.xxx.xxx:5000'
-   $auth_url = 'http://xxx.xxx.xxx.xxx:35357'
+   $auth_url = 'http://xxx.xxx.xxx.xxx:5000'
    #########
    $ceilometer_connection = ''
    $ceilometer_password = ''
@@ -114,7 +114,7 @@ class controller_rocky::params ($cloud_role){
    $admin_password = ''
    $admin_token = ''
    $auth_uri = 'http://xxx.xxx.xxx.xxx:5000'
-   $auth_url = 'http://xxx.xxx.xxx.xxx:35357'
+   $auth_url = 'http://xxx.xxx.xxx.xxx:5000'
    #########
    $ceilometer_connection = ''
    $ceilometer_service_credentials_auth_url = ''
@@ -319,7 +319,9 @@ class controller_rocky::params ($cloud_role){
 ##################
    $enable_proxy_headers_parsing = true
 ##################
-   $interface_driver = 'neutron.agent.linux.interface.OVSInterfaceDriver'
+   # MS: openvswitch si puo` usare al posto di neutron.agent.linux.interface.OVSInterfaceDriver                                                                                                  
+   # $interface_driver = 'neutron.agent.linux.interface.OVSInterfaceDriver'                                                                                                                      
+   $interface_driver = 'openvswitch'
 #####iscsi params
    $iscsi_volume_backend_name = 'iscsi-infnpd'
    $iscsi_volume_driver = 'cinder.volume.drivers.nfs.NfsDriver'
@@ -335,7 +337,9 @@ class controller_rocky::params ($cloud_role){
    ###
    $ml2_enable_ipset = true
    $ml2_enable_security_group = true
-   $ml2_firewall_driver = 'neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver'
+   # Shorter name for ml2_firewall_driver                                                                                                                                             
+   $ml2_firewall_driver = 'iptables_hybrid'
+   # $ml2_firewall_driver = 'neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver'    
    $ml2_flat_networks = '*'
    $ml2_local_ip = $::data_ip
    $ml2_mechanism_drivers = 'openvswitch'

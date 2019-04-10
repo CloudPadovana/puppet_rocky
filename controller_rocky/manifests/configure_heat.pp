@@ -72,14 +72,18 @@ define remove_config ($conf_file, $section, $param, $value) {
     value     => $controller_rocky::params::heat_db,
   }
   
-#  do_config { 'heat_rabbit_hosts': conf_file => '/etc/heat/heat.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_hosts', value => $controller_rocky::params::rabbit_hosts, }       
-#  do_config { 'heat_rabbit_ha_queues': conf_file => '/etc/heat/heat.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_ha_queues', value => $controller_rocky::params::rabbit_ha_queues, }
-
+# MS auth_uri deprecated. Use option "www_authenticate_uri"
+#  do_config { 'heat_auth_uri':
+#    conf_file => '/etc/heat/heat.conf',
+#    section   => 'keystone_authtoken',
+#    param     => 'auth_uri',
+#    value     => $controller_rocky::params::auth_uri,
+#  }   
   do_config { 'heat_auth_uri':
     conf_file => '/etc/heat/heat.conf',
     section   => 'keystone_authtoken',
-    param     => 'auth_uri',
-    value     => $controller_rocky::params::auth_uri,
+    param     => 'www_authenticate_uri',
+    value     => $controller_rocky::params::www_authenticate_uri,
   }   
 
   do_config { 'heat_auth_url':
@@ -144,12 +148,13 @@ define remove_config ($conf_file, $section, $param, $value) {
     param     => 'cafile',
     value     => $controller_rocky::params::cafile,
   }
-  
-  do_config { 'heat_trustee_auth_plugin':
+
+  # MS auth_plugin deprecated; replaced with auth_type
+  do_config { 'heat_trustee_auth_type':
     conf_file => '/etc/heat/heat.conf',
     section   => 'trustee',
-    param     => 'auth_plugin',
-    value     => $controller_rocky::params::auth_plugin,
+    param     => 'auth_type',
+    value     => $controller_rocky::params::auth_type,
   }
   
   do_config { 'heat_trustee_auth_url':

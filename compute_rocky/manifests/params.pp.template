@@ -52,6 +52,8 @@ class compute_rocky::params ($cloud_role) {
   $volume_glusterfs     = 'volume-nova-prod'
   $volume_glusterfs_ip  = 'xxxx'
   $volume_glusterfs_log_ip = 'xxxx'
+  $www_authenticate_uri = 'https://xxx.xxx.xxx.xxx:443'
+
                                      }  
 
  if $cloud_role == "is_test" {
@@ -92,6 +94,7 @@ class compute_rocky::params ($cloud_role) {
   $pub_key              = "ssh-rsa "       
 ###transport url in ocata al posto di rabbit hosts
   $transport_url = 'rabbit://openstack:'   
+  $www_authenticate_uri = 'https://xxx.xxx.xxx.xxx:443'
 ###aggiunto anche
       
                               }
