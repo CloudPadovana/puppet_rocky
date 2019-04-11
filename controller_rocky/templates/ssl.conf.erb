@@ -58,6 +58,16 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
         ShibExportAssertion Off
     </Location>
 
+    <Location ~ "/v3/auth/OS-FEDERATION/identity_providers/unipdaai/protocols/mapped/websso">
+        AuthType            shibboleth
+        Require             shib-session
+        ShibRequestSetting  requireSession 1
+        ShibRequestSetting  applicationId infn_ssoapp
+        ShibRequestSetting  entityID <%=@unipdaai_ent_id%>
+        ShibRequireSession  On
+        ShibExportAssertion Off
+    </Location>
+
     <Location /Shibboleth.sso>
         AuthType shibboleth
         Require shib-session
@@ -163,6 +173,16 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
     </Directory>
 
 <% if @enable_aai_ext -%>
+
+    <Location ~ "/v3/auth/OS-FEDERATION/identity_providers/infnaai/protocols/mapped/websso">
+        AuthType            shibboleth
+        Require             shib-session
+        ShibRequestSetting  requireSession 1
+        ShibRequestSetting  applicationId unipd_ssoapp
+        ShibRequestSetting  entityID <%=@infnaai_ent_id%>
+        ShibRequireSession  On
+        ShibExportAssertion Off
+    </Location>
 
     <Location ~ "/v3/auth/OS-FEDERATION/identity_providers/unipdaai/protocols/mapped/websso">
         AuthType            shibboleth
