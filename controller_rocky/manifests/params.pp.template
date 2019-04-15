@@ -378,7 +378,8 @@ class controller_rocky::params ($cloud_role){
    $ovs_l2_population = true
    ###
    # FF deprecato in PIKE
-   #$ovs_of_interface = 'ovs-ofctl'
+   # MS ma senza non funziona
+   $ovs_of_interface = 'ovs-ofctl'
    ###
    $project_domain_name = 'default'
    $quota_network = '1'
