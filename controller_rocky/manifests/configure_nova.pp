@@ -73,7 +73,8 @@ define do_config_list ($conf_file, $section, $param, $values) {
    do_config { 'nova_cpu_allocation_ratio': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'cpu_allocation_ratio', value => $controller_rocky::params::nova_cpu_allocation_ratio, }
    do_config { 'nova_disk_allocation_ratio': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'disk_allocation_ratio', value => $controller_rocky::params::nova_disk_allocation_ratio, }
    do_config { 'nova_ram_allocation_ratio': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'ram_allocation_ratio', value => $controller_rocky::params::nova_ram_allocation_ratio, }
-
+   do_config { 'nova_allow_resize': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'allow_resize_to_same_host', value => $controller_rocky::params::allow_resize, }
+    
     #
     #You can safely remove the AggregateCoreFilter, AggregateRamFilter, and AggregateDiskFilter from your [filter_scheduler]enabled_filters and you do not
     # need to replace them with any other core/ram/disk filters. The placement query in the FilterScheduler takes care of the core/ram/disk filtering,

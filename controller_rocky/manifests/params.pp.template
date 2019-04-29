@@ -215,6 +215,7 @@ class controller_rocky::params ($cloud_role){
    # Attributi validi sia per la cloud di test che quella di produzione
    $admin_user = 'admin'
    $allow_automatic_dhcp_failover = true
+   $allow_resize = true
    $auth_plugin = 'password'
    $auth_strategy = 'keystone'
    $auth_type = 'password'
