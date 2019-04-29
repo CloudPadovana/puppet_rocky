@@ -127,7 +127,8 @@ do_config { 'neutron_enable_proxy_headers_parsing': conf_file => '/etc/neutron/n
    # external networks
    ### FF DEPRECATED in PIKE of_interface Open vSwitch agent configuration option --> the current default driver (native) will be the only supported of_interface driver
    ## MS Ma senza abbiamo problemi di rete (forse perche` abbiamo piu` reti esterne ?)
-   do_config { 'ovs_of_interface': conf_file => '/etc/neutron/plugins/ml2/openvswitch_agent.ini', section => 'ovs', param => 'of_interface', value => $controller_rocky::params::ovs_of_interface, }
+   ## MS con la versione 13.0.3 non dovrebbe piu` servire. V. PDCL-1344
+   ## do_config { 'ovs_of_interface': conf_file => '/etc/neutron/plugins/ml2/openvswitch_agent.ini', section => 'ovs', param => 'of_interface', value => $controller_rocky::params::ovs_of_interface, }
    ###
    do_config { 'ovs_firewall_driver': conf_file => '/etc/neutron/plugins/ml2/openvswitch_agent.ini', section => 'securitygroup', param => 'firewall_driver', value => $controller_rocky::params::ml2_firewall_driver, } 
 
