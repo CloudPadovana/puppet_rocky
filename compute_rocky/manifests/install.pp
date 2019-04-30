@@ -39,6 +39,11 @@ $cloud_role = $compute_rocky::params::cloud_role
   } ->
 
   
+  exec { "removepackage_ceilometer":
+         command => "/usr/bin/yum -y erase *ceilometer*",
+         onlyif => "/bin/rpm -qa | grep centos-release-openstack-ocata",
+  } ->
+
   removepackage{
      $oldrelease :
   } ->
@@ -50,7 +55,7 @@ $cloud_role = $compute_rocky::params::cloud_role
 
 
   exec { "yum update":
-         command => "/usr/bin/yum -y update",
+         command => "/usr/bin/yum -y -x puppet update",
          onlyif => "/bin/rpm -qi zeromq | grep 'not installed'",
   } ->
 
