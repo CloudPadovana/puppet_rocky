@@ -6,9 +6,9 @@ class compute_rocky::stopservices inherits compute_rocky::params {
 #systemctl stop openstack-nova-compute
 ###
     
-    notify { 'in stop services': 
-                        message => "sono in stop services"
-           }
+    #notify { 'stopservices': 
+    #                    message => "sono in stop services"
+    #       }
     service { "stop openvswitch service":
                         stop        => "/usr/bin/systemctl stop openvswitch",
                         require => Exec['checkForRelease'],
