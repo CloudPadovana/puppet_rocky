@@ -1,14 +1,14 @@
 class compute_rocky::ceph inherits compute_rocky::params {
 
      yumrepo { "ceph":
-                 baseurl             => "http://download.ceph.com/rpm-luminous/el7/$::architecture/",
+                 baseurl             => "http://download.ceph.com/rpm-nautilus/el7/$::architecture/",
                  descr               => "Ceph packages for $::architecture",
                  enabled             => 1,
                  gpgcheck            => 1,
                  gpgkey              => 'https://download.ceph.com/keys/release.asc',
               }
       yumrepo { "ceph-noarch":
-                 baseurl             => "http://download.ceph.com/rpm-luminous/el7/noarch",
+                 baseurl             => "http://download.ceph.com/rpm-nautilus/el7/noarch",
                  descr               => "Ceph packages for noarch",
                  enabled             => 1,
                  gpgcheck            => 1,

@@ -26,5 +26,6 @@ class compute_rocky::stopservices inherits compute_rocky::params {
     exec { 'checkForRelease':
        command => "/usr/bin/yum list installed | grep centos-release-openstack-ocata ; /usr/bin/echo $?",
        returns => "0",
+       refreshonly => true,
     }
 }

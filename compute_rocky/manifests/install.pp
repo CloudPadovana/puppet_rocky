@@ -32,6 +32,11 @@ $cloud_role = $compute_rocky::params::cloud_role
   $novapackages = [ "openstack-nova-compute",
                      "openstack-nova-common", ]
 
+  file { "/etc/yum/vars/contentdir":
+         path    => '/etc/yum/vars/contentdir',
+         ensure  => 'present',
+         content => 'centos',
+  } ->
 
   exec { "removepackage_zeromq":
          command => "/usr/bin/yum -y erase zeromq",
@@ -48,6 +53,25 @@ $cloud_role = $compute_rocky::params::cloud_role
      $oldrelease :
   } ->
 
+  exec { "removepackage_ceph-release":
+         command => "/usr/bin/yum -y erase ceph-release",
+         onlyif => "/bin/rpm -qa | grep centos-release-openstack-ocata",
+  } ->
+
+  exec { "install ceph-release nautilus":
+         command => "/usr/bin/yum -y install https://download.ceph.com/rpm-nautilus/el7/noarch/ceph-release-1-1.el7.noarch.rpm",
+         onlyif => "/bin/rpm -qi ceph-release | grep 'not installed'",
+  } ->
+
+  exec { "clean repo cache":
+         command => "/usr/bin/yum clean all",
+         onlyif => "/bin/rpm -qi zeromq | grep 'not installed'",
+  } ->
+
+  exec { "update ceph-release":
+         command => "/usr/bin/yum -y -x puppet update",
+         onlyif => "/bin/rpm -qi zeromq | grep 'not installed'",
+  } ->
 
   package { $newrelease :
     ensure => 'installed',
