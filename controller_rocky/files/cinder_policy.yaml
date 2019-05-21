@@ -65,3 +65,19 @@
 # Delete volume's specified metadata with a given key.
 # DELETE  /volumes/{volume_id}/metadata/{key}
 "volume:delete_volume_metadata": "rule:admin_or_user" 
+
+# Create attachment.
+# POST  /attachments
+"volume:attachment_create": "rule:admin_or_user"
+
+# Update attachment.
+# PUT  /attachments/{attachment_id}
+"volume:attachment_update": "rule:admin_or_user"
+
+# Delete attachment.
+# DELETE  /attachments/{attachment_id}
+"volume:attachment_delete": "rule:admin_or_user"
+
+# Mark a volume attachment process as completed (in-use)
+# POST  /attachments/{attachment_id}/action (os-complete)
+"volume:attachment_complete": "rule:admin_or_user"
