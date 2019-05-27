@@ -36,7 +36,7 @@ HORIZON_CONFIG['srv_bind_table'] = {
 <% unless @shib_testing_md -%>
 
 UNIT_TABLE = {
-  'INFN' : {
+  'infn' : {
     "name" : 'INFN',
     "organization" : 'infn.it',
     "quota_total" :  200,
@@ -65,7 +65,7 @@ UNIT_TABLE = {
     "lan_router" : "router-lan",
     "nameservers" : [ "192.84.143.16", "192.84.143.224", "192.84.143.31" ]
   },
-  'UNIPD' : {
+  'unipd' : {
     "name" : u'Università di Padova',
     "organization" : 'unipd.it',
     "quota_total" :  200,
@@ -87,7 +87,7 @@ UNIT_TABLE = {
     "lan_router" : "Unipd",
     "nameservers" : [ "147.162.1.2", "8.8.8.8", "8.8.4.4" ]
   },
-    'UNIPD-DFA' : {
+  'unipddfa' : {
     "name" : u'Università di Padova - DFA',
     "organization" : 'unipd.it',
     "quota_total" :  200,
@@ -109,7 +109,7 @@ UNIT_TABLE = {
     "lan_router" : "router-lan",
     "nameservers" : [ "192.84.143.16", "192.84.143.224", "192.84.143.31" ]
   },
-  'CLOUDVENETO' : {
+  'cloudveneto' : {
     "name" : 'Cloud Veneto',
     "organization" : 'cloudveneto.it',
     "quota_total" :  200,
@@ -118,7 +118,7 @@ UNIT_TABLE = {
     "quota_equallogic-unipd" : 200,
     "quota_per_volume" : 5000,
 
-    "aggregate_prefix" : "Unipd",
+    "aggregate_prefix" : "CLOUDVENETO",
     "hypervisors" : [
       "cld-blu-01.cloud.pd.infn.it", "cld-blu-02.cloud.pd.infn.it", "cld-blu-05.cloud.pd.infn.it",
       "cld-blu-06.cloud.pd.infn.it", "cld-blu-07.cloud.pd.infn.it", "cld-blu-11.cloud.pd.infn.it",
@@ -132,10 +132,11 @@ UNIT_TABLE = {
     "nameservers" : [ "147.162.1.2", "8.8.8.8", "8.8.4.4" ]
   }
 }
+
 <% else -%>
 
 UNIT_TABLE = {
-  'INFN' : {
+  'infn' : {
     "name" : 'INFN',
     "organization" : 'infn.it',
     "quota_total" :  200,
@@ -153,10 +154,97 @@ UNIT_TABLE = {
     "metadata" : { "size" : "normal" },
 
     "lan_net_pool" : "10.66",
-    "lan_router" : "Lan",
+    "lan_router" : "92e8b080-f3aa-4d9f-b3d4-613e0dbfd099",
+    "nameservers" : [ "192.84.143.16", "192.84.143.224", "192.84.143.31" ]
+  },
+  'infnpub' : {
+    "name" : 'public INFN',
+    "organization" : 'infn.it',
+    "quota_total" :  200,
+    "quota_ceph" : 200,
+    "quota_iscsi-infnpd" : 0,
+    "quota_equallogic-unipd" : 0,
+    "quota_per_volume" : 5000,
+
+    "aggregate_prefix" : "INFNPUB",
+    "hypervisors" : [
+      "compute-01.cloud.pd.infn.it",
+      "compute-02.cloud.pd.infn.it",
+      "compute-03.cloud.pd.infn.it"
+    ],
+    "metadata" : { "size" : "normal" },
+
+    "lan_net_pool" : "10.69",
+    "lan_router" : "9e31c216-0635-4d21-b7aa-63fe4aee875e",
+    "nameservers" : [ "192.84.143.16", "192.84.143.224", "192.84.143.31" ]
+  },
+  'cloudveneto' : {
+    "name" : 'CloudVeneto',
+    "organization" : 'cloudveneto.it',
+    "quota_total" :  200,
+    "quota_ceph" : 200,
+    "quota_iscsi-infnpd" : 0,
+    "quota_equallogic-unipd" : 0,
+    "quota_per_volume" : 5000,
+
+    "aggregate_prefix" : "CLOUDVENETO",
+    "hypervisors" : [
+      "compute-01.cloud.pd.infn.it",
+      "compute-02.cloud.pd.infn.it",
+      "compute-03.cloud.pd.infn.it"
+    ],
+    "metadata" : { "size" : "normal" },
+
+    "lan_net_pool" : "10.70",
+    "lan_router" : "eaa80135-6b79-44e0-b637-cef88d09b85c",
     "nameservers" : [ "192.84.143.16", "192.84.143.224", "192.84.143.31" ]
   }
 }
 
+HORIZON_CONFIG['course_for'] = {
+    'infn.it' : 'infn_sso'
+}
+
 <% end -%>
+
+
+unipd_dpt_list = [
+    ('dfa.unipd.it', 'Physics and Astronomy Dept.'),
+    ('bio.unipd.it', 'Biology Dept.'),
+    ('dgs.unipd.it', 'Geoscience Dept.'),
+    ('dei.unipd.it', 'Information Engineering Dept.'),
+    ('icea.unipd.it', 'Civil and Environmental Engineering Dept.'),
+    ('math.unipd.it', 'Mathematics Dept.'),
+    ('dimm.unipd.it', 'Molecular Medicine Dept.'),
+    ('dsb.unipd.it', 'Biomedical Sciences Dept.'),
+    ('disc.unipd.it', 'Chemical Sciences Dept.'),
+    ('dsf.unipd.it', 'Pharmaceutical Sciences Dept.'),
+    ('other.unipd.it', 'Other Depts.')
+]
+
+HORIZON_CONFIG['organization'] = {
+    "infn.it" : [
+        ("pd.infn.it", "INFN Padova site"),
+        ("lnl.infn.it", "INFN Legnaro Labs"),
+        ("other.infn.it", "INFN other sites")
+    ],
+    "unipd.it" : unipd_dpt_list,
+    "studenti.unipd.it" : unipd_dpt_list
+}
+
+HORIZON_CONFIG['org_contacts'] = {
+    'dfa.unipd.it' : ("Alberto Garfagnini", "alberto.garfagnini@unipd.it", "0498277322"),
+    'bio.unipd.it' : ("Giorgio Valle", "giorgio.valle@unipd.it", "0498276281"),
+    'dgs.unipd.it' : ("Manuele Faccenda", "manuele.faccenda@unipd.it", "0498279159"),
+    'dei.unipd.it' : ("Barbara Di Camillo", "barbara.dicamillo@unipd.it", "0498277671"),
+    'icea.unipd.it' : ("Lorenzo Sanavia", "lorenzo.sanavia@unipd.it", "0498275599"),
+    'math.unipd.it' : ("Alessandro Sperduti", "alessandro.sperduti@unipd.it", "0498271355"),
+    'dimm.unipd.it' : ("Stefano Toppo", "stefano.toppo@unipd.it", "0498276958"),
+    'dsb.unipd.it' : ("Silvio Tosatto", "silvio.tosatto@unipd.it", "0498276269"),
+    'disc.unipd.it' : ("Antonino Polimeno", "antonino.polimeno@unipd.it", "0498275146"),
+    'dsf.unipd.it' : ("Stefano Moro", "stefano.moro@unipd.it", "0498275704")
+}
+
+
+
 
