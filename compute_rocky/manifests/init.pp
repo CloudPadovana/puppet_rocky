@@ -46,14 +46,14 @@ class compute_rocky ($cloud_role_foreman = "undefined") {
              Class['compute_rocky::firewall'] -> Class['compute_rocky::systemsetting']
              Class['compute_rocky::systemsetting'] -> Class['compute_rocky::stopservices']
              Class['compute_rocky::stopservices'] -> Class['compute_rocky::install']
-             #Class['compute_rocky::systemsetting'] -> Class['compute_rocky::install']
              Class['compute_rocky::install'] -> Class['compute_rocky::bacula']
              Class['compute_rocky::bacula'] -> Class['compute_rocky::nova']
              Class['compute_rocky::nova'] -> Class['compute_rocky::libvirt']
              Class['compute_rocky::libvirt'] -> Class['compute_rocky::neutron']
              Class['compute_rocky::neutron'] -> Class['compute_rocky::ceph']
-             Class['compute_rocky::neutron'] -> Class['compute_rocky::nagiossetting']
-             Class['compute_rocky::neutron'] -> Class['compute_rocky::pwl_access']
+             Class['compute_rocky::ceph'] -> Class['compute_rocky::nagiossetting']
+             Class['compute_rocky::nagiossetting'] -> Class['compute_rocky::pwl_access']
+             Class['compute_rocky::pwl_access'] -> Class['compute_rocky::service']
 ################           
 }
   

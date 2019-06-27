@@ -1,38 +1,22 @@
 class compute_rocky::ceph inherits compute_rocky::params {
 
-     yumrepo { "ceph":
-                 baseurl             => "http://download.ceph.com/rpm-nautilus/el7/$::architecture/",
-                 descr               => "Ceph packages for $::architecture",
-                 enabled             => 1,
-                 gpgcheck            => 1,
-                 gpgkey              => 'https://download.ceph.com/keys/release.asc',
-              }
-      yumrepo { "ceph-noarch":
-                 baseurl             => "http://download.ceph.com/rpm-nautilus/el7/noarch",
-                 descr               => "Ceph packages for noarch",
-                 enabled             => 1,
-                 gpgcheck            => 1,
-                 gpgkey              => 'https://download.ceph.com/keys/release.asc',
-              }
-
-      package { 'ceph-common':
+     package { 'ceph-common':
                  ensure => 'installed',
-                 require => [ Yumrepo["ceph-noarch"], Yumrepo["ceph"] ]
-              }
+             }
                                                             
-      file {'ceph.conf':
+     file {'ceph.conf':
               source      => 'puppet:///modules/compute_rocky/ceph.conf',
               path        => '/etc/ceph/ceph.conf',
               backup      => true,
               require => Package["ceph-common"],
-           }
+          }
 
-      file {'secret.xml':
+     file {'secret.xml':
              path        => '/etc/nova/secret.xml',
              backup      => true,
              content  => template('compute_rocky/secret.erb'),
              require => Package["openstack-nova-common"],
-           }
+          }
 
       $cm = '/usr/bin/virsh secret-define --file /etc/nova/secret.xml | /usr/bin/awk \'{print $2}\' | sed \'/^$/d\' > /etc/nova/virsh.secret'
            
