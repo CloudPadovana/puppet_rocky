@@ -49,13 +49,13 @@ $cloud_role = $compute_rocky::params::cloud_role
          onlyif => "/bin/rpm -qa | grep centos-release-openstack-ocata",
   } ->
 
-  removepackage{
-     $oldrelease :
-  } ->
-
   exec { "removepackage_ceph-release":
          command => "/usr/bin/yum -y erase ceph-release",
          onlyif => "/bin/rpm -qa | grep centos-release-openstack-ocata",
+  } ->
+
+  removepackage{
+     $oldrelease :
   } ->
 
   exec { "install ceph-release nautilus":
@@ -68,9 +68,16 @@ $cloud_role = $compute_rocky::params::cloud_role
          onlyif => "/bin/rpm -qi zeromq | grep 'not installed'",
   } ->
 
-  exec { "update ceph-release":
+  exec { "yum install ceph-common":
+         command => "/usr/bin/yum -y install ceph-common",
+         onlyif => "/bin/rpm -qi zeromq | grep 'not installed'",
+         timeout => 1800,
+  } ->
+
+  exec { "yum update to force the installation of nautilus ceph-release":
          command => "/usr/bin/yum -y -x puppet update",
          onlyif => "/bin/rpm -qi zeromq | grep 'not installed'",
+         timeout => 3600,
   } ->
 
   package { $newrelease :
@@ -78,9 +85,10 @@ $cloud_role = $compute_rocky::params::cloud_role
   } ->
 
 
-  exec { "yum update":
+  exec { "yum update complete":
          command => "/usr/bin/yum -y -x puppet update",
          onlyif => "/bin/rpm -qi zeromq | grep 'not installed'",
+         timeout => 3600,
   } ->
 
 ## Rename nova config file  
@@ -92,6 +100,12 @@ $cloud_role = $compute_rocky::params::cloud_role
   exec { "mv_nova_conf_new":
          command => "/usr/bin/mv /etc/nova/nova.conf.rpmnew /etc/nova/nova.conf",
          onlyif  => "/usr/bin/test -e /etc/nova/nova.conf.rpmnew",
+  } ->
+
+  exec { "yum install openstack-neutron":
+         command => "/usr/bin/yum -y install openstack-neutron openstack-neutron-openvswitch openstack-neutron-common openstack-neutron-ml2",
+         onlyif => "/bin/rpm -qi zeromq | grep 'not installed'",
+         timeout => 1800,
   } ->
 
 ## Install generic packages
@@ -113,7 +127,7 @@ $cloud_role = $compute_rocky::params::cloud_role
   file_line { '/etc/sudoers.d/neutron  syslog':
                path   => '/etc/sudoers.d/neutron',
                line   => 'Defaults:neutron !requiretty, !syslog',
-               match  => 'Defaults:neutron',
+               match  => 'Defaults:neutron !requiretty',
             }
  
 if $::compute_rocky::cloud_role == "is_prod_localstorage" or $::compute_rocky::cloud_role ==  "is_prod_sharedstorage" {                             
