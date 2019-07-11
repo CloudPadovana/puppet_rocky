@@ -86,6 +86,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
     UseCanonicalName On
     TraceEnable      Off
     RedirectMatch    permanent  ^/$ /dashboard
+    RedirectMatch    permanent  ^/Users_Guide/(.+)  https://cloudveneto-userguide.readthedocs.io/en/latest
 
     ErrorLog         logs/ssl_error_log_infn
     TransferLog      logs/ssl_access_log_infn
@@ -221,6 +222,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
     UseCanonicalName On
     TraceEnable      Off
     RedirectMatch    permanent  ^/$ /dashboard
+    RedirectMatch    permanent  ^/Users_Guide/(.+)  https://cloudveneto-userguide.readthedocs.io/en/latest
 
     ErrorLog         logs/ssl_error_log_unipd
     TransferLog      logs/ssl_access_log_unipd
