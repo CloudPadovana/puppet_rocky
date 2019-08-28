@@ -74,7 +74,8 @@ define remove_config ($conf_file, $section, $param, $value) {
   do_config { 'glance_api_node_staging_uri': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'node_staging_uri', value => $controller_rocky::params::glance_api_node_staging_uri, }
 
 # New ways in rocky to define glance backends       
-  do_config { 'glance_api_enabled_backends': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'enabled_backends', value => $controller_rocky::params::glance_api_enabled_backends, }
+# But this causes problems when adding location: revert to old mode
+#       do_config { 'glance_api_enabled_backends': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'enabled_backends', value => $controller_rocky::params::glance_api_enabled_backends, }
 
 
   do_config { 'glance_api_db': conf_file => '/etc/glance/glance-api.conf', section => 'database', param => 'connection', value => $controller_rocky::params::glance_db, }
@@ -96,19 +97,20 @@ define remove_config ($conf_file, $section, $param, $value) {
   do_config { 'glance_api_flavor': conf_file => '/etc/glance/glance-api.conf', section => 'paste_deploy', param => 'flavor', value => $controller_rocky::params::flavor, }
 
 #
-# stores and default_store deprecated against new attributes enabled_backends and default_backend        
-#  do_config { 'glance_api_store': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'stores', value => $controller_rocky::params::glance_store, }
-#  do_config { 'glance_api_default_store': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'default_store', value => $controller_rocky::params::glance_api_default_store, }
-  do_config { 'glance_api_default_store': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'default_backend', value => $controller_rocky::params::glance_api_default_store, }
+# stores and default_store deprecated against new attributes enabled_backends and default_backend
+# But this causes problems with add location: let's revert to old mode       
+  do_config { 'glance_api_store': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'stores', value => $controller_rocky::params::glance_store, }
+  do_config { 'glance_api_default_store': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'default_store', value => $controller_rocky::params::glance_api_default_store, }
+#  do_config { 'glance_api_default_store': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'default_backend', value => $controller_rocky::params::glance_api_default_store, }
 
 # File backend       
-  do_config { 'glance_api_store_datadir': conf_file => '/etc/glance/glance-api.conf', section => 'file', param => 'filesystem_store_datadir', value => $controller_rocky::params::glance_store_datadir, }
+  do_config { 'glance_api_store_datadir': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'filesystem_store_datadir', value => $controller_rocky::params::glance_store_datadir, }
 
 # Ceph backend       
-  do_config { 'glance_api_rbd_store_pool': conf_file => '/etc/glance/glance-api.conf', section => 'rbd', param => 'rbd_store_pool', value => $controller_rocky::params::glance_api_rbd_store_pool, }
-  do_config { 'glance_api_rbd_store_user': conf_file => '/etc/glance/glance-api.conf', section => 'rbd', param => 'rbd_store_user', value => $controller_rocky::params::glance_api_rbd_store_user, }
-  do_config { 'glance_api_rbd_store_ceph_conf': conf_file => '/etc/glance/glance-api.conf', section => 'rbd', param => 'rbd_store_ceph_conf', value => $controller_rocky::params::ceph_rbd_ceph_conf, }
-  do_config { 'glance_api_rbd_store_chunk_size': conf_file => '/etc/glance/glance-api.conf', section => 'rbd', param => 'rbd_store_chunk_size', value => $controller_rocky::params::glance_api_rbd_store_chunk_size, }
+  do_config { 'glance_api_rbd_store_pool': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'rbd_store_pool', value => $controller_rocky::params::glance_api_rbd_store_pool, }
+  do_config { 'glance_api_rbd_store_user': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'rbd_store_user', value => $controller_rocky::params::glance_api_rbd_store_user, }
+  do_config { 'glance_api_rbd_store_ceph_conf': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'rbd_store_ceph_conf', value => $controller_rocky::params::ceph_rbd_ceph_conf, }
+  do_config { 'glance_api_rbd_store_chunk_size': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'rbd_store_chunk_size', value => $controller_rocky::params::glance_api_rbd_store_chunk_size, }
        
 ###############
 # Settings needed for ceilomer
