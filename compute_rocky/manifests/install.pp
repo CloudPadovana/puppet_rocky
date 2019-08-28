@@ -74,22 +74,36 @@ $cloud_role = $compute_rocky::params::cloud_role
          timeout => 1800,
   } ->
 
-  exec { "yum update to force the installation of nautilus ceph-release":
-         command => "/usr/bin/yum -y -x puppet update",
-         onlyif => "/bin/rpm -qi zeromq | grep 'not installed'",
+  exec { "yum update to force the installation of nautilus ceph-release in DELL hosts":
+         command => "/usr/bin/yum -y --disablerepo dell-system-update_independent --disablerepo dell-system-update_dependent -x puppet -x facter update",
+         onlyif => "/bin/rpm -qi zeromq | grep 'not installed' &&  /bin/rpm -qi dell-system-update | grep 'Architecture:'",
          timeout => 3600,
   } ->
+
+  exec { "yum update to force the installation of nautilus ceph-release":
+         command => "/usr/bin/yum -y -x puppet -x facter update",
+         onlyif => "/bin/rpm -qi zeromq | grep 'not installed' &&  /bin/rpm -qi dell-system-update | grep 'not installed'",
+         timeout => 3600,
+  } ->
+
 
   package { $newrelease :
     ensure => 'installed',
   } ->
 
 
-  exec { "yum update complete":
-         command => "/usr/bin/yum -y -x puppet update",
-         onlyif => "/bin/rpm -qi zeromq | grep 'not installed'",
+  exec { "yum update complete in DELL hosts":
+         command => "/usr/bin/yum -y --disablerepo dell-system-update_independent --disablerepo dell-system-update_dependent -x puppet -x facter update",
+         onlyif => "/bin/rpm -qi zeromq | grep 'not installed' && /bin/rpm -qi dell-system-update | grep 'Architecture:'",
          timeout => 3600,
   } ->
+
+  exec { "yum update complete":
+         command => "/usr/bin/yum -y -x puppet -x facter update",
+         onlyif => "/bin/rpm -qi zeromq | grep 'not installed' &&  /bin/rpm -qi dell-system-update | grep 'not installed'",
+         timeout => 3600,
+  } ->
+
 
 ## Rename nova config file  
   exec { "mv_nova_conf_old":
