@@ -302,7 +302,8 @@ class controller_rocky::params ($cloud_role){
    $glance_api_show_multiple_locations = true
    $glance_enable_v1_api = 'True'
    $glance_api_enabled_backends	= 'file:file,http:http,rbd:rbd'
-   $glance_store = 'file,http,rbd'
+#   $glance_store = 'file,http,rbd'
+   $glance_store = 'http,rbd'
    $glance_store_datadir = '/var/lib/glance/images/'
    $glance_username = 'glance'
    $glance_verbose = false
