@@ -536,7 +536,7 @@ LOGGING = {
         },
         'horizon': {
             'handlers': ['file'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': False,
         },
         'horizon.operation_log': {
@@ -546,7 +546,7 @@ LOGGING = {
         },
         'openstack_dashboard': {
             'handlers': ['file'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': False,
         },
         'novaclient': {
@@ -585,8 +585,13 @@ LOGGING = {
             'propagate': False,
         },
         'openstack_auth': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'openstack_auth_shib': {
+            'handlers': ['file'],
+            'level': 'INFO',
             'propagate': False,
         },
         'nose.plugins.manager': {
