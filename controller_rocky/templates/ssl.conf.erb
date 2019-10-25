@@ -12,8 +12,11 @@ SSLCryptoDevice         builtin
 SSLProtocol             +TLSv1 +TLSv1.1 +TLSv1.2
 SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256"
 
-
-
+#######################################################################################################################
+#
+# Keystone for INFN site
+#
+#######################################################################################################################
 
 <VirtualHost *:443>
     ServerName       <%=@keystone_cap_fqdn -%>:443
@@ -74,12 +77,41 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
         ShibRequestSetting applicationId infn_ssoapp
     </Location>
 
+<% if @enable_oidc -%>
+    OIDCRedirectURI https://<%=@keystone_cap_fqdn -%>:443/v3/auth/OS-FEDERATION/websso/openid/redirect
+
+    #OIDCOAuthIntrospectionEndpoint TODO
+
+<% @oidc_providers.each do | prov_id, prov_data | -%>
+    <Location "/v3/auth/OS-FEDERATION/identity_providers/<%=prov_id-%>/protocols/openid/websso">
+      AuthType openid-connect
+      OIDCDiscoverURL https://<%=@keystone_cap_fqdn -%>:443/v3/auth/OS-FEDERATION/websso/openid/redirect?iss=<%=prov_data["enc_iss"]%>
+      Require claim iss:<%=prov_data["iss"]%>
+      LogLevel warn
+    </Location>
+
+    <Location ~ "/v3/OS-FEDERATION/identity_providers/<%=prov_id-%>/protocols/openid/auth">
+        Authtype oauth20
+        Require  claim iss:<%=prov_data["iss"]%>
+        LogLevel warn
+    </Location>
+
+<% end -%>
+    <Location ~ "/v3/auth/OS-FEDERATION/websso/openid">
+      AuthType  openid-connect
+      Require   valid-user
+      LogLevel warn
+    </Location>
+<% end -%>
+
 <% end -%>
 </VirtualHost>
 
-
-
-
+#######################################################################################################################
+#
+# Horizon for INFN site
+#
+#######################################################################################################################
 
 <VirtualHost *:443>
     ServerName       <%=@site_fqdn%>:443
@@ -115,8 +147,8 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 
     BrowserMatch "MSIE [2-5]" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
 
-<% if @enable_aai_ext and @enable_shib -%>
-
+<% if @enable_aai_ext -%>
+<% if @enable_shib -%>
     WSGIScriptAlias /dashboard-infn "/usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi"
 
     <Location /dashboard-infn>
@@ -140,15 +172,36 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
         Require all granted
         ShibRequestSetting applicationId default
     </Location>
+<% end -%>
+<% if @enable_oidc -%>
+    OIDCRedirectURI https://<%=@site_fqdn%>:443/dashboard-oidc/redirect
+
+<% @oidc_providers.each do | prov_id, prov_data | -%>
+    WSGIScriptAlias /dashboard-<%=prov_id-%> "/usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi"
+
+    <Location /dashboard-<%=prov_id-%>>
+        AuthType openid-connect
+        Require  claim iss:<%=prov_data["iss"]%>
+        OIDCDiscoverURL https://<%=@site_fqdn%>:443/dashboard-oidc/redirect?iss=<%=prov_data["enc_iss"]%>
+        LogLevel warn
+    </Location>
+
+<% end -%>
+    <Location /dashboard-oidc>
+        AuthType  openid-connect
+        Require   valid-user
+        LogLevel  debug
+    </Location>
+<% end -%>
 
 <% end -%>
 </VirtualHost>
 
-
-
-
-
-
+#######################################################################################################################
+#
+# Keystone for UniPD site
+#
+#######################################################################################################################
 
 <VirtualHost *:1443>
     ServerName       <%=@keystone_cv_fqdn -%>:443
@@ -209,13 +262,41 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
         ShibRequestSetting applicationId unipd_ssoapp
     </Location>
 
+<% if @enable_oidc -%>
+    OIDCRedirectURI https://<%=@keystone_cv_fqdn -%>:443/v3/auth/OS-FEDERATION/websso/openid/redirect
+
+    #OIDCOAuthIntrospectionEndpoint TODO
+
+<% @oidc_providers.each do | prov_id, prov_data | -%>
+    <Location "/v3/auth/OS-FEDERATION/identity_providers/<%=prov_id-%>/protocols/openid/websso">
+      AuthType openid-connect
+      OIDCDiscoverURL https://<%=@keystone_cv_fqdn -%>:443/v3/auth/OS-FEDERATION/websso/openid/redirect?iss=<%=prov_data["enc_iss"]%>
+      Require claim iss:<%=prov_data["iss"]%>
+      LogLevel warn
+    </Location>
+
+    <Location ~ "/v3/OS-FEDERATION/identity_providers/<%=prov_id-%>/protocols/openid/auth">
+        Authtype oauth20
+        Require  claim iss:<%=prov_data["iss"]%>
+        LogLevel warn
+    </Location>
+
+<% end -%>
+    <Location ~ "/v3/auth/OS-FEDERATION/websso/openid">
+      AuthType  openid-connect
+      Require   valid-user
+      LogLevel warn
+    </Location>
+<% end -%>
+
 <% end -%>
 </VirtualHost>
 
-
-
-
-
+#######################################################################################################################
+#
+# Horizon for UniPD site
+#
+#######################################################################################################################
 
 <VirtualHost *:1443>
     ServerName       <%=@cv_site_fqdn%>:443
@@ -251,8 +332,8 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 
     BrowserMatch "MSIE [2-5]" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
 
-<% if @enable_aai_ext and @enable_shib -%>
-
+<% if @enable_aai_ext -%>
+<% if @enable_shib -%>
     WSGIScriptAlias /dashboard-unipd "/usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi"
 
     <Location /dashboard-infn>
@@ -277,6 +358,27 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
         ShibRequestSetting applicationId unipd_app
     </Location>
 
+<% end -%>
+<% if @enable_oidc -%>
+    OIDCRedirectURI https://<%=@cv_site_fqdn%>:443/dashboard-oidc/redirect
+
+<% @oidc_providers.each do | prov_id, prov_data | -%>
+    WSGIScriptAlias /dashboard-<%=prov_id-%> "/usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi"
+
+    <Location /dashboard-<%=prov_id-%>>
+        AuthType openid-connect
+        Require  claim iss:<%=prov_data["iss"]%>
+        OIDCDiscoverURL https://<%=@cv_site_fqdn%>:443/dashboard-oidc/redirect?iss=<%=prov_data["enc_iss"]%>
+        LogLevel warn
+    </Location>
+
+<% end -%>
+    <Location /dashboard-oidc>
+        AuthType  openid-connect
+        Require   valid-user
+        LogLevel  debug
+    </Location>
+<% end -%>
 <% end -%>
 </VirtualHost>
 

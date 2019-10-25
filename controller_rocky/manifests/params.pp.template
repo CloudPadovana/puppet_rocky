@@ -446,11 +446,28 @@ class controller_rocky::params ($cloud_role){
   #  OpenID Connect params
   ############################################################################
 
-  $enable_oidc = false
-  $oidc_passphrase = ""
-  
-  $indigo_md_url = "https://iam-test.indigo-datacloud.eu/.well-known/openid-configuration"
-  $indigo_client_id = ""
-  $indigo_secret = ""
+  if $::controller_rocky::cloud_role == "is_production" {
+
+    $enable_oidc = false
+
+  } else {
+
+    $enable_oidc = true
+    $oidc_passphrase = "xxxxxxxxxxx"
+    $oidc_md_dir = "/var/cache/httpd/mod_auth_openidc/metadata"
+
+    $oidc_providers = {
+      "dodas" => {
+        "fqdn"        => "dodas-iam.cloud.cnaf.infn.it",
+        "url"         => "https://dodas-iam.cloud.cnaf.infn.it/.well-known/openid-configuration",
+        "iss"         => "https://dodas-iam.cloud.cnaf.infn.it/oidc/",
+        "enc_iss"     => "https%3A%2F%2Fdodas-iam.cloud.cnaf.infn.it%2Foidc%2F",
+        "client_id"   => "xxxxxxxxxxx",
+        "secret"      => "xxxxxxx",
+        "descr"       => "DODAS IAM"
+      }
+    }
+
+  }
 
 }
