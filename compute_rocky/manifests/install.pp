@@ -86,11 +86,15 @@ $cloud_role = $compute_rocky::params::cloud_role
          timeout => 3600,
   } ->
 
+  exec { "yum install libvirt before the openstack-nova-compute":
+         command => "/usr/bin/yum -y install libvirt",
+         onlyif => "/bin/rpm -qi zeromq | grep 'not installed'",
+         timeout => 3600,
+  } ->
 
   package { $newrelease :
     ensure => 'installed',
   } ->
-
 
   exec { "yum update complete in DELL hosts":
          command => "/usr/bin/yum -y --disablerepo dell-system-update_independent --disablerepo dell-system-update_dependent -x puppet -x facter update",
