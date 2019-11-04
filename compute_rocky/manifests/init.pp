@@ -41,6 +41,9 @@ class compute_rocky ($cloud_role_foreman = "undefined") {
   # do passwdless access
       class {'compute_rocky::pwl_access':}
 
+    # configure collectd
+      class {'compute_rocky::collectd':}
+
 
 # execution order
              Class['compute_rocky::firewall'] -> Class['compute_rocky::systemsetting']
@@ -53,7 +56,8 @@ class compute_rocky ($cloud_role_foreman = "undefined") {
              Class['compute_rocky::neutron'] -> Class['compute_rocky::ceph']
              Class['compute_rocky::ceph'] -> Class['compute_rocky::nagiossetting']
              Class['compute_rocky::nagiossetting'] -> Class['compute_rocky::pwl_access']
-             Class['compute_rocky::pwl_access'] -> Class['compute_rocky::service']
+             Class['compute_rocky::pwl_access'] -> Class['compute_rocky::collectd']
+             Class['compute_rocky::collectd'] -> Class['compute_rocky::service']
 ################           
 }
   
