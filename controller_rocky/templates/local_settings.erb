@@ -496,6 +496,10 @@ LOGGING = {
     # django.db.backends will still log unless it is disabled explicitly.
     'disable_existing_loggers': False,
     'formatters': {
+        'verbose': {
+            'format': '%(asctime)s %(process)d %(levelname)s %(name)s '
+                      '%(message)s'
+        },
         'operation': {
             # The format of "%(message)s" is defined by
             # OPERATION_LOG_OPTIONS['format']
@@ -511,6 +515,7 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': '/var/log/horizon/horizon.log',
+            'formatter': 'verbose',
         },
         'console': {
             # Set the level to "DEBUG" for verbose output logging.
