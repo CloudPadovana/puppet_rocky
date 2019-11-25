@@ -462,9 +462,25 @@ class controller_rocky::params ($cloud_role){
         "url"         => "https://dodas-iam.cloud.cnaf.infn.it/.well-known/openid-configuration",
         "iss"         => "https://dodas-iam.cloud.cnaf.infn.it/oidc/",
         "enc_iss"     => "https%3A%2F%2Fdodas-iam.cloud.cnaf.infn.it%2Foidc%2F",
-        "client_id"   => "xxxxxxxxxxx",
-        "secret"      => "xxxxxxx",
-        "descr"       => "DODAS IAM"
+        "descr"       => "DODAS IAM",
+        "clients"     => {
+            "${keystone_cap_fqdn}" => {
+                "client_id"  => "xxxxxxxxxxx",
+                "secret"     => "xxxxxxx"
+            },
+            "${site_fqdn}" => {
+                "client_id"  => "xxxxxxxxxxx",
+                "secret"     => "xxxxxxx"
+            },
+            "${keystone_cv_fqdn}" => {
+                "client_id"  => "xxxxxxxxxxx",
+                "secret"     => "xxxxxxx"
+            },
+            "${cv_site_fqdn}" => {
+                "client_id"  => "xxxxxxxxxxx",
+                "secret"     => "xxxxxxx"
+            }
+        }
       }
     }
 

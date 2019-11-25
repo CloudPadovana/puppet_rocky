@@ -19,7 +19,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 #######################################################################################################################
 
 <VirtualHost *:443>
-    ServerName       <%=@keystone_cap_fqdn -%>:443
+    ServerName       <%=@keystone_cap_fqdn-%>:443
     UseCanonicalName On
     TraceEnable      Off
     LimitRequestBody 114688
@@ -79,7 +79,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 
 <% if @enable_oidc -%>
     OIDCRedirectURI https://<%=@keystone_cap_fqdn -%>:443/v3/auth/OS-FEDERATION/websso/openid/redirect
-
+    OIDCMetadataDir <%=@oidc_md_dir-%>/<%=@keystone_cap_fqdn%>
     #OIDCOAuthIntrospectionEndpoint TODO
 
 <% @oidc_providers.each do | prov_id, prov_data | -%>
@@ -175,6 +175,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 <% end -%>
 <% if @enable_oidc -%>
     OIDCRedirectURI https://<%=@site_fqdn%>:443/dashboard-oidc/redirect
+    OIDCMetadataDir <%=@oidc_md_dir-%>/<%=@site_fqdn%>
 
 <% @oidc_providers.each do | prov_id, prov_data | -%>
     WSGIScriptAlias /dashboard-<%=prov_id-%> "/usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi"
@@ -264,7 +265,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 
 <% if @enable_oidc -%>
     OIDCRedirectURI https://<%=@keystone_cv_fqdn -%>:443/v3/auth/OS-FEDERATION/websso/openid/redirect
-
+    OIDCMetadataDir <%=@oidc_md_dir-%>/%=@keystone_cv_fqdn -%>
     #OIDCOAuthIntrospectionEndpoint TODO
 
 <% @oidc_providers.each do | prov_id, prov_data | -%>
@@ -361,6 +362,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 <% end -%>
 <% if @enable_oidc -%>
     OIDCRedirectURI https://<%=@cv_site_fqdn%>:443/dashboard-oidc/redirect
+    OIDCMetadataDir <%=@oidc_md_dir-%>/<%=@cv_site_fqdn%>
 
 <% @oidc_providers.each do | prov_id, prov_data | -%>
     WSGIScriptAlias /dashboard-<%=prov_id-%> "/usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi"
