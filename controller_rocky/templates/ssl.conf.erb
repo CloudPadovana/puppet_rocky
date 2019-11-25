@@ -265,7 +265,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 
 <% if @enable_oidc -%>
     OIDCRedirectURI https://<%=@keystone_cv_fqdn -%>:443/v3/auth/OS-FEDERATION/websso/openid/redirect
-    OIDCMetadataDir <%=@oidc_md_dir-%>/%=@keystone_cv_fqdn -%>
+    OIDCMetadataDir <%=@oidc_md_dir-%>/<%=@keystone_cv_fqdn%>
     #OIDCOAuthIntrospectionEndpoint TODO
 
 <% @oidc_providers.each do | prov_id, prov_data | -%>

@@ -29,8 +29,8 @@ class controller_rocky::configure_openidc inherits controller_rocky::params {
         mode    => "0770",
       }
 
-      exec { "download_metadata_${prov_id}":
-        command => '/usr/bin/wget -q -O ${oidc_cache_dir}/${oidc_idp}.provider ${oidc_md_url}',
+      exec { "get_${oidc_cache_dir}/${oidc_idp}.provider":
+        command => "/usr/bin/wget -q -O ${oidc_cache_dir}/${oidc_idp}.provider ${oidc_md_url}",
         creates => "${oidc_cache_dir}/${oidc_idp}.provider",
         require => File["${oidc_cache_dir}"],
         tag     => ["oidc_conf"],
@@ -41,18 +41,18 @@ class controller_rocky::configure_openidc inherits controller_rocky::params {
         owner    => "apache",
         group    => "apache",
         mode     => "0640",
-        content  => '{"client_id" : "${oidc_clientid}", "client_secret" : "${oidc_secret}"}\n',
-        require => File["${oidc_cache_dir}}"],
+        content  => "{\"client_id\" : \"${oidc_clientid}\", \"client_secret\" : \"${oidc_secret}\"}\n",
+        require  => File["${oidc_cache_dir}"],
         tag      => ["oidc_conf"],
       }
 
-      file { "${oidc_cache_dir}}/${oidc_idp}.conf":
+      file { "${oidc_cache_dir}/${oidc_idp}.conf":
         ensure   => file,
         owner    => "apache",
         group    => "apache",
         mode     => "0640",
         content  => '{"scope" : "openid profile email", "token_endpoint_auth" : "client_secret_basic", "response_type" : "code"}\n',
-        require => File["${oidc_cache_dir}"],
+        require  => File["${oidc_cache_dir}"],
         tag      => ["oidc_conf"],
       }
     }
