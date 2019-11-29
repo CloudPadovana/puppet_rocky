@@ -452,17 +452,18 @@ class controller_rocky::params ($cloud_role){
 
   } else {
 
-    $enable_oidc = true
-    $oidc_passphrase = "xxxxxxxxxxx"
-    $oidc_md_dir = "/var/cache/httpd/mod_auth_openidc/metadata"
+    $enable_oidc      = true
+    $oidc_passphrase  = "xxxxxxxxxxx"
+    $oidc_md_dir      = "/var/cache/httpd/mod_auth_openidc/metadata"
+    $oidc_intro_ep    = ""
 
     $oidc_providers = {
       "dodas" => {
-        "fqdn"        => "dodas-iam.cloud.cnaf.infn.it",
-        "url"         => "https://dodas-iam.cloud.cnaf.infn.it/.well-known/openid-configuration",
+        "metadata"    => "https://dodas-iam.cloud.cnaf.infn.it/.well-known/openid-configuration",
         "iss"         => "https://dodas-iam.cloud.cnaf.infn.it/oidc/",
-        "enc_iss"     => "https%3A%2F%2Fdodas-iam.cloud.cnaf.infn.it%2Foidc%2F",
         "descr"       => "DODAS IAM",
+        "map_local"   => "[{\"user\" : {\"name\" : \"{0}\", \"type\" : \"ephemeral\", \"email\" : \"{1}\" }, \"group\" : { \"id\" : \"*****\" }}]",
+        "map_remote"  => "[{ \"type\" : \"OIDC-preferred_username\" }, { \"type\" : \"OIDC-email\" }]",
         "clients"     => {
             "${keystone_cap_fqdn}" => {
                 "client_id"  => "xxxxxxxxxxx",

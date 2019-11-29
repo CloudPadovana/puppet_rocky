@@ -44,6 +44,11 @@ HORIZON_CONFIG['identity_providers']['<%=prov_id-%>_sso'] = {
     'context' :     '/dashboard-<%=prov_id-%>',
     'path' :        '/dashboard-<%=prov_id-%>/auth/register/',
     'description' : '<%=prov_data["descr"]-%>',
+<% if prov_data.fetch("local_user", false) -%>
+    'local_user' : True,
+<% else -%>
+    'local_user' : False,
+<% end -%>
     'logo' :        '/dashboard/static/dashboard/img/logoINDIGO.png',
     'uid_tag' :     'OIDC-preferred_username',
     'org_tag' :     'OIDC-organisation_name'
@@ -53,17 +58,8 @@ WEBSSO_IDP_MAPPING["<%=prov_id-%>_sso"] = ("<%=prov_id-%>aai", "openid")
 WEBSSO_IDP_ENTITIES["<%=prov_id-%>aai"] = [ "<%=prov_data["iss"]-%>" ]
 WEBSSO_IDP_RULES["<%=prov_id-%>_sso"] = [
     {
-        "local": [
-            {
-                "user": {
-                    "name": "{0}",
-                    "domain": { "id": "default" },
-                    "type": "local"
-                }
-
-            }
-        ],
-        "remote": [ { "type": "OIDC-preferred_username" } ]
+        "local": <%=prov_data["map_local"]-%>,
+        "remote": <%=prov_data["map_remote"]-%>
     }
 ]
 

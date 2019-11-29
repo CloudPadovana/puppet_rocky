@@ -124,6 +124,13 @@ define do_config_list ($conf_file, $section, $param, $values) {
       value     => 'Shib-Identity-Provider',
     }
 
+    do_config { "keystone_oidc_attr":
+      conf_file => '/etc/keystone/keystone.conf',
+      section   => 'openid',
+      param     => 'remote_id_attribute',
+      value     => 'HTTP_OIDC_ISS',
+    }
+
     file { "/etc/keystone/policy.json":
       ensure   => file,
       owner    => "keystone",

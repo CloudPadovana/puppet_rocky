@@ -14,8 +14,8 @@ class controller_rocky::configure_openidc inherits controller_rocky::params {
   }
 
   $oidc_providers.each | $prov_id, $prov_data | {
-    $oidc_md_url = $prov_data["url"]
-    $oidc_idp = $prov_data["fqdn"]
+    $oidc_md_url = $prov_data["metadata"]
+    $oidc_idp = encode_iss($prov_data["iss"])["dir"]
 
     $prov_data["clients"].each | $cid, $cdata | {
       $oidc_cache_dir = "${oidc_md_dir}/${cid}"
@@ -51,7 +51,7 @@ class controller_rocky::configure_openidc inherits controller_rocky::params {
         owner    => "apache",
         group    => "apache",
         mode     => "0640",
-        content  => '{"scope" : "openid profile email", "token_endpoint_auth" : "client_secret_basic", "response_type" : "code"}\n',
+        content  => "{\"scope\" : \"openid profile email\", \"token_endpoint_auth\" : \"client_secret_basic\", \"response_type\" : \"code\"}\n",
         require  => File["${oidc_cache_dir}"],
         tag      => ["oidc_conf"],
       }
