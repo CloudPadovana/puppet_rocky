@@ -36,7 +36,7 @@ class controller_rocky::ceph inherits controller_rocky::params {
               backup      => true,
               owner   => cinder,
               group   => cinder,
-              mode    => 0640,
+              mode    => "0640",
               require => Package["ceph-common"],
            }
 
@@ -46,7 +46,7 @@ class controller_rocky::ceph inherits controller_rocky::params {
               backup      => true,
               owner   => glance,
               group   => glance,
-              mode    => 0640,
+              mode    => "0640",
               require => Package["ceph-common"],
          }
 
@@ -60,7 +60,7 @@ class controller_rocky::ceph inherits controller_rocky::params {
               backup      => true,
               owner   => cinder,
               group   => cinder,
-              mode    => 0640,
+              mode    => "0640",
               require => Package["ceph-common"],
            }
 
@@ -70,7 +70,7 @@ class controller_rocky::ceph inherits controller_rocky::params {
               backup      => true,
               owner   => glance,
               group   => glance,
-              mode    => 0640,
+              mode    => "0640",
               require => Package["ceph-common"],
          }
 

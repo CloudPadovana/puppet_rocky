@@ -49,7 +49,7 @@ define do_config_list ($conf_file, $section, $param, $values) {
   $namevars = array_to_namevars($values, "${conf_file}~${section}~${param}", "~")
 
   # check each value
-  do_augeas_config { $namevars:
+  controller_rocky::configure_keystone::do_augeas_config { $namevars:
     conf_file => $conf_file,
     section => $section,
     param => $param
@@ -57,29 +57,29 @@ define do_config_list ($conf_file, $section, $param, $values) {
 }
 
 # keystone.conf
-  do_config { 'keystone_admin_token': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'admin_token', value => $controller_rocky::params::admin_token, }
+  controller_rocky::configure_keystone::do_config { 'keystone_admin_token': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'admin_token', value => $controller_rocky::params::admin_token, }
 
 
-  do_config { 'keystone_public_endpoint': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'public_endpoint', value => $controller_rocky::params::keystone_public_endpoint, }
+  controller_rocky::configure_keystone::do_config { 'keystone_public_endpoint': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'public_endpoint', value => $controller_rocky::params::keystone_public_endpoint, }
 
 # Deprecated
 # Reason: With the removal of the 2.0 API keystone does not distinguish between
 # admin and public endpoints.
-#do_config { 'keystone_admin_endpoint': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'admin_endpoint', value #=> $controller_rocky::params::keystone_admin_endpoint, }
+#controller_rocky::configure_keystone::do_config { 'keystone_admin_endpoint': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'admin_endpoint', value #=> $controller_rocky::params::keystone_admin_endpoint, }
 
-  do_config { 'keystone_db': conf_file => '/etc/keystone/keystone.conf', section => 'database', param => 'connection', value => $controller_rocky::params::keystone_db, }
+  controller_rocky::configure_keystone::do_config { 'keystone_db': conf_file => '/etc/keystone/keystone.conf', section => 'database', param => 'connection', value => $controller_rocky::params::keystone_db, }
 
-  do_config { 'keystone_token_provider': conf_file => '/etc/keystone/keystone.conf', section => 'token', param => 'provider', value => $controller_rocky::params::keystone_token_provider, }
-  do_config { 'keystone_token_expiration': conf_file => '/etc/keystone/keystone.conf', section => 'token', param => 'expiration', value => $controller_rocky::params::token_expiration, }
+  controller_rocky::configure_keystone::do_config { 'keystone_token_provider': conf_file => '/etc/keystone/keystone.conf', section => 'token', param => 'provider', value => $controller_rocky::params::keystone_token_provider, }
+  controller_rocky::configure_keystone::do_config { 'keystone_token_expiration': conf_file => '/etc/keystone/keystone.conf', section => 'token', param => 'expiration', value => $controller_rocky::params::token_expiration, }
 
 
 
        
 #######Proxy headers parsing
-  do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone/keystone.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_rocky::params::enable_proxy_headers_parsing, }
+  controller_rocky::configure_keystone::do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone/keystone.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_rocky::params::enable_proxy_headers_parsing, }
 
 
-##  do_config { 'keystone_auth_methods': conf_file => '/etc/keystone/keystone.conf', section => 'auth', param => 'methods', value => $controller_rocky::params::keystone_auth_methods, }
+##  controller_rocky::configure_keystone::do_config { 'keystone_auth_methods': conf_file => '/etc/keystone/keystone.conf', section => 'auth', param => 'methods', value => $controller_rocky::params::keystone_auth_methods, }
 
 
 
@@ -103,28 +103,28 @@ define do_config_list ($conf_file, $section, $param, $values) {
 
   if $enable_aai_ext {
 
-    do_config { 'keystone_auth_methods':
+    controller_rocky::configure_keystone::do_config { 'keystone_auth_methods':
       conf_file => '/etc/keystone/keystone.conf',
       section   => 'auth',
       param     => 'methods',
       value     => 'password,token,mapped,openid',
     }
 
-    do_config_list { "keystone_trusted_dashboards":
+    controller_rocky::configure_keystone::do_config_list { "keystone_trusted_dashboards":
       conf_file => '/etc/keystone/keystone.conf',
       section   => 'federation',
       param     => 'trusted_dashboard',
       values    => [ "https://${site_fqdn}/dashboard/auth/websso/", "https://${cv_site_fqdn}/dashboard/auth/websso/" ],
     }
     
-    do_config { "keystone_shib_attr":
+    controller_rocky::configure_keystone::do_config { "keystone_shib_attr":
       conf_file => '/etc/keystone/keystone.conf',
       section   => 'mapped',
       param     => 'remote_id_attribute',
       value     => 'Shib-Identity-Provider',
     }
 
-    do_config { "keystone_oidc_attr":
+    controller_rocky::configure_keystone::do_config { "keystone_oidc_attr":
       conf_file => '/etc/keystone/keystone.conf',
       section   => 'openid',
       param     => 'remote_id_attribute',

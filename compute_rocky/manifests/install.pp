@@ -54,7 +54,7 @@ $cloud_role = $compute_rocky::params::cloud_role
          onlyif => "/bin/rpm -qa | grep centos-release-openstack-ocata",
   } ->
 
-  removepackage{
+  compute_rocky::install::removepackage{
      $oldrelease :
   } ->
 

@@ -17,7 +17,7 @@ class compute_rocky::rsyslog inherits compute_rocky::params {
 
       file_line { '/etc/rsyslog.conf remotehost':
         path   => '/etc/rsyslog.conf',
-        line   => '*.* @@192.168.60.31:514',
+        line   => '*.* @@192.168.60.152:514',
         match  => '@@',
         notify => Service['rsyslog'],
       }
@@ -37,7 +37,7 @@ class compute_rocky::rsyslog inherits compute_rocky::params {
       backup      => true,
       owner   => root,
       group   => root,
-      mode    => 0644,
+      mode    => "0644",
       notify => Service['rsyslog'],
        }
              

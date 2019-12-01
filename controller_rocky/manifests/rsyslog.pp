@@ -22,7 +22,7 @@ class controller_rocky::rsyslog inherits controller_rocky::params {
           backup      => true,
           owner   => root,
           group   => root,
-          mode    => 0644,
+          mode    => "0644",
           notify => Service['rsyslog'],
          }
 
@@ -32,10 +32,8 @@ class controller_rocky::rsyslog inherits controller_rocky::params {
           backup      => true,
           owner   => root,
           group   => root,
-          mode    => 0644,
+          mode    => "0644",
           notify => Service['rsyslog'],
          }
-         
-
 
 }

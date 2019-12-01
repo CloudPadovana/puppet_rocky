@@ -4,7 +4,7 @@ class controller_rocky::configure_horizon inherits controller_rocky::params {
     ensure   => file,
     owner    => "root",
     group    => "root",
-    mode     => '0644',
+    mode     => "0644",
     content  => template("controller_rocky/ssl.conf.erb"),
   }
   
@@ -12,7 +12,7 @@ class controller_rocky::configure_horizon inherits controller_rocky::params {
     ensure   => file,
     owner    => "root",
     group    => "root",
-    mode     => '0644',
+    mode     => "0644",
     content  => file("controller_rocky/openstack-dashboard.conf"),
   }
  
@@ -20,7 +20,7 @@ class controller_rocky::configure_horizon inherits controller_rocky::params {
     ensure   => file,
     owner    => "root",
     group    => "apache",
-    mode     => '0640',
+    mode     => "0640",
     content  => template("controller_rocky/local_settings.erb"),
   }
 
@@ -29,7 +29,7 @@ class controller_rocky::configure_horizon inherits controller_rocky::params {
     ensure  => 'present',
     owner   => 'apache',
     group   => 'apache',
-    mode     => '0644',
+    mode     => "0644",
   }
 
 #  exec { "port_80_closed":
@@ -57,7 +57,7 @@ class controller_rocky::configure_horizon inherits controller_rocky::params {
       ensure   => file,
       owner    => "root",
       group    => "apache",
-      mode     => '0640',
+      mode     => "0640",
       content  => template("controller_rocky/aai_settings.py.erb"),
     }
 
@@ -65,7 +65,7 @@ class controller_rocky::configure_horizon inherits controller_rocky::params {
       ensure   => file,
       owner    => "root",
       group    => "root",
-      mode     => '0644',
+      mode     => "0644",
       content  => template("controller_rocky/notifications_en.txt.erb"),
       require  => Package["openstack-auth-cap"],
     }
@@ -117,7 +117,7 @@ class controller_rocky::configure_horizon inherits controller_rocky::params {
     ensure   => file,
     owner    => "root",
     group    => "root",
-    mode     => '0600',
+    mode     => "0600",
     content  => template("controller_rocky/actions.conf.erb"),
   }
   

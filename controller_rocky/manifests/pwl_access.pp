@@ -23,7 +23,7 @@ class controller_rocky::pwl_access inherits controller_rocky::params {
             path    => "$home_dir/.ssh",
             owner   => nova,
             group   => nova,
-            mode    => 0700,
+            mode    => "0700",
   }
 
   File["nova_sshdir"] -> file {
@@ -38,7 +38,7 @@ class controller_rocky::pwl_access inherits controller_rocky::params {
 	    path    => "$home_dir/.ssh/id_rsa",
             owner   => nova,
             group   => nova,
-            mode    => 0600;
+            mode    => "0600";
 
 	"public_key":
             path    => "$home_dir/.ssh/id_rsa.pub",

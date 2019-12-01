@@ -44,7 +44,6 @@ class compute_rocky::service inherits compute_rocky::params {
                     hasrestart  => true,
                     require     => Package["openstack-nova-compute"],
                     subscribe   => Class['compute_rocky::nova']
-
                }
 
        service { "polkit":

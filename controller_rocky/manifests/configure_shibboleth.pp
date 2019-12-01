@@ -14,7 +14,7 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
     ensure   => file,
     owner    => "shibd",
     group    => "shibd",
-    mode     => '0400',
+    mode     => "0400",
     source   => "${host_key}",
     tag      => ["shibboleth_sec"],
   }
@@ -23,7 +23,7 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
     ensure   => file,
     owner    => "shibd",
     group    => "shibd",
-    mode     => '0600',
+    mode     => "0600",
     source   => "${host_cert}",
     tag      => ["shibboleth_sec"],
   }
@@ -32,7 +32,7 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
     ensure   => file,
     owner    => "shibd",
     group    => "shibd",
-    mode     => '0400',
+    mode     => "0400",
     source   => "${unipd_key}",
     tag      => ["shibboleth_sec"],
   }
@@ -41,7 +41,7 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
     ensure   => file,
     owner    => "shibd",
     group    => "shibd",
-    mode     => '0600',
+    mode     => "0600",
     source   => "${unipd_cert}",
     tag      => ["shibboleth_sec"],
   }
@@ -50,7 +50,7 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
     ensure   => file,
     owner    => "shibd",
     group    => "shibd",
-    mode     => '0400',
+    mode     => "0400",
     source   => "${keystone_infn_key}",
     tag      => ["shibboleth_sec"],
   }
@@ -59,7 +59,7 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
     ensure   => file,
     owner    => "shibd",
     group    => "shibd",
-    mode     => '0600',
+    mode     => "0600",
     source   => "${keystone_infn_cert}",
     tag      => ["shibboleth_sec"],
   }
@@ -68,7 +68,7 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
     ensure   => file,
     owner    => "shibd",
     group    => "shibd",
-    mode     => '0400',
+    mode     => "0400",
     source   => "${keystone_unipd_key}",
     tag      => ["shibboleth_sec"],
   }
@@ -77,7 +77,7 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
     ensure   => file,
     owner    => "shibd",
     group    => "shibd",
-    mode     => '0600',
+    mode     => "0600",
     source   => "${keystone_unipd_cert}",
     tag      => ["shibboleth_sec"],
   }
@@ -86,19 +86,19 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
     ensure   => file,
     owner    => "root",
     group    => "root",
-    mode     => '0644',
+    mode     => "0644",
     source   => "puppet:///modules/controller_rocky/attribute-map.xml",
     tag      => ["shibboleth_conf"],
   }
 
-  srvmetadata { "/etc/shibboleth/horizon-infn-metadata.xml":
+  controller_rocky::configure_shibboleth::srvmetadata { "/etc/shibboleth/horizon-infn-metadata.xml":
     entityid => "https://${site_fqdn}/dashboard-shib",
     info_url => "${shib_info_url}",
     sp_name  => "Cloud Area Padovana (Horizon)",
     sp_org   => "INFN"
   }
 
-  srvmetadata { "/etc/shibboleth/keystone-infn-metadata.xml":
+  controller_rocky::configure_shibboleth::srvmetadata { "/etc/shibboleth/keystone-infn-metadata.xml":
     entityid => "https://${keystone_cap_fqdn}/v3",
     info_url => "${shib_info_url}",
     sp_name  => "Cloud Area Padovana (Keystone)",
@@ -106,7 +106,7 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
   }
 
 
-  srvmetadata { "/etc/shibboleth/horizon-unipd-metadata.xml":
+  controller_rocky::configure_shibboleth::srvmetadata { "/etc/shibboleth/horizon-unipd-metadata.xml":
     entityid => "https://${cv_site_fqdn}/dashboard-shib",
     info_url => "${shib_info_url}",
     sp_name  => "Cloud Veneto (Horizon)",
@@ -114,7 +114,7 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
   }
 
 
-  srvmetadata { "/etc/shibboleth/keystone-unipd-metadata.xml":
+  controller_rocky::configure_shibboleth::srvmetadata { "/etc/shibboleth/keystone-unipd-metadata.xml":
     entityid => "https://${keystone_cv_fqdn}/v3",
     info_url => "${shib_info_url}",
     sp_name  => "Cloud Veneto (Keystone)",
@@ -125,7 +125,7 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
     ensure   => file,
     owner    => "root",
     group    => "root",
-    mode     => '0644',
+    mode     => "0644",
     content  => template("controller_rocky/shibboleth2.xml.erb"),
     tag      => ["shibboleth_conf"],
   }
@@ -147,7 +147,7 @@ class controller_rocky::configure_shibboleth inherits controller_rocky::params {
       ensure   => file,
       owner    => "root",
       group    => "root",
-      mode     => '0644',
+      mode     => "0644",
       content  => template("controller_rocky/idem-template-metadata.xml.erb"),
       tag      => ["shibboleth_conf"],
     }
