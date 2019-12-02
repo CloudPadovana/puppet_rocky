@@ -17,7 +17,7 @@ module Puppet::Parser::Functions
     end
 
     if tmps.end_with?("/")
-      tmps = tmps[0:-2]
+      tmps = tmps[0..-2]
     end
 
     result["dir"] = ERB::Util.url_encode(tmps)
