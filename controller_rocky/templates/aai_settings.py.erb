@@ -40,7 +40,7 @@ HORIZON_CONFIG['srv_bind_table'] = {
 OIDC_REDIRECT_PATH = '/dashboard-oidc/redirect'
 
 <% @oidc_providers.each do | prov_id, prov_data | -%>
-HORIZON_CONFIG['identity_providers']['<%=prov_id-%>_sso'] = {
+HORIZON_CONFIG['identity_providers']['<%=prov_data["map_tag"]-%>'] = {
     'context' :     '/dashboard-<%=prov_id-%>',
     'path' :        '/dashboard-<%=prov_id-%>/auth/register/',
     'description' : '<%=prov_data["descr"]-%>',
@@ -54,19 +54,19 @@ HORIZON_CONFIG['identity_providers']['<%=prov_id-%>_sso'] = {
     'org_tag' :     'OIDC-organisation_name'
 }
 
-WEBSSO_IDP_MAPPING["<%=prov_id-%>_sso"] = ("<%=prov_id-%>aai", "openid")
-WEBSSO_IDP_ENTITIES["<%=prov_id-%>aai"] = [ "<%=prov_data["iss"]-%>" ]
-WEBSSO_IDP_RULES["<%=prov_id-%>_sso"] = [
+WEBSSO_IDP_MAPPING["<%=prov_data["map_tag"]-%>"] = ("<%=prov_id-%>", "openid")
+WEBSSO_IDP_ENTITIES["<%=prov_id-%>"] = [ "<%=prov_data["iss"]-%>" ]
+WEBSSO_IDP_RULES["<%=prov_data["map_tag"]-%>"] = [
     {
         "local": <%=prov_data["map_local"]-%>,
         "remote": <%=prov_data["map_remote"]-%>
     }
 ]
 
-WEBSSO_CHOICES = WEBSSO_CHOICES + (('<%=prov_id-%>_sso', '<%=prov_data["descr"]-%>'), )
+WEBSSO_CHOICES = WEBSSO_CHOICES + (('<%=prov_data["map_tag"]-%>', '<%=prov_data["descr"]-%>'), )
 
-<% end -%>
-<% end -%>
+<% end -%><%# end of @oidc_providers.each %>
+<% end -%><%# end of @enable_oidc %>
 
 <% unless @shib_testing_md -%>
 
