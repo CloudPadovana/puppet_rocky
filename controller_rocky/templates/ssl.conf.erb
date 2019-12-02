@@ -85,7 +85,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 <% end -%>
 
 <% @oidc_providers.each do | prov_id, prov_data |
-     enc_iss = encode_iss(prov_data["iss"])["url"] -%>
+     enc_iss = scope.function_encode_iss([ prov_data["iss"] ])["url"] -%>
 
     <Location "/v3/auth/OS-FEDERATION/identity_providers/<%=prov_id-%>/protocols/openid/websso">
       AuthType openid-connect
@@ -185,7 +185,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
     OIDCMetadataDir <%=@oidc_md_dir-%>/<%=@site_fqdn%>
 
 <% @oidc_providers.each do | prov_id, prov_data | 
-     enc_iss = encode_iss(prov_data["iss"])["url"]
+     enc_iss = scope.function_encode_iss([ prov_data["iss"] ])["url"]
      if prov_data.fetch("local_user", false) -%>
     WSGIScriptAlias /dashboard-<%=prov_id-%> "/usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi"
 
@@ -280,7 +280,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 <% end -%>
 
 <% @oidc_providers.each do | prov_id, prov_data |
-     enc_iss = encode_iss(prov_data["iss"])["url"] -%>
+     enc_iss = scope.function_encode_iss([ prov_data["iss"] ])["url"] -%>
     <Location "/v3/auth/OS-FEDERATION/identity_providers/<%=prov_id-%>/protocols/openid/websso">
       AuthType openid-connect
       OIDCDiscoverURL https://<%=@keystone_cv_fqdn -%>:443/v3/auth/OS-FEDERATION/websso/openid/redirect?iss=<%=enc_iss%>
@@ -381,7 +381,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
     OIDCMetadataDir <%=@oidc_md_dir-%>/<%=@cv_site_fqdn%>
 
 <% @oidc_providers.each do | prov_id, prov_data |
-     enc_iss = encode_iss(prov_data["iss"])["url"]
+     enc_iss = scope.function_encode_iss([ prov_data["iss"] ])["url"]
      if prov_data.fetch("local_user", false) -%>
     WSGIScriptAlias /dashboard-<%=prov_id-%> "/usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi"
 

@@ -6,9 +6,9 @@ module Puppet::Parser::Functions
 
     result = Hash.new
     result["url"] = ERB::Util.url_encode(args[0])
-    if args[0].starts_with?("https://")
+    if args[0].start_with?("https://")
       result["dir"] = ERB::Util.url_encode(args[0].sub("https://", ""))
-    elsif args[0].starts_with?("http://")
+    elsif args[0].start_with?("http://")
       result["dir"] = ERB::Util.url_encode(args[0].sub("http://", ""))
     else
       result["dir"] = result["url"]
