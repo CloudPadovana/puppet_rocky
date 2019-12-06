@@ -75,7 +75,7 @@ $cloud_role = $compute_rocky::params::cloud_role
   } ->
 
   exec { "yum update to force the installation of nautilus ceph-release in DELL hosts":
-         command => "/usr/bin/yum -y --disablerepo dell-system-update_independent --disablerepo dell-system-update_dependent -x puppet -x facter update",
+         command => "/usr/bin/yum -y --disablerepo dell-system-update_independent --disablerepo dell-system-update_dependent -x facter update",
          onlyif => "/bin/rpm -qi zeromq | grep 'not installed' &&  /bin/rpm -qi dell-system-update | grep 'Architecture:'",
          timeout => 3600,
   } ->
