@@ -171,7 +171,7 @@ define do_config_list ($conf_file, $section, $param, $values) {
 #######Proxy headers parsing
   controller_rocky::configure_nova::do_config { 'nova_enable_proxy_headers_parsing': conf_file => '/etc/nova/nova.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_rocky::params::enable_proxy_headers_parsing, }
 
-  controller_rocky::configure_nova::do_config_list { "nova_pci_alias": conf_file => '/etc/nova/nova.conf', section => 'pci', param => 'alias', values => [ "$controller_rocky::params::pci_titanxp_VGA", "$controller_rocky::params::pci_titanxp_SND", "$controller_rocky::params::pci_quadro_VGA", "$controller_rocky::params::pci_quadro_Audio", "$controller_rocky::params::pci_quadro_USB", "$controller_rocky::params::pci_quadro_SerialBus", "$controller_rocky::params::pci_geforcegtx_VGA", "$controller_rocky::params::pci_geforcegtx_SND"  ], }
+  controller_rocky::configure_nova::do_config_list { "nova_pci_alias": conf_file => '/etc/nova/nova.conf', section => 'pci', param => 'alias', values => [ "$controller_rocky::params::pci_titanxp_VGA", "$controller_rocky::params::pci_titanxp_SND", "$controller_rocky::params::pci_quadro_VGA", "$controller_rocky::params::pci_quadro_Audio", "$controller_rocky::params::pci_quadro_USB", "$controller_rocky::params::pci_quadro_SerialBus", "$controller_rocky::params::pci_geforcegtx_VGA", "$controller_rocky::params::pci_geforcegtx_SND","$controller_rocky::params::pci_t4"  ], }
   controller_rocky::configure_nova::do_config { 'nova_pci_passthrough_whitelist': conf_file => '/etc/nova/nova.conf', section => 'pci', param => 'passthrough_whitelist', value => $controller_rocky::params::pci_passthrough_whitelist, }
 
 
