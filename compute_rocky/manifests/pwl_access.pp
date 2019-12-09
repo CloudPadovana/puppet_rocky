@@ -17,7 +17,7 @@ include compute_rocky::params
 # Needed to attach equallogic volumes
     exec {"nova disk membership":
                   unless => "/bin/grep 'disk.*nova' /etc/group 2>/dev/null",
-                  command => "/sbin/usermod -G disk nova",
+                  command => "/sbin/usermod -a -G disk nova",
                   require => User['nova'],
          }
          
