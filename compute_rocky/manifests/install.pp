@@ -1,7 +1,7 @@
 class compute_rocky::install inherits compute_rocky::params {
 #include compute_rocky::params
 
-$cloud_role = $compute_rocky::params::cloud_role          
+$cloud_role = $compute_rocky::cloud_role          
 
 ### Repository settings (remove old rpm and install new one)
   
@@ -97,7 +97,7 @@ $cloud_role = $compute_rocky::params::cloud_role
   } ->
 
   exec { "yum update complete in DELL hosts":
-         command => "/usr/bin/yum -y --disablerepo dell-system-update_independent --disablerepo dell-system-update_dependent -x puppet -x facter update",
+         command => "/usr/bin/yum -y --disablerepo dell-system-update_independent --disablerepo dell-system-update_dependent -x facter update",
          onlyif => "/bin/rpm -qi zeromq | grep 'not installed' && /bin/rpm -qi dell-system-update | grep 'Architecture:'",
          timeout => 3600,
   } ->
