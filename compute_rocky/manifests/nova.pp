@@ -200,6 +200,20 @@ compute_rocky::nova::do_config { 'nova_enable_proxy_headers_parsing': conf_file 
    
 }
 
+# GPU specific setting for cld-dfa-gpu-02
+ if ($::mgmt_ip == "192.168.60.108") {
+  compute_rocky::nova::do_config { 'pci_passthrough_whitelist': conf_file => '/etc/nova/nova.conf', section => 'pci', param => 'passthrough_whitelist', value => $compute_rocky::params::pci_passthrough_whitelist, }
+
+   compute_rocky::nova::do_config_list { "pci_alias":
+           conf_file => '/etc/nova/nova.conf',
+           section   => 'pci',
+           param     => 'alias',
+           values    => [ "$compute_rocky::params::pci_t4"   ],
+         }
+         
+   
+}
+
 
 
 #####
