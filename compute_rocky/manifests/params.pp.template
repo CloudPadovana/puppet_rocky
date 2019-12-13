@@ -152,6 +152,7 @@ class compute_rocky::params ($cloud_role) {
   $nova_notification_driver = 'messagingv2'
   $nova_notify_on_state_change = 'vm_and_task_state'       
   $nova_lock_path               = '/var/lib/nova/tmp'
+  $nova_preallocate_images    	= 'space'
   $nova_username         = 'nova'     
   $nova_use_neutron = true
   $ovs_local_ip            = $::data_ip       

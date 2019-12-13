@@ -185,7 +185,7 @@ compute_rocky::nova::do_config { 'nova_enable_proxy_headers_parsing': conf_file 
 #  compute_rocky::nova::do_config { 'nova_notification_driver': conf_file => '/etc/nova/nova.conf', section => 'oslo_messaging_notifications', param => 'driver', value => $compute_rocky::params::nova_notification_driver, }
 
 
-# GPU specific setting for cld-dfa-gpu-01
+# GPU specific setting and some setting for better performance for SSD disk for cld-dfa-gpu-01
  if ($::mgmt_ip == "192.168.60.107") {
   compute_rocky::nova::do_config { 'pci_passthrough_whitelist': conf_file => '/etc/nova/nova.conf', section => 'pci', param => 'passthrough_whitelist', value => $compute_rocky::params::pci_passthrough_whitelist, }
 
@@ -196,11 +196,18 @@ compute_rocky::nova::do_config { 'nova_enable_proxy_headers_parsing': conf_file 
            values    => [ "$compute_rocky::params::pci_titanxp_VGA", "$compute_rocky::params::pci_titanxp_SND", "$compute_rocky::params::pci_quadro_VGA", "$compute_rocky::params::pci_quadro_Audio", "$compute_rocky::params::pci_quadro_USB", "$compute_rocky::params::pci_quadro_SerialBus", "$compute_rocky::params::pci_geforcegtx_VGA", "$compute_rocky::params::pci_geforcegtx_SND"  ],
            #values    => [ "$compute_rocky::params::pci_alias_1", "$compute_rocky::params::pci_alias_2" ],          
          }
+
+   compute_rocky::nova::do_config_list { "preallocate_images":
+           conf_file => '/etc/nova/nova.conf',
+           section   => 'DEFAULT',
+           param     => 'preallocate_images',
+           values    => [ "$compute_rocky::params::nova_preallocate_images"   ],
+         }
          
    
 }
 
-# GPU specific setting for cld-dfa-gpu-02
+# GPU specific setting and some setting for better performance for SSD disk for cld-dfa-gpu-02
  if ($::mgmt_ip == "192.168.60.108") {
   compute_rocky::nova::do_config { 'pci_passthrough_whitelist': conf_file => '/etc/nova/nova.conf', section => 'pci', param => 'passthrough_whitelist', value => $compute_rocky::params::pci_passthrough_whitelist, }
 
@@ -209,6 +216,13 @@ compute_rocky::nova::do_config { 'nova_enable_proxy_headers_parsing': conf_file 
            section   => 'pci',
            param     => 'alias',
            values    => [ "$compute_rocky::params::pci_t4"   ],
+         }
+
+   compute_rocky::nova::do_config_list { "preallocate_images":
+           conf_file => '/etc/nova/nova.conf',
+           section   => 'DEFAULT',
+           param     => 'preallocate_images',
+           values    => [ "$compute_rocky::params::nova_preallocate_images"   ],
          }
          
    
