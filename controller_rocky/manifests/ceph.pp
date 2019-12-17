@@ -27,6 +27,12 @@ class controller_rocky::ceph inherits controller_rocky::params {
             backup      => true,
             require => Package["ceph-common"],
           }
+     file {'ceph-ec.conf':
+            source      => 'puppet:///modules/controller_rocky/ceph-ec.conf',
+            path        => '/etc/ceph/ceph-ec.conf',
+            backup      => true,
+            require => Package["ceph-common"],
+          }
 
   if $::controller_rocky::cloud_role == "is_production" {
 
