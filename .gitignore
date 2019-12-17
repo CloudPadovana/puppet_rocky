@@ -5,6 +5,7 @@ controller_rocky/files/id_rsa_controller-01
 controller_rocky/files/INFN-CA.pem
 controller_rocky/files/cafile.pem
 controller_rocky/files/ceph.conf
+controller_rocky/files/ceph-ec.conf
 controller_rocky/files/ceph.client.cinder-prod.keyring
 controller_rocky/files/ceph.client.cinder-cloudtest.keyring
 controller_rocky/files/ceph.client.glance-prod.keyring
