@@ -64,6 +64,8 @@ define remove_config ($conf_file, $section, $param, $value) {
    controller_rocky::configure_cinder::do_config { 'cinder_iscsi_nfs_mount_point_base': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'nfs_mount_point_base', value => $controller_rocky::params::cinder_iscsi_nfs_mount_point_base, }
    # The following is needed (at least in Ocata) otherwise there are problems attaching i-scsi volumes to VMs    
    controller_rocky::configure_cinder::do_config { 'cinder_iscsi_nfs_nas_secure_file_permissions': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'nas_secure_file_permissions', value => $controller_rocky::params::cinder_iscsi_nfs_nas_secure_file_permissions, }
+
+
 ############# Ceph configuration
  controller_rocky::configure_cinder::do_config { 'cinder_ceph_volume_group': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'volume_group', value => $controller_rocky::params::ceph_volume_group, }
    controller_rocky::configure_cinder::do_config { 'cinder_ceph_volume_backend_name': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'volume_backend_name', value => $controller_rocky::params::ceph_volume_backend_name, }
@@ -71,16 +73,32 @@ define remove_config ($conf_file, $section, $param, $value) {
    controller_rocky::configure_cinder::do_config { 'cinder_ceph_rbd_pool': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rbd_pool', value => $controller_rocky::params::cinder_ceph_rbd_pool, }
    controller_rocky::configure_cinder::do_config { 'cinder_ceph_rbd_ceph_conf': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rbd_ceph_conf', value => $controller_rocky::params::ceph_rbd_ceph_conf, }
    controller_rocky::configure_cinder::do_config { 'cinder_ceph_rbd_flatten_volume_from_snapshot': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rbd_flatten_volume_from_snapshot', value => $controller_rocky::params::ceph_rbd_flatten_volume_from_snapshot, }
-  controller_rocky::configure_cinder::do_config { 'cinder_ceph_rbd_max_clone_depth': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rbd_max_clone_depth', value => $controller_rocky::params::ceph_rbd_max_clone_depth, }
   controller_rocky::configure_cinder::do_config { 'cinder_ceph_rbd_store_chunk_size': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rbd_store_chunk_size', value => $controller_rocky::params::ceph_rbd_store_chunk_size, }
   controller_rocky::configure_cinder::do_config { 'cinder_ceph_rados_connect_timeout': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rados_connect_timeout', value => $controller_rocky::params::ceph_rados_connect_timeout, }
-### DEPRECATED in PIKE - removed in QUEENS       
-#  controller_rocky::configure_cinder::do_config { 'cinder_ceph_glance_api_version': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'glance_api_version', value => $controller_rocky::params::ceph_glance_api_version, }
+  controller_rocky::configure_cinder::do_config { 'cinder_ceph_rbd_max_clone_depth': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rbd_max_clone_depth', value => $controller_rocky::params::ceph_rbd_max_clone_depth, }
   controller_rocky::configure_cinder::do_config { 'cinder_ceph_rbd_user': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rbd_user', value => $controller_rocky::params::cinder_ceph_rbd_user, }
   controller_rocky::configure_cinder::do_config { 'cinder_ceph_rbd_secret_uuid': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rbd_secret_uuid', value => $controller_rocky::params::cinder_ceph_rbd_secret_uuid, }
- #
  # MS: Optimization that can be applied since the pool is used only for cinder      
   controller_rocky::configure_cinder::do_config { 'cinder_ceph_rbd_exclusive_cinder_pool': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rbd_exclusive_cinder_pool', value => $controller_rocky::params::cinder_ceph_rbd_exclusive_cinder_pool, }
+
+############# Ceph EC configuration
+ if $::controller_rocky::cloud_role == "is_test" {
+
+ controller_rocky::configure_cinder::do_config { 'cinder_ceph-ec_volume_group': conf_file => '/etc/cinder/cinder.conf', section => 'ceph-ec', param => 'volume_group', value => $controller_rocky::params::ceph_ec_volume_group, }
+   controller_rocky::configure_cinder::do_config { 'cinder_ceph-ec_volume_backend_name': conf_file => '/etc/cinder/cinder.conf', section => 'ceph-ec', param => 'volume_backend_name', value => $controller_rocky::params::ceph_ec_volume_backend_name, }
+   controller_rocky::configure_cinder::do_config { 'cinder_ceph-ec_volume_driver': conf_file => '/etc/cinder/cinder.conf', section => 'ceph-ec', param => 'volume_driver', value => $controller_rocky::params::ceph_volume_driver, }
+   controller_rocky::configure_cinder::do_config { 'cinder_ceph-ec_rbd_pool': conf_file => '/etc/cinder/cinder.conf', section => 'ceph-ec', param => 'rbd_pool', value => $controller_rocky::params::cinder_ceph_ec_rbd_pool, }
+   controller_rocky::configure_cinder::do_config { 'cinder_ceph-ec_rbd_ceph_conf': conf_file => '/etc/cinder/cinder.conf', section => 'ceph-ec', param => 'rbd_ceph_conf', value => $controller_rocky::params::ceph_rbd_ceph_ec_conf, }
+   controller_rocky::configure_cinder::do_config { 'cinder_ceph-ec_rbd_flatten_volume_from_snapshot': conf_file => '/etc/cinder/cinder.conf', section => 'ceph-ec', param => 'rbd_flatten_volume_from_snapshot', value => $controller_rocky::params::ceph_rbd_flatten_volume_from_snapshot, }
+  controller_rocky::configure_cinder::do_config { 'cinder_ceph-ec_rbd_store_chunk_size': conf_file => '/etc/cinder/cinder.conf', section => 'ceph-ec', param => 'rbd_store_chunk_size', value => $controller_rocky::params::ceph_rbd_store_chunk_size, }
+  controller_rocky::configure_cinder::do_config { 'cinder_ceph-ec_rados_connect_timeout': conf_file => '/etc/cinder/cinder.conf', section => 'ceph-ec', param => 'rados_connect_timeout', value => $controller_rocky::params::ceph_rados_connect_timeout, }
+  controller_rocky::configure_cinder::do_config { 'cinder_ceph-ec_rbd_max_clone_depth': conf_file => '/etc/cinder/cinder.conf', section => 'ceph-ec', param => 'rbd_max_clone_depth', value => $controller_rocky::params::ceph_rbd_max_clone_depth, }
+  controller_rocky::configure_cinder::do_config { 'cinder_ceph-ec_rbd_user': conf_file => '/etc/cinder/cinder.conf', section => 'ceph-ec', param => 'rbd_user', value => $controller_rocky::params::cinder_ceph_rbd_user, }
+  controller_rocky::configure_cinder::do_config { 'cinder_ceph-ec_rbd_secret_uuid': conf_file => '/etc/cinder/cinder.conf', section => 'ceph-ec', param => 'rbd_secret_uuid', value => $controller_rocky::params::cinder_ceph_rbd_secret_uuid, }
+ # MS: Optimization that can be applied since the pool is used only for cinder      
+  controller_rocky::configure_cinder::do_config { 'cinder_ceph-ec_rbd_exclusive_cinder_pool': conf_file => '/etc/cinder/cinder.conf', section => 'ceph-ec', param => 'rbd_exclusive_cinder_pool', value => $controller_rocky::params::cinder_ceph_rbd_exclusive_cinder_pool, }
+
+}
 
        
 ##########EqualLogic
