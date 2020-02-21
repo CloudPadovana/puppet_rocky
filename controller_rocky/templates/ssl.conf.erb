@@ -1,5 +1,7 @@
 Listen 443 https
+<% if @is_production -%>
 Listen 1443 https
+<% end -%>
 
 SSLPassPhraseDialog     exec:/usr/libexec/httpd-ssl-pass-dialog
 
@@ -112,6 +114,31 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 
 <% end -%><%# end of @enable_oidc %>
 <% end -%><%# end of @enable_aai_ext %>
+
+<% unless @is_production -%>
+### FEDE oidc ###
+
+    <Location "/v3/auth/OS-FEDERATION/identity_providers/dodas/protocols/oidc/websso">
+      AuthType openid-connect
+      OIDCDiscoverURL https://keystone-cv-test.pd.infn.it:443/v3/auth/OS-FEDERATION/websso/oidc/redirect?iss=https%3A%2F%2Fdodas-iam.cloud.cnaf.infn.it%2F
+      Require claim iss:https://dodas-iam.cloud.cnaf.infn.it/
+      LogLevel warn
+    </Location>
+
+    <Location ~ "/v3/OS-FEDERATION/identity_providers/dodas/protocols/oidc/auth">
+        Authtype oauth20
+        Require  claim iss:https://dodas-iam.cloud.cnaf.infn.it/
+        LogLevel warn
+    </Location>
+ 
+### questo forse non serve ###
+    <Location ~ "/v3/auth/OS-FEDERATION/websso/oidc">
+      AuthType  openid-connect
+      Require   valid-user
+      LogLevel warn
+    </Location>
+###
+<% end -%>
 </VirtualHost>
 
 #######################################################################################################################
@@ -213,7 +240,11 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 #
 #######################################################################################################################
 
+<% if @is_production -%>
 <VirtualHost *:1443>
+<% else -%>
+<VirtualHost *:443>
+<% end -%>
     ServerName       <%=@keystone_cv_fqdn -%>:443
     UseCanonicalName On
     TraceEnable      Off
@@ -315,7 +346,11 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 #
 #######################################################################################################################
 
+<% if @is_production -%>
 <VirtualHost *:1443>
+<% else -%>
+<VirtualHost *:443>
+<% end -%>
     ServerName       <%=@cv_site_fqdn%>:443
     UseCanonicalName On
     TraceEnable      Off
@@ -401,6 +436,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 <% end -%>
 <% end -%>
 </VirtualHost>
+
 
 
 

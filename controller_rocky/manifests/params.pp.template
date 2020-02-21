@@ -100,7 +100,7 @@ class controller_rocky::params ($cloud_role){
    $aai_mail_sender = ""
    $aai_mail_admins = {'Cloud Support', ''}
     
-
+   $is_production = true
    } 
     
    if $::controller_rocky::cloud_role == "is_test"    {
@@ -206,7 +206,7 @@ class controller_rocky::params ($cloud_role){
    $aai_mail_sender = ""
    $aai_mail_admins = {'Cloud Support', ''}
     
-
+   $is_production = false
    }
    ### Admin account on mysql
    $mysql_admin_password = "undefined"
