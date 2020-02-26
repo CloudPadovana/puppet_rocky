@@ -82,7 +82,6 @@ define remove_config ($conf_file, $section, $param, $value) {
   controller_rocky::configure_cinder::do_config { 'cinder_ceph_rbd_exclusive_cinder_pool': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rbd_exclusive_cinder_pool', value => $controller_rocky::params::cinder_ceph_rbd_exclusive_cinder_pool, }
 
 ############# Ceph EC configuration
- if $::controller_rocky::cloud_role == "is_test" {
 
  controller_rocky::configure_cinder::do_config { 'cinder_ceph-ec_volume_group': conf_file => '/etc/cinder/cinder.conf', section => 'ceph-ec', param => 'volume_group', value => $controller_rocky::params::ceph_ec_volume_group, }
    controller_rocky::configure_cinder::do_config { 'cinder_ceph-ec_volume_backend_name': conf_file => '/etc/cinder/cinder.conf', section => 'ceph-ec', param => 'volume_backend_name', value => $controller_rocky::params::ceph_ec_volume_backend_name, }
@@ -98,7 +97,7 @@ define remove_config ($conf_file, $section, $param, $value) {
  # MS: Optimization that can be applied since the pool is used only for cinder      
   controller_rocky::configure_cinder::do_config { 'cinder_ceph-ec_rbd_exclusive_cinder_pool': conf_file => '/etc/cinder/cinder.conf', section => 'ceph-ec', param => 'rbd_exclusive_cinder_pool', value => $controller_rocky::params::cinder_ceph_rbd_exclusive_cinder_pool, }
 
-}
+
 
        
 ##########EqualLogic
