@@ -41,28 +41,31 @@ class compute_rocky::firewall inherits compute_rocky::params {
              unless=> "/usr/bin/firewall-cmd --query-port 161/udp | grep yes  | wc -l | xargs test 1 -eq",
        }
                
-      
+# ssh      
   exec { "open-port-22":
     command=> "/usr/bin/firewall-cmd --add-port=22/tcp; /usr/bin/firewall-cmd --permanent --add-port=22/tcp",
     unless=> "/usr/bin/firewall-cmd --query-port 22/tcp | grep yes  | wc -l | xargs test 1 -eq",
        }
  
+# VM console
   exec { "open-port-5900-5999":
     command=> "/usr/bin/firewall-cmd --add-port=5900-5999/tcp; /usr/bin/firewall-cmd --permanent --add-port=5900-5999/tcp",
     unless=> "/usr/bin/firewall-cmd --query-port 5900-5999/tcp | grep yes  | wc -l | xargs test 1 -eq",
        }
 
+# Libvirt
   exec { "open-port-16509":
     command=> "/usr/bin/firewall-cmd --add-port=16509/tcp; /usr/bin/firewall-cmd --permanent --add-port=16509/tcp",
     unless=> "/usr/bin/firewall-cmd --query-port 16509/tcp | grep yes  | wc -l | xargs test 1 -eq",
        }
 
-      
+# Libvirt for live migration      
   exec { "open-port-49152-49261":
     command=> "/usr/bin/firewall-cmd --add-port=49152-49261/tcp; /usr/bin/firewall-cmd --permanent --add-port=49152-49261/tcp",
     unless=> "/usr/bin/firewall-cmd --query-port 49152-49261/tcp | grep yes  | wc -l | xargs test 1 -eq",
        }
 
+# ntpd
   exec { "open-port-123":
     command=> "/usr/bin/firewall-cmd --add-port=123/udp; /usr/bin/firewall-cmd --permanent --add-port=16509/udp",
     unless=> "/usr/bin/firewall-cmd --query-port 123/udp | grep yes  | wc -l | xargs test 1 -eq",
