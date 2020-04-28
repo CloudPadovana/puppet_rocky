@@ -81,3 +81,9 @@
 # Mark a volume attachment process as completed (in-use)
 # POST  /attachments/{attachment_id}/action (os-complete)
 "volume:attachment_complete": "rule:admin_or_user"
+
+# Policies for detach
+"volume_extension:volume_admin_actions:force_detach": "rule:admin_or_user"
+"volume_extension:volume_actions:detach": "rule:admin_or_user"
+"volume_extension:volume_actions:begin_detaching": "rule:admin_or_user"
+"volume_extension:volume_actions:roll_detaching": "rule:admin_or_user"
