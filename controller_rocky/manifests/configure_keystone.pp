@@ -57,7 +57,8 @@ define do_config_list ($conf_file, $section, $param, $values) {
 }
 
 # keystone.conf
-  controller_rocky::configure_keystone::do_config { 'keystone_admin_token': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'admin_token', value => $controller_rocky::params::admin_token, }
+## Not needed anymore (needed only for the very first installation)
+##  controller_rocky::configure_keystone::do_config { 'keystone_admin_token': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'admin_token', value => $controller_rocky::params::admin_token, }
 
 
   controller_rocky::configure_keystone::do_config { 'keystone_public_endpoint': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'public_endpoint', value => $controller_rocky::params::keystone_public_endpoint, }
