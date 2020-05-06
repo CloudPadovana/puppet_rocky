@@ -68,7 +68,7 @@ WEBSSO_CHOICES = WEBSSO_CHOICES + (('<%=prov_data["map_tag"]-%>', '<%=prov_data[
 <% end -%><%# end of @oidc_providers.each %>
 <% end -%><%# end of @enable_oidc %>
 
-<% unless @shib_testing_md -%>
+<% if @is_production -%>
 
 UNIT_TABLE = {
   'infn' : {
@@ -175,6 +175,11 @@ UNIT_TABLE = {
   }
 }
 
+HORIZON_CONFIG['course_for'] = {
+    'unipd.it' : 'unipd_sso',
+    'studenti.unipd.it' : 'unipd_sso'
+}
+
 <% else -%>
 
 UNIT_TABLE = {
@@ -222,7 +227,8 @@ UNIT_TABLE = {
 }
 
 HORIZON_CONFIG['course_for'] = {
-    'infn.it' : 'infn_sso'
+    'unipd.it' : 'unipd_sso',
+    'studenti.unipd.it' : 'unipd_sso'
 }
 
 <% end -%>
@@ -251,8 +257,5 @@ HORIZON_CONFIG['organization'] = {
     "unipd.it" : unipd_dpt_list,
     "studenti.unipd.it" : unipd_dpt_list
 }
-
-
-
 
 
