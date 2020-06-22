@@ -375,6 +375,8 @@ class controller_rocky::params ($cloud_role){
    $nova_scheduler_max_attempts = '10'
    $nova_host_subset_size = '10'
    $nova_username = 'nova'
+   $nova_vendordata_providers = 'StaticJSON'
+   $nova_vendordata_jsonfile_path = '/etc/nova/vendor-data.json'
    $nova_verbose = false
    $ovs_enable_tunneling = true
    $ovs_l2_population = true
