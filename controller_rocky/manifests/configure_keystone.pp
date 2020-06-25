@@ -132,23 +132,14 @@ define do_config_list ($conf_file, $section, $param, $values) {
       value     => 'HTTP_OIDC_ISS',
     }
 
-if $::controller_rocky::cloud_role == "is_production" {
     file { "/etc/keystone/policy.json":
       ensure   => file,
       owner    => "keystone",
       group    => "keystone",
       mode     => '0640',
       source  => "puppet:///modules/controller_rocky/policy.json",
-    }} else {
-    file { "/etc/keystone/policy.json":
-      ensure   => file,
-      owner    => "keystone",
-      group    => "keystone",
-      mode     => '0640',
-      source  => "puppet:///modules/controller_rocky/policy-caso.json",
+    }
 
-}
-}
 
     ### Patch for error handling in OS-Federation
     package { "patch":
