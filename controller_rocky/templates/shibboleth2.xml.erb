@@ -13,7 +13,9 @@
                          REMOTE_USER="eppn persistent-id targeted-id">
 
         <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
-                  checkAddress="false" handlerSSL="true" cookieProps="https">
+                  checkAddress="false" handlerSSL="true" cookieProps="https"
+                  redirectLimit="whitelist"
+                  redirectWhitelist="https://<%=@site_fqdn-%>/ https://<%=@keystone_cap_fqdn-%>/">
 
             <SSO>SAML2 SAML1</SSO>
 
@@ -64,7 +66,9 @@
         <ApplicationOverride id="infn_ssoapp" entityID="https://<%=@keystone_cap_fqdn-%>/v3">
 
             <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
-                      checkAddress="false" handlerSSL="true" cookieProps="https">
+                      checkAddress="false" handlerSSL="true" cookieProps="https"
+                      redirectLimit="whitelist"
+                      redirectWhitelist="https://<%=@site_fqdn-%>/ https://<%=@keystone_cap_fqdn-%>/">
 
                 <SSO>SAML2 SAML1</SSO>
 
@@ -76,7 +80,7 @@
 
             </Sessions>
 
-            <Errors redirectErrors="https://<%=@cv_site_fqdn-%>/dashboard/auth/auth_error/"/>
+            <Errors redirectErrors="https://<%=@site_fqdn-%>/dashboard/auth/auth_error/"/>
 
             <CredentialResolver type="File">
                 <Key><Path>/etc/shibboleth/keystone-infn-key.pem</Path></Key>
@@ -92,7 +96,9 @@
         <ApplicationOverride id="unipd_app" entityID="https://<%=@cv_site_fqdn-%>/dashboard-shib">
 
             <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
-                      checkAddress="false" handlerSSL="true" cookieProps="https">
+                      checkAddress="false" handlerSSL="true" cookieProps="https"
+                      redirectLimit="whitelist"
+                      redirectWhitelist="https://<%=@cv_site_fqdn-%>/ https://<%=@keystone_cv_fqdn-%>/">
 
                 <SSO>SAML2 SAML1</SSO>
 
@@ -120,7 +126,9 @@
         <ApplicationOverride id="unipd_ssoapp" entityID="https://<%=@keystone_cv_fqdn-%>/v3">
 
             <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
-                      checkAddress="false" handlerSSL="true" cookieProps="https">
+                      checkAddress="false" handlerSSL="true" cookieProps="https"
+                      redirectLimit="whitelist"
+                      redirectWhitelist="https://<%=@cv_site_fqdn-%>/ https://<%=@keystone_cv_fqdn-%>/">
 
                 <SSO>SAML2 SAML1</SSO>
 
