@@ -15,7 +15,11 @@
         <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
                   checkAddress="false" handlerSSL="true" cookieProps="https"
                   redirectLimit="whitelist"
-                  redirectWhitelist="https://<%=@site_fqdn-%>/ https://<%=@keystone_cap_fqdn-%>/">
+<% if @shib_testing_md -%>
+                  redirectWhitelist="https://cloud-areapd-test.pd.infn.it/ https://keystone-cv-test.pd.infn.it/ https://cloud-areapd-test.pd.infn.it:443/ https://keystone-cv-test.pd.infn.it:443/">
+<% else -%>
+                  redirectWhitelist="https://cloud-areapd.pd.infn.it/ https://keystone-cv.pd.infn.it/ https://cloud-areapd.pd.infn.it:443/ https://keystone-cv.pd.infn.it:443/">
+<% end -%>
 
             <SSO>SAML2 SAML1</SSO>
 
@@ -68,8 +72,11 @@
             <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
                       checkAddress="false" handlerSSL="true" cookieProps="https"
                       redirectLimit="whitelist"
-                      redirectWhitelist="https://<%=@site_fqdn-%>/ https://<%=@keystone_cap_fqdn-%>/">
-
+<% if @shib_testing_md -%>
+                      redirectWhitelist="https://cloud-areapd-test.pd.infn.it/ https://keystone-cv-test.pd.infn.it/ https://cloud-areapd-test.pd.infn.it:443/ https://keystone-cv-test.pd.infn.it:443/">
+<% else -%>
+                      redirectWhitelist="https://cloud-areapd.pd.infn.it/ https://keystone-cv.pd.infn.it/ https://cloud-areapd.pd.infn.it:443/ https://keystone-cv.pd.infn.it:443/">
+<% end -%>
                 <SSO>SAML2 SAML1</SSO>
 
                 <Logout>SAML2 Local</Logout>
@@ -98,8 +105,11 @@
             <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
                       checkAddress="false" handlerSSL="true" cookieProps="https"
                       redirectLimit="whitelist"
-                      redirectWhitelist="https://<%=@cv_site_fqdn-%>/ https://<%=@keystone_cv_fqdn-%>/">
-
+<% if @shib_testing_md -%>
+                      redirectWhitelist="https://cloudveneto-test.ict.unipd.it/ https://keystone-cv-test.ict.unipd.it/ https://cloudveneto-test.ict.unipd.it:443/ https://keystone-cv-test.ict.unipd.it:443/">
+<% else -%>
+                      redirectWhitelist="https://cloudveneto.ict.unipd.it/ https://keystone-cv.ict.unipd.it/ https://cloudveneto.ict.unipd.it:443/ https://keystone-cv.ict.unipd.it:443/">
+<% end -%>
                 <SSO>SAML2 SAML1</SSO>
 
                 <Logout>SAML2 Local</Logout>
@@ -128,7 +138,11 @@
             <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
                       checkAddress="false" handlerSSL="true" cookieProps="https"
                       redirectLimit="whitelist"
-                      redirectWhitelist="https://<%=@cv_site_fqdn-%>/ https://<%=@keystone_cv_fqdn-%>/">
+<% if @shib_testing_md -%>
+                      redirectWhitelist="https://cloudveneto-test.ict.unipd.it/ https://keystone-cv-test.ict.unipd.it/ https://cloudveneto-test.ict.unipd.it:443/ https://keystone-cv-test.ict.unipd.it:443/">
+<% else -%>
+                      redirectWhitelist="https://cloudveneto.ict.unipd.it/ https://keystone-cv.ict.unipd.it/ https://cloudveneto.ict.unipd.it:443/ https://keystone-cv.ict.unipd.it:443/">
+<% end -%>
 
                 <SSO>SAML2 SAML1</SSO>
 
